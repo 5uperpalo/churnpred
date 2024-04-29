@@ -1,0 +1,137 @@
+site_name: churn_pred
+repo_name: churn_pred
+repo_url: https://github.com/5uperpalo/churn_pred
+copyright: Pavol Mulinka
+docs_dir: sources
+site_url: 
+edit_uri: edit/main/docs/sources
+
+# Navigation
+# There is no 'nav' in this config because we use mkdocs-awesome-pages-plugin
+# The ordering of pages in the docs folder are now in a `.pages` file instead
+nav:
+    - Home: index.md
+    - Installation: installation.md
+    - churn_pred:
+        - preprocess_data: churn_pred/preprocess_data.md
+
+theme:
+    logo: assets/images/ecovadis_green_logo.png
+    name: material
+    custom_dir: sources/overrides
+
+    features:
+        - navigation.tabs
+        - navigation.tabs.sticky
+        - navigation.indexes
+        - navigation.expand
+        - toc.integrate
+
+    palette:
+    - scheme: default
+      primary: green
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: green
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+    # palette:
+    #     # scheme: preference uses dark or light mode based on user (OS) preference
+    #     scheme: preference
+    #     primary: red
+    #     accent: red
+    icon:
+        logo: fontawesome/solid/code
+    # favicon: 'assets/images/favicon.ico'
+    language: 'en'
+
+
+use_directory_urls: false
+
+plugins:
+    - search
+    - autolinks
+    - git-authors:
+        show_contribution: True
+    - mkdocs-jupyter:
+        ignore_h1_titles: True
+        include_source: True
+    - mkdocstrings:
+        default_handler: python
+        handlers:
+            python:
+                setup_commands:
+                    - import sys
+                    # - import os
+                    - sys.path.insert(0, "..")
+                rendering:
+                    members_order: source
+                    show_source: True
+                    show_submodules: True
+                    merge_init_into_class: True
+                    separate_signature: True
+                    show_root_full_path: False
+                    show_root_heading: True
+                    docstring_section_style: list
+                    show_root_toc_entry: False
+                    # show_root_heading: True
+                    # show_object_full_path: False
+                    # separate_signature: True
+                    # merge_init_into_class: True
+                    # heading_level: 2
+                    # show_source: True
+                    # show_category_heading: true
+                    # docstring_section_style: table
+                selection:
+                    docstring_style: google
+                    # filters:
+                    #    - "!^_"  # exclude all members starting with _
+## Custom theme additions
+extra_javascript:
+    - stylesheets/extra.js
+    - javascripts/mathjax.js
+    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+    - stylesheets/extra.css
+
+## Extensions
+markdown_extensions:
+    - markdown.extensions.admonition
+    - markdown.extensions.attr_list
+    - markdown.extensions.def_list
+    - markdown.extensions.footnotes
+    - markdown.extensions.meta
+    - markdown.extensions.toc:
+        baselevel: 1
+        permalink: true
+        toc_depth: 2
+    - pymdownx.arithmatex:
+        generic: true
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+    - pymdownx.critic
+    - pymdownx.details
+    - pymdownx.emoji
+    - pymdownx.highlight
+    - pymdownx.inlinehilite
+    - pymdownx.keys
+    - pymdownx.magiclink:
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.snippets:
+        check_paths: true
+    - pymdownx.superfences
+    - pymdownx.tabbed:
+        alternate_style: true
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde

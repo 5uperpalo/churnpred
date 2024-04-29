@@ -1,0 +1,57 @@
+#python
+build/
+dist/
+__pycache__*
+*.pyc
+*.pyo
+*.key
+*.egg-info
+
+# jupyter / ipython
+.ipynb_checkpoints
+Untitled*.ipynb
+
+# sublime debugger
+*.sublime-project
+*.sublime-workspace
+
+# data related dirs
+data/
+
+# Unit Tests/Coverage
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov*/
+.pytest_cache
+.cache
+.hypothesis/
+
+# vscode
+.vscode
+
+# sublime
+*.sublime-workspace
+sftp*-config.json
+
+# misc
+.DS_store
+
+#mypy
+.mypy_cache
+
+# Documentation
+_build
+mkdocs/site
+mkdocs/_build
+
+# _static
+_templates
+
+# test checkpoints
+checkpoints
+
+# wnb
+wandb/
+wandb_api.key
