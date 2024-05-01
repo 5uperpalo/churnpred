@@ -44,7 +44,7 @@ setup_kwargs = {
     "license": "MIT",
     "install_requires": reqs,
     "extras_require": extras,
-    "python_requires": ">=3.10.0",
+    "python_requires": ">=3.9.0",
     "classifiers": [
         "Environment :: Other Environment",
         "Framework :: Jupyter",
