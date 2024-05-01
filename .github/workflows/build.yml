@@ -11,11 +11,11 @@ on:
 jobs:
   codestyle:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push'  !github.event.pull_request.draft }}
+    if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
     steps:
-    - uses: actionscheckout@v4
+    - uses: actions/checkout@v4
     - name: Set up Python 3.10
-      uses: actionssetup-python@v5
+      uses: actions/setup-python@v5
       with:
         python-version: "3.10"
     - name: Install dependencies
@@ -33,15 +33,15 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push'  !github.event.pull_request.draft }}
+    if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
     strategy:
       fail-fast: true
       matrix:
         python-version [3.9, 3.10, 3.11]
     steps:
-    - uses: actionscheckout@v4
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actionssetup-python@v5
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -53,7 +53,7 @@ jobs:
       run: | 
         pytest --doctest-modules churn_pred --cov-report xml --cov-report term --disable-pytest-warnings --cov=churn_pred tests
     - name: Upload coverage
-      uses: actionsupload-artifact@v4
+      uses: actions/upload-artifact@v4
       with:
         name: coverage${{ matrix.python-version }}
         path: .coverage
@@ -61,11 +61,11 @@ jobs:
   finish: 
     needs: test
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push'  !github.event.pull_request.draft }}
+    if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
     steps:
-    - uses: actionscheckout@v4
+    - uses: actions/checkout@v4
     - name: Set up Python 3.10
-      uses: actionssetup-python@v5
+      uses: actions/setup-python@v5
       with:
         python-version 3.10
     - name: Install dependencies
@@ -74,7 +74,7 @@ jobs:
         python -m pip install coverage
     - name: Download all artifacts
       # Downloads coverage1, coverage2, etc.
-      uses: actionsdownload-artifact@v4
+      uses: actions/download-artifact@v4
     - name: Convert coverage
       run: |
         coverage combine coverage.coverage
