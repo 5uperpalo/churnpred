@@ -35,12 +35,12 @@ setup_kwargs = {
     "name": "churn_pred",
     "version": version,
     "description": "EcoVadis assignment",
-    "long_description": open("README.md", "r", encoding="utf-8").read(),
+    "long_description": open("README.MD", "r", encoding="utf-8").read(),
     "long_description_content_type": "text/markdown",
     # "long_description": long_description,
     "author": "Pavol Mulinka",
     "author_email": "mulinka.pavol@gmail.com",
-    "url": "https://github.com/5uperpalo/churn_pred",
+    "url": "https://github.com/5uperpalo/ecovadis_assignment",
     "license": "MIT",
     "install_requires": reqs,
     "extras_require": extras,
@@ -56,7 +56,7 @@ setup_kwargs = {
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
     "zip_safe": True,
-    "package_data": {"churn_pred": ["data/*"]},
+    "package_data": {"ecovadis_assignment": ["data/*"]},
     "packages": setuptools.find_packages(exclude=["test_*.py"]),
 }
 
