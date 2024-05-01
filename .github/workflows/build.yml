@@ -37,7 +37,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11"]
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -83,4 +83,4 @@ jobs:
     - name: upload coverage to Codecov
       uses: codecov/codecov-action@v4
       with:
-        fail_ci_if_error true
+        fail_ci_if_error: true
