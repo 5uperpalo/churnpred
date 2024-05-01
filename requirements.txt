@@ -24,3 +24,4 @@ black[jupyter]
 memory_profiler
 pytest-cov
 codecov
+dill
