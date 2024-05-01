@@ -80,8 +80,8 @@ def aiqc(actual: np.ndarray, high_quantile: np.ndarray, low_quantile: np.ndarray
 
     Args:
         actual (np.ndarray): actual values
-        high_quantile_predicted (np.ndarray): high quantile predicted values
-        low_quantile_predicted (np.ndarray): low quantile predicted values
+        high_quantile (np.ndarray): high quantile predicted values
+        low_quantile (np.ndarray): low quantile predicted values
     Returns:
         aiqc (float): average interquantile coverage
     """

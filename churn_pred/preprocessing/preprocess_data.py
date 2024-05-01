@@ -121,7 +121,7 @@ def nan_with_unknown_imputer(
     Args:
         df (pd.DataFrame): input dataframe
         columns (List[str]): ist of columns that will be filled
-        fillna_token (str = "unknown"): string used to replace NAs
+        fill_token (str = "unknown"): string used to replace NAs
         verbose (bool): whether the output should be verbose
     """
     df = df.copy()

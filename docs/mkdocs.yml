@@ -24,7 +24,7 @@ nav:
         - 02_target_analysis: notebooks/02_target_analysis.ipynb
         - 03_models: notebooks/03_models.ipynb
         - 04_model_training_pipeline: notebooks/04_model_training_pipeline.ipynb
-        - 05_model_analysis.ipynb: notebooks/05_model_analysis.ipynb.
+        - 05_model_analysis.ipynb: notebooks/05_model_analysis.ipynb
     - CICD: cicd.md
     - Code profiling: code_profiling.md
     - Contributing: contributing.md

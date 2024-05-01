@@ -94,7 +94,6 @@ def distributions_in_binary_cls(
 
     Args:
         df (DataFrame): pandas dataframe
-        cont_cols (list): numerical features in the dataset
         target (pd.Series): target values, i.e. binary classes
 
     Returns:

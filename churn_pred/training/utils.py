@@ -96,7 +96,7 @@ def predict_proba_lgbm_from_raw(
     This replaces predict_proba().
 
     Args:
-        predicted_raw (ndarray):
+        preds_raw (ndarray):
             1D numpy array of arrays
         task (str):
             type of task/objective
@@ -125,8 +125,8 @@ def predict_cls_lgbm_from_raw(
     Args:
         preds_raw (ndarray):
             predictions
-        lgbDataset (lightgbm.Dataset):
-            dataset, containing labels, used for prediction
+        task (Literal["binary", "multiclass"]):
+            task type
     Returns:
         (y_true, preds):
             tuple containg labels and predictions for further evaluation
