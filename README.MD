@@ -1,5 +1,7 @@
 # Assignment 
 
+**DISCLAIMER**: please see the [online documentation](https://5uperpalo.github.io/ecovadis_assignment/)
+
 ```
 In this assignment you're tasked with developing a machine learning solution for churn prediction to identify which customers are likely to leave a service (column "Exited" in the attached dataset). This assignment is meant to assess
 
@@ -18,17 +20,20 @@ HasCreditCard - whether a customer has a credit card
 CustomerFeedback - latest customer feedback, if available
 ```
 
-## Additional data:
+## Solution
 
-### GDPP:
-https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.CD
+Please see the Notebooks section. The notebooks are sorted from 0 to 5. Notebooks start with gathering auxiliary data that I could extract from the provided dataset, e.g. 'country origin of the surname'. This is followed by Exploratory Data Analysis of features and target in the notebooks 2, 3. In the notebook 4, I presented a `Trainer` object that handles training an hyperparameter search of the model. In the notebook 5 I made a quick analysis of the model and it's predictions using SHAP values.
 
-### Big Mac index:
-https://github.com/TheEconomist/big-mac-data
+The final solution uses LightGBM, a GBM model of my choice. I chose GBM as 4 out of top 5 models in H2O AutoML were GBMs.
 
-iso_codes: 
-* not for free https://www.iso.org/publication/PUB500001.html
-* updated in Jan 26; 1.3k github stars; good enough: https://github.com/stefangabos/world_countries/
+
+### Additional work note mentioning
+
+In notebook `00_auxiliary_features_surname_origin_country_classification.ipynb` I adjusted(copy/paste+adjust) a BERT model for surname origin prediction. Due to lack of time I could not gather additional data that would help with model training, but I left some ideas in the notebook.
+
+The solution was tested in a virtual machine, spawned from `jupyter/datascience-notebook:python-3.10` image in Zero-to-JupyterHub solution. As the bare metal server with GPU was down in the kubernetes, I had to do additional troubleshooting and fixing.
+
+The code is easily extendable to `multiclass`, `regression` and `quantile_regression` tasks.
 
 ##  Installation
 
@@ -36,14 +41,14 @@ The code was tested on
 ### Install using pip directly from github:
 
 ```bash
-pip install git+https://github.com/5uperpalo/churn_pred.git
+pip install git+https://github.com/5uperpalo/ecovadis_assignment.git
 ```
 
 ### Locally
 
 ```bash
-git clone https://github.com/5uperpalo/churn_pred.git
-cd churn_pred
+git clone https://github.com/5uperpalo/ecovadis_assignment.git
+cd ecovadis_assignment
 pip install .
 ```
 

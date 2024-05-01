@@ -1,6 +1,6 @@
-site_name: churn_pred
-repo_name: churn_pred
-repo_url: https://github.com/5uperpalo/churn_pred
+site_name: ecovadis_assignment
+repo_name: ecovadis_assignment
+repo_url: https://github.com/5uperpalo/ecovadis_assignment
 copyright: Pavol Mulinka
 docs_dir: sources
 site_url: 
@@ -10,8 +10,8 @@ edit_uri: edit/main/docs/sources
 # There is no 'nav' in this config because we use mkdocs-awesome-pages-plugin
 # The ordering of pages in the docs folder are now in a `.pages` file instead
 nav:
-    - Home: index.md
-    - Installation: installation.md
+    - home: index.md
+    - installation: installation.md
     - churn_pred:
         - code_profiling: churn_pred/code_profiling.md
         - eda: churn_pred/eda.md
@@ -25,9 +25,9 @@ nav:
         - 03_models: notebooks/03_models.ipynb
         - 04_model_training_pipeline: notebooks/04_model_training_pipeline.ipynb
         - 05_model_analysis.ipynb: notebooks/05_model_analysis.ipynb
-    - CICD: cicd.md
-    - Code profiling: code_profiling.md
-    - Contributing: contributing.md
+    - cicd: cicd.md
+    - code profiling: code_profiling.md
+    - contributing: contributing.md
 
 theme:
     logo: assets/images/ecovadis_green_logo.png
