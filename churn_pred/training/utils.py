@@ -140,44 +140,6 @@ def predict_cls_lgbm_from_raw(
     return pred_cls
 
 
-def get_feature_shap(
-    objective: Literal["binary", "multiclass", "regression", "quantile_regression"],
-    model: lgb.basic.Booster,
-    X: np.ndarray,
-) -> pd.DataFrame:
-    """Compute model feature SHAP values and return sorted dataframe.
-
-    Args:
-        objective (str): type of the task/objective
-        X (np.ndarray): dataset to compute SHAP values
-        model (lgb.basic.Booster): LightGBM model
-
-    Returns:
-        feature_shap (pd.DataFrame): sorted dataframe with features and their
-            SHAP values
-    """
-    if objective == "multiclass":
-        feature_shap = np.abs(model.predict(data=X, pred_contrib=True))
-        feature_shap = (
-            feature_shap.reshape(
-                X.shape[0], X.shape[1] + 1, model.params["num_classes"]
-            )
-            .sum(axis=2)
-            .mean(axis=0)[:-1]
-        )
-    else:
-        feature_shap = np.abs(model.predict(data=X, pred_contrib=True)[:, :-1]).mean(
-            axis=0
-        )
-
-    feature_shap = pd.DataFrame(
-        {"value": feature_shap, "feature": model.feature_name()}
-    )
-    feature_shap.sort_values(by="value", inplace=True)
-    feature_shap.reset_index(drop=True, inplace=True)
-    return feature_shap
-
-
 def get_feature_importance(model: lgb.basic.Booster) -> pd.DataFrame:
     """Extract model feature importances and return sorted dataframe.
 

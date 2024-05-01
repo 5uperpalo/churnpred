@@ -1,12 +1,14 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 import numpy as np
 import pandas as pd
 import pycountry
-import openapi_client
+from countryinfo import CountryInfo
+from names_dataset import NameDataset
 from geopy.geocoders import Nominatim
-from openapi_client.apis.tags import personal_api
 
+# import openapi_client
+# from openapi_client.apis.tags import personal_api
 from churn_pred.config import (
     BIG_MAC_INDEX,
     GDP_PER_CAPITA,
@@ -14,70 +16,123 @@ from churn_pred.config import (
 )
 
 
-def surname_origin(df: pd.DataFrame, surname_col: str, api_key: str) -> pd.DataFrame:
+def surname_origin_bert(df: pd.DataFrame, surname_col: str) -> pd.DataFrame:
     """
-    Surname classification that uses Namsor API to get additional information
-    about the surname, i.e.['countryOrigin', 'regionOrigin', 'subRegionOrigin',
-    'probabilityCalibrated']. Based on API documentation:
-    https://github.com/namsor/namsor-python-sdk2/blob/master/docs/apis/tags/PersonalApi.md#origin
+    THIS IS WORK IN PROGRESS!!!
+    Surname classification that uses adjusted script
+    scripts/surname_classification_with_bert.py) from:
+    https://www.kaggle.com/code/yonatankpl/surname-classification-with-bert
+    to train a bert model for surname classification
 
-    Issues:
-    * uses 10 units per name to Infer the likely country of origin of a personal name
-      * only 5k units are available in trial version and 2930 unique surnames are in
-      the toy dataset; additional 10k units cost 19$/month and 100k units 130$/month
+    additional data from:
+    https://github.com/greenelab/wiki-nationality-estimate/tree/master
+
+    and possibly data from:
+    https://github.com/philipperemy/name-dataset?tab=readme-ov-file#full-dataset
 
     Args:
         df (pd.DataFrame): input dataset
         surname_col (str): column name with surnames
-        personal_api (str): namsor API key
     """
     dfc = df.copy()
-
-    configuration = openapi_client.Configuration(
-        host="https://v2.namsor.com/NamSorAPIv2"
-    )
-
-    configuration.api_key["api_key"] = api_key
-
-    surnames = list(dfc[surname_col].unique())
-    surname_origin_country = []
-    surname_origin_region = []
-    surname_origin_subregion = []
-    surname_origin_namsor_probability = []
-
-    with openapi_client.ApiClient(configuration) as api_client:
-        api_instance = personal_api.PersonalApi(api_client)
-        for surname in surnames:
-            path_params = {
-                "firstName": "unset",
-                "lastName": surname,
-            }
-            try:
-                api_response = api_instance.origin(
-                    path_params=path_params,
-                )
-                surname_origin_country.append(api_response.body["countryOrigin"])
-                surname_origin_region.append(api_response.body["regionOrigin"])
-                surname_origin_subregion.append(api_response.body["subRegionOrigin"])
-                surname_origin_namsor_probability.append(
-                    float(api_response.body["probabilityCalibrated"])
-                )
-            except openapi_client.ApiException:
-                surname_origin_country.append("NA")
-                surname_origin_region.append("NA")
-                surname_origin_subregion.append("NA")
-                surname_origin_namsor_probability.append(np.nan)
-    name_origin_df = pd.DataFrame(
-        {
-            "Surname": surnames,
-            "surname_origin_country": surname_origin_country,
-            "surname_origin_region": surname_origin_region,
-            "surname_origin_subregion": surname_origin_subregion,
-            "surname_origin_namsor_probability": surname_origin_namsor_probability,
-        }
-    )
-    dfc = dfc.merge(name_origin_df, on="Surname", how="left")
     return dfc
+
+
+def surname_origin(df: pd.DataFrame, surname_col: str) -> pd.DataFrame:
+    """
+    Surname classification that uses db of names leaked from FB, see:
+    https://github.com/philipperemy/name-dataset
+
+    Args:
+        df (pd.DataFrame): input dataset
+        surname_col (str): column name with surnames
+    """
+    dfc = df.copy()
+    nd = NameDataset()
+
+    def _search_surname(surname):
+        try:
+            res = nd.search(surname)
+            origin_country = max(
+                res["last_name"]["country"], key=res["last_name"]["country"].get
+            )
+        except:
+            origin_country = "NA"
+        return origin_country
+
+    dfc["res"] = "NA"
+    for surname in dfc[surname_col].unique():
+        dfc.loc[dfc[surname_col] == surname, ["res"]] = _search_surname(surname)
+
+    return dfc["res"]
+
+
+# def surname_origin_namsor(
+#     df: pd.DataFrame, surname_col: str, api_key: str
+# ) -> pd.DataFrame:
+#     """
+#     Surname classification that uses Namsor API to get additional information
+#     about the surname, i.e.['countryOrigin', 'regionOrigin', 'subRegionOrigin',
+#     'probabilityCalibrated']. Based on API documentation:
+#     https://github.com/namsor/namsor-python-sdk2/blob/master/docs/apis/tags/PersonalApi.md#origin
+
+#     Issues:
+#     * uses 10 units per name to Infer the likely country of origin of a personal name
+#       * only 5k units are available in trial version and 2930 unique surnames are in
+#       the toy dataset; additional 10k units cost 19$/month and 100k units 130$/month
+
+#     Args:
+#         df (pd.DataFrame): input dataset
+#         surname_col (str): column name with surnames
+#         personal_api (str): namsor API key
+#     """
+#     dfc = df.copy()
+
+#     configuration = openapi_client.Configuration(
+#         host="https://v2.namsor.com/NamSorAPIv2"
+#     )
+
+#     configuration.api_key["api_key"] = api_key
+
+#     surnames = list(dfc[surname_col].unique())
+#     surname_origin_country = []
+#     surname_origin_region = []
+#     surname_origin_subregion = []
+#     surname_origin_namsor_probability = []
+
+#     with openapi_client.ApiClient(configuration) as api_client:
+#         api_instance = personal_api.PersonalApi(api_client)
+#         for surname in surnames:
+#             path_params = {
+#                 "firstName": "unset",
+#                 "lastName": surname,
+#             }
+#             try:
+#                 api_response = api_instance.origin(
+#                     path_params=path_params,
+#                 )
+#                 surname_origin_country.append(api_response.body["countryOrigin"])
+#                 surname_origin_region.append(api_response.body["regionOrigin"])
+#                 surname_origin_subregion.append(api_response.body["subRegionOrigin"])
+#                 surname_origin_namsor_probability.append(
+#                     float(api_response.body["probabilityCalibrated"])
+#                 )
+#             except openapi_client.ApiException as e:
+#                 surname_origin_country.append("NA")
+#                 surname_origin_region.append("NA")
+#                 surname_origin_subregion.append("NA")
+#                 surname_origin_namsor_probability.append("NA")
+#     name_origin_df = pd.DataFrame(
+#         {
+#             "Surname": surnames,
+#             "surname_origin_country": surname_origin_country,
+#             # "surname_origin_region": surname_origin_region,
+#             # "surname_origin_subregion": surname_origin_subregion,
+#             # "surname_origin_namsor_probability": surname_origin_namsor_probability
+#         }
+#     )
+#     dfc = dfc.merge(name_origin_df, on="Surname", how="left")
+#     return dfc
 
 
 def hemisphere(
@@ -248,12 +303,18 @@ def gdppc(df: pd.DataFrame, country_name_col: str) -> pd.DataFrame:
         df (pd.DataFrame): input dataset
         country_name_col: column name with country names
     """
-    gdp_per_capita = pd.read_csv(GDP_PER_CAPITA)
+    gdp_per_capita_raw = pd.read_csv(GDP_PER_CAPITA)
     gdp_per_capita_ic = pd.read_csv(GDP_PER_CAPITA_INCOMEGROUP)
     # add last available year
-    gdp_per_capita = gdp_per_capita[["Country Code", "2022"]]
-    gdp_per_capita.rename(columns={"2022": "gdp_per_capita_2022"}, inplace=True)
+    gdp_per_capita = gdp_per_capita_raw[["Country Code"]]
     gdp_per_capita.rename(columns={"Country Code": "iso_a3"}, inplace=True)
+    gdp_per_capita["gdp_per_capita"] = (
+        gdp_per_capita_raw.drop(
+            columns=["Country Name", "Country Code", "Indicator Name", "Indicator Code"]
+        )
+        .ffill(axis=1)
+        .iloc[:, -1]
+    )
 
     gdp_per_capita_ic = gdp_per_capita_ic[["Country Code", "IncomeGroup"]]
     gdp_per_capita_ic.rename(columns={"Country Code": "iso_a3"}, inplace=True)
@@ -278,14 +339,72 @@ def get_iso_a3(df: pd.DataFrame, country_name_col: str):
         df (pd.Series): input country name pandas series
     """
     dfc = df.copy()
-    return dfc[country_name_col].apply(_get_iso_a3_map)
+
+    def _get_iso_a3_map(country_name: str) -> str:
+        """Helper function for get_iso_a3"""
+        try:
+            result = pycountry.countries.search_fuzzy(country_name)
+            iso_a3_str = result[0].alpha_3  # type: ignore
+        except:
+            iso_a3_str = "NA"
+        return iso_a3_str
+
+    dfc["res"] = "NA"
+    for country_name in dfc[country_name_col].unique():
+        dfc.loc[dfc[country_name_col] == country_name, ["res"]] = _get_iso_a3_map(
+            country_name
+        )
+    return dfc["res"]
 
 
-def _get_iso_a3_map(country_name: str) -> str:
-    """Helper function for get_iso_a3"""
-    result = pycountry.countries.search_fuzzy(country_name)
-    if result:
-        iso_a3_str = result[0].alpha_3
-    else:
-        iso_a3_str = "NA"
-    return iso_a3_str
+def get_country_name(df: pd.DataFrame, country_name_col: str):
+    """Returns pd.Series with mapped country iso_a2 to names.
+
+    Args:
+        df (pd.Series): input country name pandas series
+    """
+    dfc = df.copy()
+
+    def _get_country_name_map(country_name: str) -> str:
+        """Helper function for get_country_name"""
+        try:
+            result = pycountry.countries.get(alpha_2=country_name)
+            name_str = result.name
+        except:
+            name_str = "NA"
+        return name_str
+
+    dfc["res"] = "NA"
+    for country_name in dfc[country_name_col].unique():
+        dfc.loc[dfc[country_name_col] == country_name, ["res"]] = _get_country_name_map(
+            country_name
+        )
+    return dfc["res"]
+
+
+def get_country_region_subregion(df: pd.DataFrame, country_name_col: str):
+    """Returns pd.Series with mapped country iso_a2 to names.
+
+    Args:
+        df (pd.Series): input country name pandas series
+    """
+    dfc = df.copy()
+
+    def _get_country_region_subregion_map(country_name: str) -> Tuple[str, str]:
+        """Helper function for get_country_name"""
+        try:
+            result = CountryInfo(country_name)
+            region_str = result.region()
+            subregion_str = result.subregion()
+        except:
+            region_str = "NA"
+            subregion_str = "NA"
+        return (region_str, subregion_str)
+
+    dfc[[country_name_col + "_region", country_name_col + "_subregion"]] = ("NA", "NA")
+    for country_name in dfc[country_name_col].unique():
+        dfc.loc[
+            dfc[country_name_col] == country_name,
+            [country_name_col + "_region", country_name_col + "_subregion"],
+        ] = _get_country_region_subregion_map(country_name)
+    return dfc[[country_name_col + "_region", country_name_col + "_subregion"]]

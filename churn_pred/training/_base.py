@@ -13,36 +13,29 @@ from sklearn.metrics import (
     classification_report,
     precision_recall_curve,
 )
-from data_preparation.base import BaseDataPreprocess
-from lightv.training.utils import (
+
+from churn_pred.training.utils import (
     predict_cls_lgbm_from_raw,
     predict_proba_lgbm_from_raw,
 )
-from lightv.training.losses import set_feval_fobj
-from lightv.training._params import set_base_params
-from lightv.training.metrics import aiqc, rmse, nacil
-from lightv.train_test_split._base import BaseTrainTestSplit
+from churn_pred.training._params import set_base_params
+from churn_pred.training.metrics import aiqc, rmse, nacil
+from churn_pred.preprocessing.preprocess import PreprocessData
 
 
 class Base(object):
     def __init__(
         self,
-        objective: Literal["binary", "multiclass", "regression", "quantile_regression"],
-        quantiles: Optional[List[float]] = None,
+        objective: Literal["binary", "multiclass", "regression"],
         n_class: Optional[int] = None,
-        loss: Optional[Literal["focal_loss"]] = None,
     ):
         """Base object with common parameters of `BaseTrainer` and `BaseOptimizer`.
 
         Args:
             objective (
-                Literal["binary", "multiclass", "regression", "quantile_regression"]
+                Literal["binary", "multiclass", "regression"]
                 ): type of task/objective
-            quantiles (list): list of quantiles for quantile regression
             n_class (int): number of classes in the dataset
-            loss (str): type of loss function to use
-                * 'None' - default for given task
-                * 'focal_loss' - focal loss
         """
         self.objective = objective
 
@@ -51,32 +44,14 @@ class Base(object):
             raise ValueError(
                 "n_class must be specified for target type in ['binary', 'multiclass'])"
             )
-        self.feval, self.fobj = set_feval_fobj(n_class=n_class, loss=loss)
-
-        if quantiles:
-            quantiles.sort()
-            if 0.5 not in quantiles:
-                warnings.warn(
-                    """
-                    Quantile 0.5 is not in quantiles and will be added.
-                    """
-                )
-                quantiles.append(0.5)
-        self.quantiles = quantiles
-        self.quantiles.sort()
+        self.feval, self.fobj = None, None
 
         self.base_params = set_base_params(
             objective=self.objective,
             feval=self.feval,
             fobj=self.fobj,
-            quantiles=self.quantiles,
-            quantiles_names=self._quantiles_to_str(),
             n_class=self.n_class,
         )
-
-    def _quantiles_to_str(self):
-        "Helper function to turn quantiles into column names in predictions"
-        return ["quantile_" + str(q).replace(".", "_") for q in self.quantiles]
 
 
 class BaseTrainer(Base):
@@ -85,12 +60,9 @@ class BaseTrainer(Base):
         cat_cols: List[str],
         target_col: str,
         id_cols: List[str],
-        objective: Literal["binary", "multiclass", "regression", "quantile_regression"],
-        groupby_cols: Optional[List[str]] = None,
-        quantiles: Optional[List[float]] = None,
+        objective: Literal["binary", "multiclass", "regression"],
         n_class: Optional[int] = None,
-        loss: Optional[Literal["focal_loss"]] = None,
-        preprocessors: Optional[List[Union[Any, BaseDataPreprocess]]] = None,
+        preprocessors: Optional[List[Union[Any, PreprocessData]]] = None,
     ):
         """Object that governs optimization, training and prediction of the lgbm model.
 
@@ -99,22 +71,16 @@ class BaseTrainer(Base):
             target_col (str): column name that represents target
             id_cols (list): identification column names
             objective (str): type of task/objective
-            groupby_cols: List[str]: group by columns for metric computation,
-                eg.user aquisition campaigns
-            loss (str): type of loss function to use
-                * 'None' - default for given task
-                * 'focal_loss' - focal loss
             n_class (int): number of classes in the dataset
-            preprocessors (List[Union[Any, BaseDataPreprocess]]):
+            preprocessors (List[Union[Any, PreprocessData]]):
                 ordered list of objects to preprocess dataset before optimization
                 and training
         """
-        super(BaseTrainer, self).__init__(objective, quantiles, n_class, loss)
+        super(BaseTrainer, self).__init__(objective, n_class)
 
         self.cat_cols = cat_cols
         self.target_col = target_col
         self.id_cols = id_cols
-        self.groupby_cols = groupby_cols
         self.model: Union[lgb.basic.Booster, dict, None] = None
         if preprocessors is not None:
             for prep in preprocessors:
@@ -141,14 +107,20 @@ class BaseTrainer(Base):
         """
         raise NotImplementedError("Trainer must implement a 'train' method")
 
-    def fit(self, df: pd.DataFrame, splitter: BaseTrainTestSplit) -> pd.DataFrame:
+    def fit(
+        self,
+        df_train: pd.DataFrame,
+        df_valid: pd.DataFrame,
+        df_test: pd.DataFrame,
+    ) -> pd.DataFrame:
         """Train the model and optimize the parameters.
 
         Args:
-            df (pd.DataFrame): fitting dataset
-            splitter (dict):
+            df_train (pd.DataFrame): training dataset
+            df_valid (pd.DataFrame): validation dataset
+            df_test (pd.DataFrame): testing dataset
         Returns:
-            model (lgb.basic.Booster): trained mdoel
+            model (lgb.basic.Booster): trained model
         """
         raise NotImplementedError("Trainer must implement a 'fit' method")
 
@@ -171,24 +143,15 @@ class BaseTrainer(Base):
                             inplace=True,
                         )
 
-        if self.objective == "quantile_regression":
-            preds_raw_list = []
-            for quantile in self.model:
-                preds_raw_temp = self.model[quantile].predict(
-                    df.drop(columns=self.id_cols), raw_score=raw_score
-                )
-                preds_raw_list.append(preds_raw_temp)
-            preds_raw = np.asarray(preds_raw_list).transpose()
-            cols_names = list(self.model)
+        preds_raw = self.model.predict(  # type: ignore
+            df.drop(columns=self.id_cols), raw_score=raw_score
+        )
+        if type(self.n_class) is int and self.n_class > 2:
+            n_class_list_str = list(map(str, range(self.n_class)))
+            cols_names = [self.target_col + "_" + cl for cl in n_class_list_str]
         else:
-            preds_raw = self.model.predict(  # type: ignore
-                df.drop(columns=self.id_cols), raw_score=raw_score
-            )
-            if type(self.n_class) is int and self.n_class > 2:
-                n_class_list_str = list(map(str, range(self.n_class)))
-                cols_names = [self.target_col + "_" + cl for cl in n_class_list_str]
-            else:
-                cols_names = [self.target_col]
+            cols_names = [self.target_col]
+
         return pd.DataFrame(data=preds_raw, columns=cols_names)
 
     def predict_proba(self, df: pd.DataFrame, binary2d: bool = False) -> pd.DataFrame:
@@ -250,7 +213,7 @@ class BaseTrainer(Base):
             df.drop(columns=self.id_cols), raw_score=True
         )
         preds_cls = predict_cls_lgbm_from_raw(
-            preds_raw=preds_raw,
+            preds_raw=preds_raw,  # type: ignore
             task=self.objective,  # type: ignore
         )
         return pd.DataFrame({self.target_col: preds_cls})
@@ -269,23 +232,9 @@ class BaseTrainer(Base):
         Returns:
             metrics_dict (dict): dictionary of computed evaluation metrics
         """
-        if self.groupby_cols:
-            per_group_metrics_dict = (
-                df.groupby(self.groupby_cols)
-                .apply(self._compute_metrics, with_dynamic_binary_threshold)
-                .to_dict()
-            )
-            overall_metrics_dict = self._compute_metrics(
-                df=df, with_dynamic_binary_threshold=with_dynamic_binary_threshold
-            )
-            metrics_dict = {
-                "per_group": per_group_metrics_dict,
-                "overall": overall_metrics_dict,
-            }
-        else:
-            metrics_dict = self._compute_metrics(
-                df=df, with_dynamic_binary_threshold=with_dynamic_binary_threshold
-            )
+        metrics_dict = self._compute_metrics(
+            df=df, with_dynamic_binary_threshold=with_dynamic_binary_threshold
+        )
         return metrics_dict
 
     def _compute_metrics(
@@ -312,30 +261,13 @@ class BaseTrainer(Base):
             preds = np.array([int(p > self.threshold) for p in preds_prob])
         elif self.objective == "multiclass":
             preds = self.predict_cls(df=df.drop(columns=[self.target_col]))
-        elif self.objective in ["regression", "quantile_regression"]:
+        elif self.objective == "regression":
             preds = self.predict(df=df.drop(columns=[self.target_col]), raw_score=True)
             metrics_dict["sample_count"] = len(df)
             metrics_dict["mean_target_col"] = df[self.target_col].mean()
-
-            if self.objective == "regression":
-                metrics_dict["rmse"] = rmse(labels, preds)
-                metrics_dict["mae"] = mean_absolute_error(labels, preds)
-                metrics_dict["r2"] = r2_score(labels, preds)
-            else:
-                quantiles_str = self._quantiles_to_str()
-                metrics_dict["rmse"] = rmse(labels, preds["quantile_0_5"])
-                metrics_dict["mae"] = mean_absolute_error(labels, preds["quantile_0_5"])
-                metrics_dict["r2"] = r2_score(labels, preds["quantile_0_5"])
-                metrics_dict["aiqc"] = aiqc(
-                    actual=labels,
-                    high_quantile=preds[quantiles_str[-1]],
-                    low_quantile=preds[quantiles_str[0]],
-                )
-                metrics_dict["nacil"] = nacil(
-                    actual=labels,
-                    high_quantile_predicted=preds[quantiles_str[-1]],
-                    low_quantile_predicted=preds[quantiles_str[0]],
-                )
+            metrics_dict["rmse"] = rmse(labels, preds)
+            metrics_dict["mae"] = mean_absolute_error(labels, preds)
+            metrics_dict["r2"] = r2_score(labels, preds)
 
         if self.objective in ["binary", "multiclass"]:
             metrics_dict["cls_report"] = classification_report(
@@ -379,28 +311,18 @@ class BaseTrainer(Base):
 class BaseOptimizer(Base):
     def __init__(
         self,
-        objective: Literal["binary", "multiclass", "regression", "quantile_regression"],
-        quantiles: Optional[List[float]] = None,
-        optimize_all_quantiles: Optional[bool] = False,
+        objective: Literal["binary", "multiclass", "regression"],
         n_class: Optional[int] = None,
-        loss: Optional[Literal["focal_loss"]] = None,
     ):
         """Base object to govern all tasks related to parameter optimization.
 
         Args:
             objective (
-                Literal["binary", "multiclass", "regression", "quantile_regression"]
+                Literal["binary", "multiclass", "regression"]
                 ): type of task/objective
-            quantiles (list): list of quantiles for quantile regression
-            optimize_all_quantiles (bool): whether to optimize each quantile or just 0.5
-                and copy the paramaters to other quantiles
             n_class (int): number of classes in the dataset
-            loss (str): type of loss function to use
-                * 'None' - default for given task
-                * 'focal_loss' - focal loss
         """
-        super(BaseOptimizer, self).__init__(objective, quantiles, n_class, loss)
-        self.optimize_all_quantiles = optimize_all_quantiles
+        super(BaseOptimizer, self).__init__(objective, n_class)
         self.best: Dict[str, Any] = {}  # Best hyper-parameters
 
     def optimize(self, dtrain: lgbDataset, deval: lgbDataset):

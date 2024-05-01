@@ -2,9 +2,9 @@ import numpy as np
 import pandas as pd
 import pytest
 import lightgbm as lgb
-from lightv.training.utils import (
+
+from churn_pred.training.utils import (
     to_lgbdataset,
-    get_feature_shap,
     get_feature_importance,
     predict_cls_lgbm_from_raw,
     predict_proba_lgbm_from_raw,
@@ -138,49 +138,3 @@ def test_predict_proba_lgbm_from_raw(preds_raw, task, binary2d):
 def test_predict_cls_lgbm_from_raw(preds_raw, task):
     preds = predict_cls_lgbm_from_raw(preds_raw=preds_raw, task=task)
     assert preds.size == 2
-
-
-@pytest.mark.parametrize(
-    "objective, n_class, lgbtrain, X",
-    [
-        ("regression", None, lgbtrain, lgbvalid.data.to_numpy()),
-        ("binary", 2, lgbtrain, lgbvalid.data.to_numpy()),
-        ("multiclass", 3, lgbtrain, lgbvalid_multi.data.to_numpy()),
-    ],
-)
-def test_get_feature_shap_and_importance(objective, n_class, lgbtrain, X):
-    if objective == "binary":
-        params = {
-            "objective": "binary",
-            "metric": "binary_logloss",
-            "verbose": -1,
-        }
-    elif objective == "multiclass":
-        params = {
-            "objective": "multiclass",
-            "metric": "multiclass",
-            "num_classes": n_class,
-            "verbose": -1,
-        }
-    elif objective == "regression":
-        params = {
-            "objective": "regression",
-            "metric": "regression",
-            "verbose": -1,
-        }
-    model = lgb.train(
-        params=params,
-        train_set=lgbtrain,
-    )
-    feature_shaps = get_feature_shap(
-        objective=objective,
-        model=model,
-        X=X,
-    )
-    feature_imps = get_feature_importance(model=model)
-    assert all(
-        [
-            list(feature_shaps.columns) == ["value", "feature"],
-            list(feature_imps.columns) == ["value", "feature"],
-        ]
-    )

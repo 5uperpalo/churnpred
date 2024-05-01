@@ -13,7 +13,21 @@ nav:
     - Home: index.md
     - Installation: installation.md
     - churn_pred:
-        - preprocess_data: churn_pred/preprocess_data.md
+        - code_profiling: churn_pred/code_profiling.md
+        - eda: churn_pred/eda.md
+        - preprocessing: churn_pred/preprocessing.md
+        - training: churn_pred/training.md
+    - notebooks:
+        - TBD_00_auxiliary_features_surname_origin_country_classification.ipynb: notebooks/00_auxiliary_features_surname_origin_country_classification.ipynb
+        - 00_auxiliary_features: notebooks/00_auxiliary_features.ipynb
+        - 01_feature_analysis: notebooks/01_feature_analysis.ipynb
+        - 02_target_analysis: notebooks/02_target_analysis.ipynb
+        - 03_models: notebooks/03_models.ipynb
+        - 04_model_training_pipeline: notebooks/04_model_training_pipeline.ipynb
+        - 05_model_analysis.ipynb: notebooks/05_model_analysis.ipynb.
+    - CICD: cicd.md
+    - Code profiling: code_profiling.md
+    - Contributing: contributing.md
 
 theme:
     logo: assets/images/ecovadis_green_logo.png

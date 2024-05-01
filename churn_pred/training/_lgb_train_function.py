@@ -4,16 +4,13 @@ from typing import Callable, Optional
 
 import lightgbm as lgb
 from lightgbm import Dataset as lgbDataset
-from lightv.training._params import set_params_to_int
-from ray.tune.integration.lightgbm import TuneReportCallback
+
+from churn_pred.training._params import set_params_to_int
 
 
 def lgb_train_function(
     config: Optional[dict],
     feval: Callable,
-    fobj: Callable,
-    with_tune: bool,
-    TuneCallback_dict: Optional[dict],
     lgbtrain: lgbDataset,
     lgbeval: Optional[lgbDataset] = None,
     early_stopping_rounds: int = 20,
@@ -24,9 +21,6 @@ def lgb_train_function(
         config (dict): dictionary of config paramater search spaces
         feval (FunctionType): evaluation function
         fobj (FunctionType): objective function
-        with_tune (bool): if the training function is used with RayTune
-        TuneCallback_dict (dict): dictionary of metrics reported from
-            LighGBM back to RayTune through TuneReportCheckpointCallback
         lgbtrain (lgbDataset): LightGBM training dataset
         lgbeval (lgbDataset): LightGBM validation dataset
         early_stopping_rounds (int): training early stopping rounds
@@ -38,14 +32,11 @@ def lgb_train_function(
     lgbtrain_copy = deepcopy(lgbtrain)
     lgbeval_copy = deepcopy(lgbeval) if lgbeval is not None else None
 
-    if with_tune:
-        callbacks = [TuneReportCallback(TuneCallback_dict)]
-    else:
-        callbacks = (
-            [lgb.early_stopping(stopping_rounds=early_stopping_rounds)]
-            if lgbeval is not None
-            else None
-        )
+    callbacks = (
+        [lgb.early_stopping(stopping_rounds=early_stopping_rounds)]
+        if lgbeval is not None
+        else None
+    )
 
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
@@ -55,7 +46,6 @@ def lgb_train_function(
             valid_sets=[lgbeval_copy] if lgbeval is not None else None,
             valid_names=["val"] if lgbeval is not None else None,
             feval=feval,
-            fobj=fobj,
-            callbacks=callbacks,
+            callbacks=callbacks,  # type: ignore
         )
     return model

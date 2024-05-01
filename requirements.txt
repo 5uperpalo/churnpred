@@ -7,8 +7,20 @@ transformers
 spacy-cleaner
 # https://spacy.io/usage/models#production
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
-sqlalchemy
+spacy_fastlang
 modin
 plotly
 seaborn
+names_dataset
+countryinfo
+h2o
+lightgbm
+sklearn_pandas
+optuna
+shap
+optuna_integration
 mypy
+black[jupyter]
+memory_profiler
+pytest-cov
+codecov

@@ -1,6 +1,7 @@
 from typing import Literal
 
 import spacy
+import torch
 import pandas as pd
 import spacy_cleaner
 import spacy_fastlang
@@ -78,33 +79,53 @@ def text_cleaning(df: pd.DataFrame, text_col: str) -> pd.DataFrame:
     return dfc
 
 
-def sentiment_analysis(df: pd.DataFrame, text_col: str) -> pd.DataFrame:
+def sentiment_analysis(
+    df: pd.DataFrame, text_col: str, sentiment_depth: Literal[3, 5] = 3
+) -> pd.DataFrame:
     """
     Returns dataframe with new column that analysis sentintent in the text_col.
+
+    initial idea:
     Inspired by https://www.nature.com/articles/s41598-024-60210-7 I also used
     the 3 most popular models with voting:
-    * https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest
-    * https://huggingface.co/nlptown/bert-base-multilingual-uncased-sentiment
-    * https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis
+    1. cardiffnlp/twitter-roberta-base-sentiment-latest
+    2. nlptown/bert-base-multilingual-uncased-sentiment
+    3. mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis
+    4. lxyuan/distilbert-base-multilingual-cased-sentiments-student
+    5. finiteautomata/bertweet-base-sentiment-analysis
+
+    issues:
+    1. 3(pos, neutral, neg) vs 5(1-5 stars) sentiments; models 1,3 vs 2
+    2. maximum sequence length models 4-5
+
+    final idea:
+    Either 3 sentimnets(model 1) or 5 stars (model 2)
 
     Args:
         df (pd.DataFrame): input dataset
-        text_col: column name with text
+        text_col (str): column name with text
+        sentiment_depth ([3, 5]): depth of sentiment analysis
     """
     dfc = df.copy()
-    pipe = pipeline(
-        "text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
+    if sentiment_depth == 3:
+        pipe = pipeline(
+            "text-classification",
+            model="cardiffnlp/twitter-roberta-base-sentiment-latest",
+            device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+        )
+    elif sentiment_depth == 5:
+        pipe = pipeline(
+            "text-classification",
+            model="nlptown/bert-base-multilingual-uncased-sentiment",
+            device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+        )
+    else:
+        raise NotImplementedError
+    res = pipe(dfc[text_col].astype(str).to_list())
+    res = pd.DataFrame(res).rename(
+        columns={
+            "label": text_col + "_sentiment",
+            "score": text_col + "_sentiment_score",
+        }
     )
-    dfc[text_col + "_sentiment_0"] = pipe(dfc[text_col].astype(str))
-    pipe = pipeline(
-        "text-classification", model="nlptown/bert-base-multilingual-uncased-sentiment"
-    )
-    dfc[text_col + "_sentiment_1"] = pipe(dfc[text_col].astype(str))
-    pipe = pipeline(
-        "text-classification",
-        model="mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis",
-    )
-    dfc[text_col + "_sentiment_2"] = pipe(dfc[text_col].astype(str))
-    # dfc.mode(axis=0, numeric_only=False, dropna=True)
-    # dfc[text_col + "_sentiment"] = pipe(dfc[text_col].astype(str))
-    return dfc
+    return pd.concat([dfc, res], axis=1)

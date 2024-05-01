@@ -16,7 +16,7 @@ Untitled*.ipynb
 *.sublime-workspace
 
 # data related dirs
-data/
+# data/
 
 # Unit Tests/Coverage
 .coverage

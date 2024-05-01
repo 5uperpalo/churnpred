@@ -107,7 +107,7 @@ class LabelEncoder(object):
 
         Examples:
             >>> import pandas as pd
-            >>> from data_preparation.label_encoder import LabelEncoder
+            >>> from churn_pred.preprocessing.label_encoder import LabelEncoder
             >>> df = pd.DataFrame({'col1': [1,2,3], 'col2': ['me', 'you', 'him']})
             >>> columns_to_encode = ['col2']
             >>> encoder = LabelEncoder(columns_to_encode)
@@ -129,7 +129,7 @@ class LabelEncoder(object):
 
         Examples:
             >>> import pandas as pd
-            >>> from data_preparation.label_encoder import LabelEncoder
+            >>> from churn_pred.preprocessing.label_encoder import LabelEncoder
             >>> df = pd.DataFrame({'col1': [1,2,3], 'col2': ['me', 'you', 'him']})
             >>> columns_to_encode = ['col2']
             >>> encoder = LabelEncoder(columns_to_encode)

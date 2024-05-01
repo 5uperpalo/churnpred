@@ -1,12 +1,13 @@
 from typing import Any, Dict, List, Union, Literal, Optional
 
 import pandas as pd
-from lightv.general_utils import intsec
-from data_preparation.base import BaseDataPreprocess
-from lightv.training._base import BaseTrainer, BaseOptimizer
-from lightv.training.utils import to_lgbdataset
-from lightv.train_test_split._base import BaseTrainTestSplit
-from lightv.training._lgb_train_function import lgb_train_function
+from sklearn.model_selection import train_test_split
+
+from churn_pred.utils import intsec
+from churn_pred.training._base import BaseTrainer, BaseOptimizer
+from churn_pred.training.utils import to_lgbdataset
+from churn_pred.preprocessing.preprocess import PreprocessData
+from churn_pred.training._lgb_train_function import lgb_train_function
 
 
 class Trainer(BaseTrainer):
@@ -15,13 +16,10 @@ class Trainer(BaseTrainer):
         cat_cols: List[str],
         target_col: str,
         id_cols: List[str],
-        objective: Literal["binary", "multiclass", "regression", "quantile_regression"],
-        groupby_cols: Optional[List[str]] = None,
-        quantiles: Optional[List[float]] = None,
-        loss: Optional[Literal["focal_loss"]] = None,
-        n_class: Optional[int] = None,
+        objective: Literal["binary"],
         optimizer: Union[Any, BaseOptimizer, None] = None,
-        preprocessors: Optional[List[Union[Any, BaseDataPreprocess]]] = None,
+        n_class: Optional[int] = None,
+        preprocessors: Optional[List[Union[Any, PreprocessData]]] = None,
     ):
         """Objects that governs training and parameter optimization of the lgbm model.
 
@@ -30,27 +28,15 @@ class Trainer(BaseTrainer):
             target_col (str): column name that represents target
             id_cols (list): identification column names
             objective (str): type of the task/objective
-            groupby_cols: List[str]: group by columns for metric computation,
-                eg.user aquisition campaigns
-            loss (str): type of loss function to use
-                * 'None' - default for given task
-                * 'focal_loss' - focal loss
-            n_class (int): number of classes in the dataset
             optimizer (BaseOptimizer): parameter optimizer object
-            preprocessors (List[Union[Any, BaseDataPreprocess]]):
-                ordered list of objects to preprocess dataset before optimization
-                and training
         """
         super(Trainer, self).__init__(
-            cat_cols,
-            target_col,
-            id_cols,
-            objective,
-            groupby_cols,
-            quantiles,
-            n_class,
-            loss,
-            preprocessors,
+            cat_cols=cat_cols,
+            target_col=target_col,
+            id_cols=id_cols,
+            objective=objective,
+            n_class=n_class,
+            preprocessors=preprocessors,
         )
         if optimizer is not None:
             if not hasattr(optimizer, "optimize"):
@@ -82,18 +68,14 @@ class Trainer(BaseTrainer):
                     if df_valid is not None
                     else None
                 )
-            if self.objective in ["binary", "multiclass"]:
+            if self.objective in ["binary"]:
                 df_train_prep[self.target_col] = df_train[self.target_col].astype(int)
                 if df_valid is not None:
                     df_valid_prep[self.target_col] = df_valid[self.target_col].astype(
                         int
                     )
             else:
-                df_train_prep[self.target_col] = df_train[self.target_col].astype(float)
-                if df_valid is not None:
-                    df_valid_prep[self.target_col] = df_valid[self.target_col].astype(
-                        float
-                    )
+                raise NotImplementedError
         else:
             df_train_prep = df_train.copy()
             df_valid_prep = df_valid.copy() if df_valid is not None else None
@@ -126,58 +108,39 @@ class Trainer(BaseTrainer):
             valid=df_valid_prep,
         )
 
-        if self.objective == "quantile_regression":
-            self.model = {}
-            for quantile in config:
-                self.model[quantile] = lgb_train_function(
-                    config=config[quantile],
-                    lgbtrain=lgb_train,
-                    lgbeval=lgb_valid,
-                    feval=self.feval,
-                    fobj=self.fobj,
-                    with_tune=False,
-                    TuneCallback_dict=None,
-                )
-        else:
-            self.model = lgb_train_function(
-                config=config,
-                lgbtrain=lgb_train,
-                lgbeval=lgb_valid,
-                feval=self.feval,
-                fobj=self.fobj,
-                with_tune=False,
-                TuneCallback_dict=None,
-            )
+        self.model = lgb_train_function(
+            config=config,
+            lgbtrain=lgb_train,
+            lgbeval=lgb_valid,
+            feval=self.feval,
+        )
 
     def fit(
         self,
-        df: pd.DataFrame,
-        splitter: Union[Any, BaseTrainTestSplit],
+        df_train: pd.DataFrame,
+        df_valid: pd.DataFrame,
+        df_test: pd.DataFrame,
     ) -> pd.DataFrame:
         """Train the model and optimize the parameters.
 
         Args:
-            df (pd.DataFrame): fitting dataset
-            splitter (dict):
+            df_train (pd.DataFrame): training dataset
+            df_valid (pd.DataFrame): validation dataset
+            df_test (pd.DataFrame): testing dataset
         Returns:
-            model (lgb.basic.Booster): trained mdoel
+            model (lgb.basic.Booster): trained model
         """
-        if not hasattr(splitter, "split"):
-            raise AttributeError(
-                "{} splitter must have {} method".format(splitter, "split")
-            )
-        df_train, df_valid, df_test = splitter.split(df)
-
         if self.preprocessors:
+            # this should be
+            # df_train_prep = prep.transform(df_train_prep.drop(columns=[self.target_col]))
             for prep in self.preprocessors:
                 df_train_prep = prep.transform(df_train.drop(columns=[self.target_col]))
                 df_valid_prep = prep.transform(df_valid.drop(columns=[self.target_col]))
-            if self.objective in ["binary", "multiclass"]:
+            if self.objective in ["binary"]:
                 df_train_prep[self.target_col] = df_train[self.target_col].astype(int)
                 df_valid_prep[self.target_col] = df_valid[self.target_col].astype(int)
             else:
-                df_train_prep[self.target_col] = df_train[self.target_col].astype(float)
-                df_valid_prep[self.target_col] = df_valid[self.target_col].astype(float)
+                raise NotImplementedError
         else:
             df_train_prep = df_train.copy()
             df_valid_prep = df_valid.copy()

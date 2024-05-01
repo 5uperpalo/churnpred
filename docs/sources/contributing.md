@@ -3,7 +3,7 @@ Before making a pushing a code and making a pull request please run codestyle ch
 
 ```bash
 ./code_style.sh
-pytest --doctest-modules eda --cov-report xml --cov-report term --disable-pytest-warnings --cov=eda tests/
+pytest --doctest-modules churn_pred --cov-report xml --cov-report term --disable-pytest-warnings --cov=eda tests/
 ```
 
 # Documentation

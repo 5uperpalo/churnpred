@@ -2,23 +2,17 @@ import os
 from typing import List, Tuple, Optional
 
 import numpy as np
-
-if os.environ.get("USE_MODIN") == "True":
-    import modin.pandas as pd
-else:
-    import pandas as pd
-
+import pandas as pd
 from sklearn.exceptions import NotFittedError
 
+from churn_pred.utils import intsec
 from churn_pred.preprocessing.label_encoder import LabelEncoder
 from churn_pred.preprocessing.preprocess_data import (
-    booleans_to_str,
     drop_constant_cols,
     drop_high_nan_cols,
     nan_with_number_imputer,
     nan_with_unknown_imputer,
     drop_highly_correlated_columns,
-    pandas_types_to_standard_types,
 )
 
 
@@ -26,6 +20,7 @@ class PreprocessData:
     """Object to preprocess the dataset.
     Args:
         target_col (str): target column name
+        id_cols (List[str]): id columns
         cat_cols (Optional[List[str]]): list of categorical column names
         cont_cols (Optional[List[str]]): list of continuous column names
     """
@@ -33,10 +28,12 @@ class PreprocessData:
     def __init__(
         self,
         target_col: str,
+        id_cols: str,
         cat_cols: Optional[List[str]] = None,
         cont_cols: Optional[List[str]] = None,
     ):
         self.target_col = target_col
+        self.id_cols = id_cols
         self.cat_cols = cat_cols
         self.cont_cols = cont_cols
 
@@ -45,17 +42,14 @@ class PreprocessData:
     def fit_transform(self, df: pd.DataFrame) -> pd.DataFrame:
         """Fit peprocessor and transform dataset in training step."""
 
-        dfc = df.copy()
+        dfc = df.drop(columns=self.id_cols).copy()
 
-        dfc = (
-            dfc.pipe(drop_constant_cols)
-            .pipe(pandas_types_to_standard_types)
-            .pipe(booleans_to_str)
-        )
+        dfc = dfc.pipe(drop_constant_cols)
+
+        self.cat_cols = intsec(list(dfc), self.cat_cols)
 
         if self.cat_cols is None:
             self.cat_cols = self._infere_cat_cols(dfc)
-            # related to https://app.shortcut.com/assetario/story/4714/pltv-gmls-keyerror-issue
             dfc_cat_cols = drop_high_nan_cols(dfc[self.cat_cols])
             dfc = dfc.drop(columns=self.cat_cols)
             dfc = pd.concat([dfc, dfc_cat_cols], axis=1)
@@ -93,6 +87,8 @@ class PreprocessData:
 
         dfc_le = self._change_int_float_types(dfc_le)
 
+        dfc_le[self.id_cols] = df[self.id_cols]
+
         self.is_fitted = True
 
         return dfc_le
@@ -106,14 +102,12 @@ class PreprocessData:
                 Please, run 'fit' first"""
             )
 
-        dfc = df.copy()
+        dfc = df.drop(columns=self.id_cols).copy()
 
         try:
             dfc = dfc[self.cat_cols + self.final_cont_cols + [self.target_col]]
         except KeyError:
             dfc = dfc[self.cat_cols + self.final_cont_cols]
-
-        dfc = dfc.pipe(pandas_types_to_standard_types).pipe(booleans_to_str)
 
         # dfc = dfc.replace(self.replace_rare_categories_dict)
 
@@ -128,6 +122,8 @@ class PreprocessData:
         dfc_le = self.label_encoder.transform(dfc)
 
         dfc_le = self._change_int_float_types(dfc_le)
+
+        dfc_le[self.id_cols] = df[self.id_cols]
 
         return dfc_le
 
@@ -151,7 +147,7 @@ class PreprocessData:
 
     def _infere_cat_cols(self, df: pd.DataFrame):
         """Guess the categorical columns by excluding clearly continuous
-        columns - int, float, and ignore,target_col."""
+        columns - int, float"""
 
         cat_cols = []
         for col in df.columns:
@@ -167,20 +163,16 @@ class PreprocessData:
         self, df: pd.DataFrame, cat_cols: Optional[List[str]]
     ):  # noqa
         """Guess the continuous columns by excluding clearly categorical,
-        ignore and target_col and including only int or float."""
+        and target_col and including only int or float."""
 
         if cat_cols is not None:
-            cont_cols = [
-                c
-                for c in df.columns
-                if c not in cat_cols [self.target_col]
-            ]
+            cont_cols = [c for c in df.columns if c not in cat_cols + [self.target_col]]
         else:
             cont_cols = []
             for col in df.columns:
-                if (
-                    df[col].dtype == "int" or df[col].dtype == "float"
-                ) and col not in [self.target_col]:
+                if (df[col].dtype == "int" or df[col].dtype == "float") and col not in [
+                    self.target_col
+                ]:
                     cont_cols.append(col)
 
         return cont_cols

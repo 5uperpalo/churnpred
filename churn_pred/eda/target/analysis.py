@@ -2,8 +2,9 @@ from typing import Tuple, Literal
 
 import pandas as pd
 import matplotlib.pyplot as plt
-from eda.plotting import bar_plot
 from matplotlib.figure import Figure
+
+from churn_pred.eda.plotting import bar_plot
 
 
 def correlation(

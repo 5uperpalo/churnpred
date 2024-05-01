@@ -19,3 +19,18 @@ NumberOfProducts - the number of accounts and bank-affiliated products
 HasCreditCard - whether a customer has a credit card
 CustomerFeedback - latest customer feedback, if available
 ```
+
+## Solution
+
+Please see the Notebooks section. The notebooks are sroted from 0 to 5. Notebooks start with gathereing auxiliary data that I could extract from the provided dataset, e.g. 'country origin of the surname'. This is followed by Exploratory Data Analysis of features and targety in notebooks 2,3. In notebook 4 I presented a Trainer object that handles training an hyperparameter search of the model and in notebook 5 I made a quick analysis of the model and it's predictions using SHAP values.
+
+The final solution uses LightGBM a GBM model of my choice. I chose GBM as 4 out of top 5 models in H2O AutoML were GBMs.
+
+
+### Additional work note mentioning
+
+In notebook 00_auxiliary_features_surname_origin_country_classification.ipynb I adjusted/implemented transformer for surname origin prediction. Due to lack of time I could not gather additional data that would help with model training, but I left some ideas in the notebook.
+
+The solution was tested on a virtual machine spawned from `jupyter/datascience-notebook:python-3.10` image in Zero-to-JupyterHub solution. As the bare metal server with GPU was down in the kubernetes, I had to do additional troubleshooting and fixing.
+
+The code is easily extendable to multiclass, regression and quantile regression tasks.
