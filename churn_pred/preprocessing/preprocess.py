@@ -104,6 +104,10 @@ class PreprocessData:
 
         dfc = df.drop(columns=self.id_cols).copy()
 
+        # added as mlflow inference is receiving all the data as objects
+        dfc[self.cat_cols] = dfc[self.cat_cols].astype(str)
+        dfc[self.final_cont_cols] = dfc[self.final_cont_cols].astype(float)
+
         try:
             dfc = dfc[self.cat_cols + self.final_cont_cols + [self.target_col]]
         except KeyError:

@@ -1,9 +1,48 @@
 from typing import List, Tuple, Literal, Optional
+from collections.abc import MutableMapping
 
 import numpy as np
+import mlflow
 import pandas as pd
 import lightgbm as lgb
 from lightgbm import Dataset as lgbDataset
+
+
+def flatten_dict(
+    d: MutableMapping, parent_key: str = "", sep: str = "_"
+) -> MutableMapping:
+    """
+    fastest according to https://www.freecodecamp.org/news/how-to-flatten-a-dictionary-in-python-in-4-different-ways/
+    """
+    items = []
+    for k, v in d.items():
+        new_key = parent_key + sep + k if parent_key else k
+        if isinstance(v, MutableMapping):
+            items.extend(flatten_dict(v, new_key, sep=sep).items())
+        else:
+            items.append((new_key, v))
+    return dict(items)
+
+
+def get_or_create_experiment(experiment_name):
+    """
+    Retrieve the ID of an existing MLflow experiment or create a new one if it doesn't exist.
+
+    This function checks if an experiment with the given name exists within MLflow.
+    If it does, the function returns its ID. If not, it creates a new experiment
+    with the provided name and returns its ID.
+
+    Parameters:
+    - experiment_name (str): Name of the MLflow experiment.
+
+    Returns:
+    - str: ID of the existing or newly created MLflow experiment.
+    """
+
+    if experiment := mlflow.get_experiment_by_name(experiment_name):
+        return experiment.experiment_id
+    else:
+        return mlflow.create_experiment(experiment_name)
 
 
 def to_lgbdataset(

@@ -2,6 +2,7 @@ import warnings
 from typing import Any, Dict, List, Tuple, Union, Literal, Callable, Optional
 
 import numpy as np
+import mlflow
 import pandas as pd
 import lightgbm as lgb
 from lightgbm import Dataset as lgbDataset
@@ -54,7 +55,7 @@ class Base(object):
         )
 
 
-class BaseTrainer(Base):
+class BaseTrainer(Base, mlflow.pyfunc.PythonModel):
     def __init__(
         self,
         cat_cols: List[str],
@@ -124,15 +125,22 @@ class BaseTrainer(Base):
         """
         raise NotImplementedError("Trainer must implement a 'fit' method")
 
-    def predict(self, df: pd.DataFrame, raw_score: bool = True) -> pd.DataFrame:
+    def predict(
+        self, context: Optional[dict], df: pd.DataFrame, raw_score: bool = True
+    ) -> pd.DataFrame:
         """Predict.
 
         Args:
             df (pd.DataFrame): dataset
             raw_score (bool): whether to return raw output
+            context (dict): for compatibility with mlflow model methods
         Returns:
             preds_raw (np.ndarray):
         """
+        # for mlflow inference service testing
+        if type(df) is dict:
+            df = pd.DataFrame.from_dict(df, orient="index").transpose()
+
         if self.preprocessors:
             for prep in self.preprocessors:
                 df = prep.transform(df)

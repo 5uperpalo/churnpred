@@ -25,3 +25,5 @@ memory_profiler
 pytest-cov
 codecov
 dill
+mlflow
+boto3
