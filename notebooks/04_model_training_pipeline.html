@@ -1398,6 +1398,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">".."</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
 
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">"display.max_columns"</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">"display.max_rows"</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
@@ -1409,6 +1410,7 @@ sys.path.append(os.getcwd())
 os.chdir("..")
 
 import pandas as pd
+import mlflow
 
 pd.set_option("display.max_columns", 200)
 pd.set_option("display.max_rows", 300)</div>
@@ -1444,11 +1446,11 @@ pd.set_option("display.max_rows", 300)</div>
 <span class="kn">from</span> <span class="nn">churn_pred.preprocessing.preprocess</span> <span class="kn">import</span> <span class="n">PreprocessData</span>
 <span class="kn">from</span> <span class="nn">churn_pred.training.trainer</span> <span class="kn">import</span> <span class="n">Trainer</span>
 <span class="kn">from</span> <span class="nn">churn_pred.training.optuna_optimizer</span> <span class="kn">import</span> <span class="n">LGBOptunaOptimizer</span>
+<span class="kn">from</span> <span class="nn">churn_pred.training.utils</span> <span class="kn">import</span> <span class="n">flatten_dict</span><span class="p">,</span> <span class="n">get_or_create_experiment</span>
 
 <span class="kn">import</span> <span class="nn">dill</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">churn_pred.utils</span> <span class="kn">import</span> <span class="n">dill_dump</span>
-<span class="kn">from</span> <span class="nn">churn_pred.utils</span> <span class="kn">import</span> <span class="n">dill_load</span>
+<span class="kn">from</span> <span class="nn">churn_pred.utils</span> <span class="kn">import</span> <span class="n">dill_dump</span><span class="p">,</span> <span class="n">dill_load</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
@@ -1461,11 +1463,11 @@ import pandas as pd
 from churn_pred.preprocessing.preprocess import PreprocessData
 from churn_pred.training.trainer import Trainer
 from churn_pred.training.optuna_optimizer import LGBOptunaOptimizer
+from churn_pred.training.utils import flatten_dict, get_or_create_experiment
 
 import dill
 import numpy as np
-from churn_pred.utils import dill_dump
-from churn_pred.utils import dill_load
+from churn_pred.utils import dill_dump, dill_load
 from sklearn.model_selection import train_test_split
 
 from pprint import pprint</div>
@@ -1997,7 +1999,7 @@ metrics_dict = trainer.fit(
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[I 2024-05-01 21:23:45,400] A new study created in memory with name: no-name-d630027d-067f-416b-b1eb-7c87a894bc0a
+<pre>[I 2024-05-17 10:13:50,499] A new study created in memory with name: no-name-fa589f64-d8f0-4cbb-b929-f47ba65e30cf
 feature_fraction, val_score: inf:   0%|          | 0/7 [00:00&lt;?, ?it/s]</pre>
 </div>
 </div>
@@ -2011,15 +2013,15 @@ feature_fraction, val_score: inf:   0%|          | 0/7 [00:00&lt;?, ?it/s]</pre>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction, val_score: 0.379844:  14%|#4        | 1/7 [00:07&lt;00:43,  7.21s/it][I 2024-05-01 21:23:52,617] Trial 0 finished with value: 0.37984401975406856 and parameters: {'feature_fraction': 0.7}. Best is trial 0 with value: 0.37984401975406856.
-feature_fraction, val_score: 0.379844:  14%|#4        | 1/7 [00:07&lt;00:43,  7.21s/it]</pre>
+<pre>feature_fraction, val_score: 0.384886:  14%|#4        | 1/7 [00:03&lt;00:18,  3.09s/it][I 2024-05-17 10:13:53,604] Trial 0 finished with value: 0.3848856550710792 and parameters: {'feature_fraction': 0.5}. Best is trial 0 with value: 0.3848856550710792.
+feature_fraction, val_score: 0.384886:  14%|#4        | 1/7 [00:03&lt;00:18,  3.09s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[163]	valid_0's binary_logloss: 0.379844
+[256]	valid_0's binary_logloss: 0.384886
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2027,15 +2029,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction, val_score: 0.379844:  29%|##8       | 2/7 [00:09&lt;00:21,  4.27s/it][I 2024-05-01 21:23:54,829] Trial 1 finished with value: 0.38409999598941535 and parameters: {'feature_fraction': 0.5}. Best is trial 0 with value: 0.37984401975406856.
-feature_fraction, val_score: 0.379844:  29%|##8       | 2/7 [00:09&lt;00:21,  4.27s/it]</pre>
+<pre>feature_fraction, val_score: 0.384886:  29%|##8       | 2/7 [00:09&lt;00:24,  4.93s/it][I 2024-05-17 10:13:59,819] Trial 1 finished with value: 0.38876581289974715 and parameters: {'feature_fraction': 0.4}. Best is trial 0 with value: 0.3848856550710792.
+feature_fraction, val_score: 0.384886:  29%|##8       | 2/7 [00:09&lt;00:24,  4.93s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[234]	valid_0's binary_logloss: 0.3841
+[203]	valid_0's binary_logloss: 0.388766
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2043,15 +2045,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction, val_score: 0.379844:  43%|####2     | 3/7 [00:11&lt;00:12,  3.15s/it][I 2024-05-01 21:23:56,638] Trial 2 finished with value: 0.3823353357777058 and parameters: {'feature_fraction': 0.6}. Best is trial 0 with value: 0.37984401975406856.
-feature_fraction, val_score: 0.379844:  43%|####2     | 3/7 [00:11&lt;00:12,  3.15s/it]</pre>
+<pre>feature_fraction, val_score: 0.384886:  43%|####2     | 3/7 [00:10&lt;00:13,  3.45s/it][I 2024-05-17 10:14:01,500] Trial 2 finished with value: 0.3871060537924552 and parameters: {'feature_fraction': 0.6}. Best is trial 0 with value: 0.3848856550710792.
+feature_fraction, val_score: 0.384886:  43%|####2     | 3/7 [00:10&lt;00:13,  3.45s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[183]	valid_0's binary_logloss: 0.382335
+[136]	valid_0's binary_logloss: 0.387106
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2059,15 +2061,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction, val_score: 0.379844:  57%|#####7    | 4/7 [00:13&lt;00:07,  2.62s/it][I 2024-05-01 21:23:58,444] Trial 3 finished with value: 0.3853827423103823 and parameters: {'feature_fraction': 0.8999999999999999}. Best is trial 0 with value: 0.37984401975406856.
-feature_fraction, val_score: 0.379844:  57%|#####7    | 4/7 [00:13&lt;00:07,  2.62s/it]</pre>
+<pre>feature_fraction, val_score: 0.376373:  57%|#####7    | 4/7 [00:13&lt;00:08,  2.95s/it][I 2024-05-17 10:14:03,700] Trial 3 finished with value: 0.37637252943396876 and parameters: {'feature_fraction': 0.8}. Best is trial 3 with value: 0.37637252943396876.
+feature_fraction, val_score: 0.376373:  57%|#####7    | 4/7 [00:13&lt;00:08,  2.95s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[174]	valid_0's binary_logloss: 0.385383
+[182]	valid_0's binary_logloss: 0.376373
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2075,15 +2077,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction, val_score: 0.379844:  71%|#######1  | 5/7 [00:14&lt;00:04,  2.32s/it][I 2024-05-01 21:24:00,240] Trial 4 finished with value: 0.38473704277343407 and parameters: {'feature_fraction': 0.4}. Best is trial 0 with value: 0.37984401975406856.
-feature_fraction, val_score: 0.379844:  71%|#######1  | 5/7 [00:14&lt;00:04,  2.32s/it]</pre>
+<pre>feature_fraction, val_score: 0.376373:  71%|#######1  | 5/7 [00:18&lt;00:07,  3.70s/it][I 2024-05-17 10:14:08,731] Trial 4 finished with value: 0.38580891587959387 and parameters: {'feature_fraction': 1.0}. Best is trial 3 with value: 0.37637252943396876.
+feature_fraction, val_score: 0.376373:  71%|#######1  | 5/7 [00:18&lt;00:07,  3.70s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[227]	valid_0's binary_logloss: 0.384737
+[196]	valid_0's binary_logloss: 0.385809
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2091,15 +2093,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction, val_score: 0.379844:  86%|########5 | 6/7 [00:16&lt;00:02,  2.21s/it][I 2024-05-01 21:24:02,245] Trial 5 finished with value: 0.3882168120094672 and parameters: {'feature_fraction': 0.8}. Best is trial 0 with value: 0.37984401975406856.
-feature_fraction, val_score: 0.379844:  86%|########5 | 6/7 [00:16&lt;00:02,  2.21s/it]</pre>
+<pre>feature_fraction, val_score: 0.376373:  86%|########5 | 6/7 [00:20&lt;00:03,  3.13s/it][I 2024-05-17 10:14:10,735] Trial 5 finished with value: 0.38034803511400994 and parameters: {'feature_fraction': 0.7}. Best is trial 3 with value: 0.37637252943396876.
+feature_fraction, val_score: 0.376373:  86%|########5 | 6/7 [00:20&lt;00:03,  3.13s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[209]	valid_0's binary_logloss: 0.388217
+[178]	valid_0's binary_logloss: 0.380348
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2107,8 +2109,8 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction, val_score: 0.379844: 100%|##########| 7/7 [00:17&lt;00:00,  1.68s/it][I 2024-05-01 21:24:02,840] Trial 6 finished with value: 0.410300061224442 and parameters: {'feature_fraction': 1.0}. Best is trial 0 with value: 0.37984401975406856.
-feature_fraction, val_score: 0.379844: 100%|##########| 7/7 [00:17&lt;00:00,  2.49s/it]
+<pre>feature_fraction, val_score: 0.376373: 100%|##########| 7/7 [00:25&lt;00:00,  3.83s/it][I 2024-05-17 10:14:16,006] Trial 6 finished with value: 0.38397832605349824 and parameters: {'feature_fraction': 0.8999999999999999}. Best is trial 3 with value: 0.37637252943396876.
+feature_fraction, val_score: 0.376373: 100%|##########| 7/7 [00:25&lt;00:00,  3.64s/it]
 </pre>
 </div>
 </div>
@@ -2116,14 +2118,14 @@ feature_fraction, val_score: 0.379844: 100%|##########| 7/7 [00:17&lt;00:00,  2.
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[10]	valid_0's binary_logloss: 0.4103
+[166]	valid_0's binary_logloss: 0.383978
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.379844:   0%|          | 0/20 [00:00&lt;?, ?it/s]</pre>
+<pre>num_leaves, val_score: 0.376373:   0%|          | 0/20 [00:00&lt;?, ?it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2136,15 +2138,15 @@ feature_fraction, val_score: 0.379844: 100%|##########| 7/7 [00:17&lt;00:00,  2.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.373154:   5%|5         | 1/20 [00:06&lt;01:59,  6.27s/it][I 2024-05-01 21:24:09,119] Trial 7 finished with value: 0.3731542988236144 and parameters: {'num_leaves': 89}. Best is trial 7 with value: 0.3731542988236144.
-num_leaves, val_score: 0.373154:   5%|5         | 1/20 [00:06&lt;01:59,  6.27s/it]</pre>
+<pre>num_leaves, val_score: 0.376373:   5%|5         | 1/20 [00:02&lt;00:51,  2.69s/it][I 2024-05-17 10:14:18,709] Trial 7 finished with value: 0.38099924239489236 and parameters: {'num_leaves': 176}. Best is trial 7 with value: 0.38099924239489236.
+num_leaves, val_score: 0.376373:   5%|5         | 1/20 [00:02&lt;00:51,  2.69s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[86]	valid_0's binary_logloss: 0.373154
+[28]	valid_0's binary_logloss: 0.380999
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2152,15 +2154,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.373154:  10%|#         | 2/20 [00:08&lt;01:08,  3.83s/it][I 2024-05-01 21:24:11,231] Trial 8 finished with value: 0.3787072948288647 and parameters: {'num_leaves': 34}. Best is trial 7 with value: 0.3731542988236144.
-num_leaves, val_score: 0.373154:  10%|#         | 2/20 [00:08&lt;01:08,  3.83s/it]</pre>
+<pre>num_leaves, val_score: 0.373858:  10%|#         | 2/20 [00:06&lt;01:05,  3.64s/it][I 2024-05-17 10:14:23,016] Trial 8 finished with value: 0.37385793384339394 and parameters: {'num_leaves': 222}. Best is trial 8 with value: 0.37385793384339394.
+num_leaves, val_score: 0.373858:  10%|#         | 2/20 [00:07&lt;01:05,  3.64s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[185]	valid_0's binary_logloss: 0.378707
+[40]	valid_0's binary_logloss: 0.373858
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2168,15 +2170,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.370279:  15%|#5        | 3/20 [00:11&lt;01:00,  3.54s/it][I 2024-05-01 21:24:14,422] Trial 9 finished with value: 0.37027853532829447 and parameters: {'num_leaves': 182}. Best is trial 9 with value: 0.37027853532829447.
-num_leaves, val_score: 0.370279:  15%|#5        | 3/20 [00:11&lt;01:00,  3.54s/it]</pre>
+<pre>num_leaves, val_score: 0.373858:  15%|#5        | 3/20 [00:13&lt;01:21,  4.81s/it][I 2024-05-17 10:14:29,219] Trial 9 finished with value: 0.38119071611784033 and parameters: {'num_leaves': 93}. Best is trial 8 with value: 0.37385793384339394.
+num_leaves, val_score: 0.373858:  15%|#5        | 3/20 [00:13&lt;01:21,  4.81s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[50]	valid_0's binary_logloss: 0.370279
+[74]	valid_0's binary_logloss: 0.381191
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2184,15 +2186,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.370279:  20%|##        | 4/20 [00:14&lt;00:55,  3.45s/it][I 2024-05-01 21:24:17,738] Trial 10 finished with value: 0.3738566569324325 and parameters: {'num_leaves': 251}. Best is trial 9 with value: 0.37027853532829447.
-num_leaves, val_score: 0.370279:  20%|##        | 4/20 [00:14&lt;00:55,  3.45s/it]</pre>
+<pre>num_leaves, val_score: 0.373858:  20%|##        | 4/20 [00:22&lt;01:46,  6.66s/it][I 2024-05-17 10:14:38,717] Trial 10 finished with value: 0.3773282550132434 and parameters: {'num_leaves': 249}. Best is trial 8 with value: 0.37385793384339394.
+num_leaves, val_score: 0.373858:  20%|##        | 4/20 [00:22&lt;01:46,  6.66s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[30]	valid_0's binary_logloss: 0.373857
+[40]	valid_0's binary_logloss: 0.377328
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2200,15 +2202,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.370279:  25%|##5       | 5/20 [00:17&lt;00:46,  3.07s/it][I 2024-05-01 21:24:20,129] Trial 11 finished with value: 0.37562094257700807 and parameters: {'num_leaves': 146}. Best is trial 9 with value: 0.37027853532829447.
-num_leaves, val_score: 0.370279:  25%|##5       | 5/20 [00:17&lt;00:46,  3.07s/it]</pre>
+<pre>num_leaves, val_score: 0.373858:  25%|##5       | 5/20 [00:24&lt;01:13,  4.88s/it][I 2024-05-17 10:14:40,431] Trial 11 finished with value: 0.39044042093457787 and parameters: {'num_leaves': 19}. Best is trial 8 with value: 0.37385793384339394.
+num_leaves, val_score: 0.373858:  25%|##5       | 5/20 [00:24&lt;01:13,  4.88s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[43]	valid_0's binary_logloss: 0.375621
+[244]	valid_0's binary_logloss: 0.39044
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2216,15 +2218,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.370279:  30%|###       | 6/20 [00:19&lt;00:41,  2.94s/it][I 2024-05-01 21:24:22,830] Trial 12 finished with value: 0.37355185545083636 and parameters: {'num_leaves': 128}. Best is trial 9 with value: 0.37027853532829447.
-num_leaves, val_score: 0.370279:  30%|###       | 6/20 [00:19&lt;00:41,  2.94s/it]</pre>
+<pre>num_leaves, val_score: 0.373858:  30%|###       | 6/20 [00:28&lt;01:02,  4.44s/it][I 2024-05-17 10:14:44,030] Trial 12 finished with value: 0.38026069867454104 and parameters: {'num_leaves': 251}. Best is trial 8 with value: 0.37385793384339394.
+num_leaves, val_score: 0.373858:  30%|###       | 6/20 [00:28&lt;01:02,  4.44s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[54]	valid_0's binary_logloss: 0.373552
+[28]	valid_0's binary_logloss: 0.380261
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2232,15 +2234,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.370279:  35%|###5      | 7/20 [00:25&lt;00:47,  3.69s/it][I 2024-05-01 21:24:28,112] Trial 13 finished with value: 0.37749137269814065 and parameters: {'num_leaves': 137}. Best is trial 9 with value: 0.37027853532829447.
-num_leaves, val_score: 0.370279:  35%|###5      | 7/20 [00:25&lt;00:47,  3.69s/it]</pre>
+<pre>num_leaves, val_score: 0.373858:  35%|###5      | 7/20 [00:31&lt;00:52,  4.07s/it][I 2024-05-17 10:14:47,328] Trial 13 finished with value: 0.3753274511816769 and parameters: {'num_leaves': 165}. Best is trial 8 with value: 0.37385793384339394.
+num_leaves, val_score: 0.373858:  35%|###5      | 7/20 [00:31&lt;00:52,  4.07s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[66]	valid_0's binary_logloss: 0.377491
+[48]	valid_0's binary_logloss: 0.375327
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2248,15 +2250,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.370279:  40%|####      | 8/20 [00:27&lt;00:38,  3.24s/it][I 2024-05-01 21:24:30,327] Trial 14 finished with value: 0.37670628993111843 and parameters: {'num_leaves': 71}. Best is trial 9 with value: 0.37027853532829447.
-num_leaves, val_score: 0.370279:  40%|####      | 8/20 [00:27&lt;00:38,  3.24s/it]</pre>
+<pre>num_leaves, val_score: 0.373858:  40%|####      | 8/20 [00:38&lt;00:59,  4.99s/it][I 2024-05-17 10:14:54,309] Trial 14 finished with value: 0.3739214777794338 and parameters: {'num_leaves': 162}. Best is trial 8 with value: 0.37385793384339394.
+num_leaves, val_score: 0.373858:  40%|####      | 8/20 [00:38&lt;00:59,  4.99s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[103]	valid_0's binary_logloss: 0.376706
+[52]	valid_0's binary_logloss: 0.373921
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2264,15 +2266,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.370279:  45%|####5     | 9/20 [00:30&lt;00:35,  3.23s/it][I 2024-05-01 21:24:33,532] Trial 15 finished with value: 0.37171561556175114 and parameters: {'num_leaves': 211}. Best is trial 9 with value: 0.37027853532829447.
-num_leaves, val_score: 0.370279:  45%|####5     | 9/20 [00:30&lt;00:35,  3.23s/it]</pre>
+<pre>num_leaves, val_score: 0.371332:  45%|####5     | 9/20 [00:41&lt;00:49,  4.54s/it][I 2024-05-17 10:14:57,829] Trial 15 finished with value: 0.3713317512304886 and parameters: {'num_leaves': 191}. Best is trial 15 with value: 0.3713317512304886.
+num_leaves, val_score: 0.371332:  45%|####5     | 9/20 [00:41&lt;00:49,  4.54s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[38]	valid_0's binary_logloss: 0.371716
+[39]	valid_0's binary_logloss: 0.371332
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2280,15 +2282,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.367726:  50%|#####     | 10/20 [00:34&lt;00:34,  3.40s/it][I 2024-05-01 21:24:37,332] Trial 16 finished with value: 0.36772645943071486 and parameters: {'num_leaves': 218}. Best is trial 16 with value: 0.36772645943071486.
-num_leaves, val_score: 0.367726:  50%|#####     | 10/20 [00:34&lt;00:34,  3.40s/it]</pre>
+<pre>num_leaves, val_score: 0.371332:  50%|#####     | 10/20 [00:45&lt;00:43,  4.31s/it][I 2024-05-17 10:15:01,634] Trial 16 finished with value: 0.37619505728984265 and parameters: {'num_leaves': 215}. Best is trial 15 with value: 0.3713317512304886.
+num_leaves, val_score: 0.371332:  50%|#####     | 10/20 [00:45&lt;00:43,  4.31s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[52]	valid_0's binary_logloss: 0.367726
+[39]	valid_0's binary_logloss: 0.376195
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2296,15 +2298,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.367726:  55%|#####5    | 11/20 [00:37&lt;00:29,  3.25s/it][I 2024-05-01 21:24:40,238] Trial 17 finished with value: 0.3735775248435483 and parameters: {'num_leaves': 195}. Best is trial 16 with value: 0.36772645943071486.
-num_leaves, val_score: 0.367726:  55%|#####5    | 11/20 [00:37&lt;00:29,  3.25s/it]</pre>
+<pre>num_leaves, val_score: 0.371332:  55%|#####5    | 11/20 [00:48&lt;00:35,  3.94s/it][I 2024-05-17 10:15:04,721] Trial 17 finished with value: 0.3714154578813961 and parameters: {'num_leaves': 105}. Best is trial 15 with value: 0.3713317512304886.
+num_leaves, val_score: 0.371332:  55%|#####5    | 11/20 [00:48&lt;00:35,  3.94s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[39]	valid_0's binary_logloss: 0.373578
+[75]	valid_0's binary_logloss: 0.371415
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2312,15 +2314,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  60%|######    | 12/20 [00:40&lt;00:26,  3.29s/it][I 2024-05-01 21:24:43,621] Trial 18 finished with value: 0.3631654866465407 and parameters: {'num_leaves': 198}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  60%|######    | 12/20 [00:40&lt;00:26,  3.29s/it]</pre>
+<pre>num_leaves, val_score: 0.371332:  60%|######    | 12/20 [00:51&lt;00:27,  3.47s/it][I 2024-05-17 10:15:07,131] Trial 18 finished with value: 0.38587964344293435 and parameters: {'num_leaves': 96}. Best is trial 15 with value: 0.3713317512304886.
+num_leaves, val_score: 0.371332:  60%|######    | 12/20 [00:51&lt;00:27,  3.47s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[63]	valid_0's binary_logloss: 0.38588
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2328,15 +2330,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  65%|######5   | 13/20 [00:44&lt;00:24,  3.45s/it][I 2024-05-01 21:24:47,442] Trial 19 finished with value: 0.3658250333668991 and parameters: {'num_leaves': 255}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  65%|######5   | 13/20 [00:44&lt;00:24,  3.45s/it]</pre>
+<pre>num_leaves, val_score: 0.367410:  65%|######5   | 13/20 [00:54&lt;00:24,  3.45s/it][I 2024-05-17 10:15:10,519] Trial 19 finished with value: 0.36740957414352104 and parameters: {'num_leaves': 109}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410:  65%|######5   | 13/20 [00:54&lt;00:24,  3.45s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[42]	valid_0's binary_logloss: 0.365825
+[75]	valid_0's binary_logloss: 0.36741
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2344,15 +2346,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  70%|#######   | 14/20 [00:50&lt;00:24,  4.10s/it][I 2024-05-01 21:24:53,028] Trial 20 finished with value: 0.37765964111476913 and parameters: {'num_leaves': 250}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  70%|#######   | 14/20 [00:50&lt;00:24,  4.10s/it]</pre>
+<pre>num_leaves, val_score: 0.367410:  70%|#######   | 14/20 [00:56&lt;00:18,  3.10s/it][I 2024-05-17 10:15:12,812] Trial 20 finished with value: 0.38156230494038623 and parameters: {'num_leaves': 54}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410:  70%|#######   | 14/20 [00:56&lt;00:18,  3.10s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[39]	valid_0's binary_logloss: 0.37766
+[103]	valid_0's binary_logloss: 0.381562
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2360,15 +2362,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  75%|#######5  | 15/20 [00:56&lt;00:23,  4.64s/it][I 2024-05-01 21:24:58,936] Trial 21 finished with value: 0.3635935909969657 and parameters: {'num_leaves': 224}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  75%|#######5  | 15/20 [00:56&lt;00:23,  4.64s/it]</pre>
+<pre>num_leaves, val_score: 0.367410:  75%|#######5  | 15/20 [00:59&lt;00:15,  3.01s/it][I 2024-05-17 10:15:15,610] Trial 21 finished with value: 0.3792670191593437 and parameters: {'num_leaves': 116}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410:  75%|#######5  | 15/20 [00:59&lt;00:15,  3.01s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[45]	valid_0's binary_logloss: 0.363594
+[41]	valid_0's binary_logloss: 0.379267
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2376,15 +2378,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  80%|########  | 16/20 [01:00&lt;00:18,  4.63s/it][I 2024-05-01 21:25:03,542] Trial 22 finished with value: 0.3762392972653625 and parameters: {'num_leaves': 256}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  80%|########  | 16/20 [01:00&lt;00:18,  4.63s/it]</pre>
+<pre>num_leaves, val_score: 0.367410:  80%|########  | 16/20 [01:02&lt;00:11,  2.98s/it][I 2024-05-17 10:15:18,526] Trial 22 finished with value: 0.37058611292960486 and parameters: {'num_leaves': 132}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410:  80%|########  | 16/20 [01:02&lt;00:11,  2.98s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.376239
+[53]	valid_0's binary_logloss: 0.370586
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2392,15 +2394,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  85%|########5 | 17/20 [01:06&lt;00:15,  5.07s/it][I 2024-05-01 21:25:09,619] Trial 23 finished with value: 0.372364943808219 and parameters: {'num_leaves': 221}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  85%|########5 | 17/20 [01:06&lt;00:15,  5.07s/it]</pre>
+<pre>num_leaves, val_score: 0.367410:  85%|########5 | 17/20 [01:05&lt;00:08,  2.95s/it][I 2024-05-17 10:15:21,421] Trial 23 finished with value: 0.372527054012802 and parameters: {'num_leaves': 139}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410:  85%|########5 | 17/20 [01:05&lt;00:08,  2.95s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[45]	valid_0's binary_logloss: 0.372365
+[49]	valid_0's binary_logloss: 0.372527
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2408,15 +2410,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  90%|######### | 18/20 [01:19&lt;00:14,  7.30s/it][I 2024-05-01 21:25:22,123] Trial 24 finished with value: 0.3648830332169861 and parameters: {'num_leaves': 171}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  90%|######### | 18/20 [01:19&lt;00:14,  7.30s/it]</pre>
+<pre>num_leaves, val_score: 0.367410:  90%|######### | 18/20 [01:08&lt;00:05,  2.85s/it][I 2024-05-17 10:15:24,028] Trial 24 finished with value: 0.38036745420691503 and parameters: {'num_leaves': 64}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410:  90%|######### | 18/20 [01:08&lt;00:05,  2.85s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[59]	valid_0's binary_logloss: 0.364883
+[105]	valid_0's binary_logloss: 0.380367
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2424,15 +2426,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165:  95%|#########5| 19/20 [01:22&lt;00:06,  6.19s/it][I 2024-05-01 21:25:25,739] Trial 25 finished with value: 0.36907375798189823 and parameters: {'num_leaves': 168}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165:  95%|#########5| 19/20 [01:22&lt;00:06,  6.19s/it]</pre>
+<pre>num_leaves, val_score: 0.367410:  95%|#########5| 19/20 [01:11&lt;00:02,  2.96s/it][I 2024-05-17 10:15:27,232] Trial 25 finished with value: 0.3818090274252709 and parameters: {'num_leaves': 194}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410:  95%|#########5| 19/20 [01:11&lt;00:02,  2.96s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.369074
+[37]	valid_0's binary_logloss: 0.381809
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2440,8 +2442,8 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>num_leaves, val_score: 0.363165: 100%|##########| 20/20 [01:25&lt;00:00,  5.14s/it][I 2024-05-01 21:25:28,426] Trial 26 finished with value: 0.3684827888676411 and parameters: {'num_leaves': 165}. Best is trial 18 with value: 0.3631654866465407.
-num_leaves, val_score: 0.363165: 100%|##########| 20/20 [01:25&lt;00:00,  4.28s/it]
+<pre>num_leaves, val_score: 0.367410: 100%|##########| 20/20 [01:14&lt;00:00,  3.15s/it][I 2024-05-17 10:15:30,831] Trial 26 finished with value: 0.37252705401280195 and parameters: {'num_leaves': 139}. Best is trial 19 with value: 0.36740957414352104.
+num_leaves, val_score: 0.367410: 100%|##########| 20/20 [01:14&lt;00:00,  3.74s/it]
 </pre>
 </div>
 </div>
@@ -2449,14 +2451,14 @@ num_leaves, val_score: 0.363165: 100%|##########| 20/20 [01:25&lt;00:00,  4.28s/
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[46]	valid_0's binary_logloss: 0.368483
+[49]	valid_0's binary_logloss: 0.372527
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:   0%|          | 0/10 [00:00&lt;?, ?it/s]</pre>
+<pre>bagging, val_score: 0.367410:   0%|          | 0/10 [00:00&lt;?, ?it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2469,15 +2471,15 @@ num_leaves, val_score: 0.363165: 100%|##########| 20/20 [01:25&lt;00:00,  4.28s/
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  10%|#         | 1/10 [00:03&lt;00:27,  3.08s/it][I 2024-05-01 21:25:31,522] Trial 27 finished with value: 0.37409818995074706 and parameters: {'bagging_fraction': 0.6874386187665034, 'bagging_freq': 5}. Best is trial 27 with value: 0.37409818995074706.
-bagging, val_score: 0.363165:  10%|#         | 1/10 [00:03&lt;00:27,  3.08s/it]</pre>
+<pre>bagging, val_score: 0.367410:  10%|#         | 1/10 [00:02&lt;00:19,  2.20s/it][I 2024-05-17 10:15:33,110] Trial 27 finished with value: 0.3954670757458217 and parameters: {'bagging_fraction': 0.6247871962774826, 'bagging_freq': 1}. Best is trial 27 with value: 0.3954670757458217.
+bagging, val_score: 0.367410:  10%|#         | 1/10 [00:02&lt;00:19,  2.20s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[52]	valid_0's binary_logloss: 0.374098
+[26]	valid_0's binary_logloss: 0.395467
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2485,15 +2487,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  20%|##        | 2/10 [00:09&lt;00:39,  4.99s/it][I 2024-05-01 21:25:37,841] Trial 28 finished with value: 0.37471757657090604 and parameters: {'bagging_fraction': 0.9956160383196109, 'bagging_freq': 1}. Best is trial 27 with value: 0.37409818995074706.
-bagging, val_score: 0.363165:  20%|##        | 2/10 [00:09&lt;00:39,  4.99s/it]</pre>
+<pre>bagging, val_score: 0.367410:  20%|##        | 2/10 [00:04&lt;00:19,  2.43s/it][I 2024-05-17 10:15:35,712] Trial 28 finished with value: 0.383350674150879 and parameters: {'bagging_fraction': 0.923285663502434, 'bagging_freq': 7}. Best is trial 28 with value: 0.383350674150879.
+bagging, val_score: 0.367410:  20%|##        | 2/10 [00:04&lt;00:19,  2.43s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[43]	valid_0's binary_logloss: 0.374718
+[53]	valid_0's binary_logloss: 0.383351
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2501,15 +2503,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  30%|###       | 3/10 [00:11&lt;00:24,  3.48s/it][I 2024-05-01 21:25:39,531] Trial 29 finished with value: 0.3881328954029099 and parameters: {'bagging_fraction': 0.4000466628465502, 'bagging_freq': 7}. Best is trial 27 with value: 0.37409818995074706.
-bagging, val_score: 0.363165:  30%|###       | 3/10 [00:11&lt;00:24,  3.48s/it]</pre>
+<pre>bagging, val_score: 0.367410:  30%|###       | 3/10 [00:07&lt;00:17,  2.47s/it][I 2024-05-17 10:15:38,221] Trial 29 finished with value: 0.37923553921285863 and parameters: {'bagging_fraction': 0.420843204313341, 'bagging_freq': 4}. Best is trial 29 with value: 0.37923553921285863.
+bagging, val_score: 0.367410:  30%|###       | 3/10 [00:07&lt;00:17,  2.47s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[28]	valid_0's binary_logloss: 0.388133
+[48]	valid_0's binary_logloss: 0.379236
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2517,15 +2519,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  40%|####      | 4/10 [00:14&lt;00:20,  3.41s/it][I 2024-05-01 21:25:42,830] Trial 30 finished with value: 0.37112386819072435 and parameters: {'bagging_fraction': 0.9660001811651555, 'bagging_freq': 1}. Best is trial 30 with value: 0.37112386819072435.
-bagging, val_score: 0.363165:  40%|####      | 4/10 [00:14&lt;00:20,  3.41s/it]</pre>
+<pre>bagging, val_score: 0.367410:  40%|####      | 4/10 [00:10&lt;00:16,  2.75s/it][I 2024-05-17 10:15:41,400] Trial 30 finished with value: 0.37765693537413436 and parameters: {'bagging_fraction': 0.9878318604557115, 'bagging_freq': 7}. Best is trial 30 with value: 0.37765693537413436.
+bagging, val_score: 0.367410:  40%|####      | 4/10 [00:10&lt;00:16,  2.75s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[41]	valid_0's binary_logloss: 0.371124
+[54]	valid_0's binary_logloss: 0.377657
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2533,15 +2535,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  50%|#####     | 5/10 [00:17&lt;00:15,  3.15s/it][I 2024-05-01 21:25:45,527] Trial 31 finished with value: 0.3814333892163908 and parameters: {'bagging_fraction': 0.4086955649462155, 'bagging_freq': 4}. Best is trial 30 with value: 0.37112386819072435.
-bagging, val_score: 0.363165:  50%|#####     | 5/10 [00:17&lt;00:15,  3.15s/it]</pre>
+<pre>bagging, val_score: 0.367410:  50%|#####     | 5/10 [00:13&lt;00:13,  2.78s/it][I 2024-05-17 10:15:44,233] Trial 31 finished with value: 0.37280801864840957 and parameters: {'bagging_fraction': 0.7481148208250323, 'bagging_freq': 2}. Best is trial 31 with value: 0.37280801864840957.
+bagging, val_score: 0.367410:  50%|#####     | 5/10 [00:13&lt;00:13,  2.78s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[60]	valid_0's binary_logloss: 0.381433
+[49]	valid_0's binary_logloss: 0.372808
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2549,15 +2551,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  60%|######    | 6/10 [00:20&lt;00:12,  3.13s/it][I 2024-05-01 21:25:48,621] Trial 32 finished with value: 0.37164548042615214 and parameters: {'bagging_fraction': 0.6956261973827507, 'bagging_freq': 3}. Best is trial 30 with value: 0.37112386819072435.
-bagging, val_score: 0.363165:  60%|######    | 6/10 [00:20&lt;00:12,  3.13s/it]</pre>
+<pre>bagging, val_score: 0.367410:  60%|######    | 6/10 [00:14&lt;00:09,  2.38s/it][I 2024-05-17 10:15:45,825] Trial 32 finished with value: 0.3842362749848752 and parameters: {'bagging_fraction': 0.4391676469093167, 'bagging_freq': 4}. Best is trial 31 with value: 0.37280801864840957.
+bagging, val_score: 0.367410:  60%|######    | 6/10 [00:14&lt;00:09,  2.38s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[48]	valid_0's binary_logloss: 0.371645
+[19]	valid_0's binary_logloss: 0.384236
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2565,15 +2567,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  70%|#######   | 7/10 [00:22&lt;00:08,  2.99s/it][I 2024-05-01 21:25:51,319] Trial 33 finished with value: 0.3734658479856046 and parameters: {'bagging_fraction': 0.8307663196126824, 'bagging_freq': 7}. Best is trial 30 with value: 0.37112386819072435.
-bagging, val_score: 0.363165:  70%|#######   | 7/10 [00:22&lt;00:08,  2.99s/it]</pre>
+<pre>bagging, val_score: 0.367410:  70%|#######   | 7/10 [00:17&lt;00:07,  2.38s/it][I 2024-05-17 10:15:48,226] Trial 33 finished with value: 0.38045738974897325 and parameters: {'bagging_fraction': 0.7379269104820864, 'bagging_freq': 5}. Best is trial 31 with value: 0.37280801864840957.
+bagging, val_score: 0.367410:  70%|#######   | 7/10 [00:17&lt;00:07,  2.38s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[31]	valid_0's binary_logloss: 0.373466
+[46]	valid_0's binary_logloss: 0.380457
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2581,15 +2583,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  80%|########  | 8/10 [00:25&lt;00:05,  2.97s/it][I 2024-05-01 21:25:54,243] Trial 34 finished with value: 0.3796650018224596 and parameters: {'bagging_fraction': 0.5660326067670218, 'bagging_freq': 3}. Best is trial 30 with value: 0.37112386819072435.
-bagging, val_score: 0.363165:  80%|########  | 8/10 [00:25&lt;00:05,  2.97s/it]</pre>
+<pre>bagging, val_score: 0.367410:  80%|########  | 8/10 [00:20&lt;00:05,  2.55s/it][I 2024-05-17 10:15:51,131] Trial 34 finished with value: 0.39307944210588885 and parameters: {'bagging_fraction': 0.5892054794337009, 'bagging_freq': 2}. Best is trial 31 with value: 0.37280801864840957.
+bagging, val_score: 0.367410:  80%|########  | 8/10 [00:20&lt;00:05,  2.55s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[52]	valid_0's binary_logloss: 0.379665
+[70]	valid_0's binary_logloss: 0.393079
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2597,15 +2599,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165:  90%|######### | 9/10 [00:29&lt;00:03,  3.07s/it][I 2024-05-01 21:25:57,612] Trial 35 finished with value: 0.38350780701414616 and parameters: {'bagging_fraction': 0.5512934223382902, 'bagging_freq': 5}. Best is trial 30 with value: 0.37112386819072435.
-bagging, val_score: 0.363165:  90%|######### | 9/10 [00:29&lt;00:03,  3.07s/it]</pre>
+<pre>bagging, val_score: 0.367410:  90%|######### | 9/10 [00:23&lt;00:02,  2.75s/it][I 2024-05-17 10:15:54,323] Trial 35 finished with value: 0.37565759644445834 and parameters: {'bagging_fraction': 0.8753010476839909, 'bagging_freq': 5}. Best is trial 31 with value: 0.37280801864840957.
+bagging, val_score: 0.367410:  90%|######### | 9/10 [00:23&lt;00:02,  2.75s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[60]	valid_0's binary_logloss: 0.383508
+[61]	valid_0's binary_logloss: 0.375658
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2613,8 +2615,8 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>bagging, val_score: 0.363165: 100%|##########| 10/10 [00:32&lt;00:00,  3.13s/it][I 2024-05-01 21:26:00,815] Trial 36 finished with value: 0.3787565611977642 and parameters: {'bagging_fraction': 0.8839668872496622, 'bagging_freq': 2}. Best is trial 30 with value: 0.37112386819072435.
-bagging, val_score: 0.363165: 100%|##########| 10/10 [00:32&lt;00:00,  3.24s/it]
+<pre>bagging, val_score: 0.367410: 100%|##########| 10/10 [00:25&lt;00:00,  2.64s/it][I 2024-05-17 10:15:56,727] Trial 36 finished with value: 0.38695330483645435 and parameters: {'bagging_fraction': 0.5402623279814973, 'bagging_freq': 3}. Best is trial 31 with value: 0.37280801864840957.
+bagging, val_score: 0.367410: 100%|##########| 10/10 [00:25&lt;00:00,  2.58s/it]
 </pre>
 </div>
 </div>
@@ -2622,14 +2624,14 @@ bagging, val_score: 0.363165: 100%|##########| 10/10 [00:32&lt;00:00,  3.24s/it]
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[38]	valid_0's binary_logloss: 0.378757
+[54]	valid_0's binary_logloss: 0.386953
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction_stage2, val_score: 0.363165:   0%|          | 0/6 [00:00&lt;?, ?it/s]</pre>
+<pre>feature_fraction_stage2, val_score: 0.367410:   0%|          | 0/6 [00:00&lt;?, ?it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2642,15 +2644,15 @@ bagging, val_score: 0.363165: 100%|##########| 10/10 [00:32&lt;00:00,  3.24s/it]
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction_stage2, val_score: 0.363165:  17%|#6        | 1/6 [00:04&lt;00:21,  4.31s/it][I 2024-05-01 21:26:05,135] Trial 37 finished with value: 0.37778620877327024 and parameters: {'feature_fraction': 0.652}. Best is trial 37 with value: 0.37778620877327024.
-feature_fraction_stage2, val_score: 0.363165:  17%|#6        | 1/6 [00:04&lt;00:21,  4.31s/it]</pre>
+<pre>feature_fraction_stage2, val_score: 0.367410:  17%|#6        | 1/6 [00:02&lt;00:14,  2.91s/it][I 2024-05-17 10:15:59,715] Trial 37 finished with value: 0.3750569994664222 and parameters: {'feature_fraction': 0.88}. Best is trial 37 with value: 0.3750569994664222.
+feature_fraction_stage2, val_score: 0.367410:  17%|#6        | 1/6 [00:02&lt;00:14,  2.91s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[45]	valid_0's binary_logloss: 0.377786
+[75]	valid_0's binary_logloss: 0.375057
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2658,15 +2660,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction_stage2, val_score: 0.363165:  33%|###3      | 2/6 [00:09&lt;00:18,  4.54s/it][I 2024-05-01 21:26:09,833] Trial 38 finished with value: 0.36316548664654064 and parameters: {'feature_fraction': 0.716}. Best is trial 38 with value: 0.36316548664654064.
-feature_fraction_stage2, val_score: 0.363165:  33%|###3      | 2/6 [00:09&lt;00:18,  4.54s/it]</pre>
+<pre>feature_fraction_stage2, val_score: 0.367410:  33%|###3      | 2/6 [00:07&lt;00:15,  3.84s/it][I 2024-05-17 10:16:04,209] Trial 38 finished with value: 0.36740957414352116 and parameters: {'feature_fraction': 0.784}. Best is trial 38 with value: 0.36740957414352116.
+feature_fraction_stage2, val_score: 0.367410:  33%|###3      | 2/6 [00:07&lt;00:15,  3.84s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[75]	valid_0's binary_logloss: 0.36741
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2674,15 +2676,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction_stage2, val_score: 0.363165:  50%|#####     | 3/6 [00:19&lt;00:21,  7.17s/it][I 2024-05-01 21:26:20,131] Trial 39 finished with value: 0.3818026498511844 and parameters: {'feature_fraction': 0.7799999999999999}. Best is trial 38 with value: 0.36316548664654064.
-feature_fraction_stage2, val_score: 0.363165:  50%|#####     | 3/6 [00:19&lt;00:21,  7.17s/it]</pre>
+<pre>feature_fraction_stage2, val_score: 0.367410:  50%|#####     | 3/6 [00:10&lt;00:10,  3.42s/it][I 2024-05-17 10:16:07,121] Trial 39 finished with value: 0.37661326532050776 and parameters: {'feature_fraction': 0.7520000000000001}. Best is trial 38 with value: 0.36740957414352116.
+feature_fraction_stage2, val_score: 0.367410:  50%|#####     | 3/6 [00:10&lt;00:10,  3.42s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[29]	valid_0's binary_logloss: 0.381803
+[80]	valid_0's binary_logloss: 0.376613
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2690,15 +2692,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction_stage2, val_score: 0.363165:  67%|######6   | 4/6 [00:22&lt;00:11,  5.65s/it][I 2024-05-01 21:26:23,444] Trial 40 finished with value: 0.37231189943704796 and parameters: {'feature_fraction': 0.62}. Best is trial 38 with value: 0.36316548664654064.
-feature_fraction_stage2, val_score: 0.363165:  67%|######6   | 4/6 [00:22&lt;00:11,  5.65s/it]</pre>
+<pre>feature_fraction_stage2, val_score: 0.367410:  67%|######6   | 4/6 [00:18&lt;00:10,  5.27s/it][I 2024-05-17 10:16:15,229] Trial 40 finished with value: 0.3766132653205076 and parameters: {'feature_fraction': 0.7200000000000001}. Best is trial 38 with value: 0.36740957414352116.
+feature_fraction_stage2, val_score: 0.367410:  67%|######6   | 4/6 [00:18&lt;00:10,  5.27s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[45]	valid_0's binary_logloss: 0.372312
+[80]	valid_0's binary_logloss: 0.376613
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2706,15 +2708,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction_stage2, val_score: 0.363165:  83%|########3 | 5/6 [00:26&lt;00:04,  4.98s/it][I 2024-05-01 21:26:27,240] Trial 41 finished with value: 0.36316548664654064 and parameters: {'feature_fraction': 0.6839999999999999}. Best is trial 38 with value: 0.36316548664654064.
-feature_fraction_stage2, val_score: 0.363165:  83%|########3 | 5/6 [00:26&lt;00:04,  4.98s/it]</pre>
+<pre>feature_fraction_stage2, val_score: 0.367410:  83%|########3 | 5/6 [00:24&lt;00:05,  5.57s/it][I 2024-05-17 10:16:21,324] Trial 41 finished with value: 0.37205822085312645 and parameters: {'feature_fraction': 0.8160000000000001}. Best is trial 38 with value: 0.36740957414352116.
+feature_fraction_stage2, val_score: 0.367410:  83%|########3 | 5/6 [00:24&lt;00:05,  5.57s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[48]	valid_0's binary_logloss: 0.372058
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2722,8 +2724,8 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>feature_fraction_stage2, val_score: 0.363165: 100%|##########| 6/6 [00:29&lt;00:00,  4.44s/it][I 2024-05-01 21:26:30,640] Trial 42 finished with value: 0.37306027041183026 and parameters: {'feature_fraction': 0.748}. Best is trial 38 with value: 0.36316548664654064.
-feature_fraction_stage2, val_score: 0.363165: 100%|##########| 6/6 [00:29&lt;00:00,  4.97s/it]
+<pre>feature_fraction_stage2, val_score: 0.367410: 100%|##########| 6/6 [00:33&lt;00:00,  6.63s/it][I 2024-05-17 10:16:30,027] Trial 42 finished with value: 0.375056999466422 and parameters: {'feature_fraction': 0.8480000000000001}. Best is trial 38 with value: 0.36740957414352116.
+feature_fraction_stage2, val_score: 0.367410: 100%|##########| 6/6 [00:33&lt;00:00,  5.54s/it]
 </pre>
 </div>
 </div>
@@ -2731,14 +2733,14 @@ feature_fraction_stage2, val_score: 0.363165: 100%|##########| 6/6 [00:29&lt;00:
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[47]	valid_0's binary_logloss: 0.37306
+[75]	valid_0's binary_logloss: 0.375057
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:   0%|          | 0/20 [00:00&lt;?, ?it/s]</pre>
+<pre>regularization_factors, val_score: 0.367410:   0%|          | 0/20 [00:00&lt;?, ?it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -2751,15 +2753,15 @@ feature_fraction_stage2, val_score: 0.363165: 100%|##########| 6/6 [00:29&lt;00:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:   5%|5         | 1/20 [00:06&lt;02:03,  6.48s/it][I 2024-05-01 21:26:37,128] Trial 43 finished with value: 0.3693160167829919 and parameters: {'lambda_l1': 0.010839648774434362, 'lambda_l2': 1.841325727627302e-08}. Best is trial 43 with value: 0.3693160167829919.
-regularization_factors, val_score: 0.363165:   5%|5         | 1/20 [00:06&lt;02:03,  6.48s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:   5%|5         | 1/20 [00:04&lt;01:19,  4.20s/it][I 2024-05-17 10:16:34,305] Trial 43 finished with value: 0.4000754351948232 and parameters: {'lambda_l1': 9.735476402093866, 'lambda_l2': 1.1885650284878641e-05}. Best is trial 43 with value: 0.4000754351948232.
+regularization_factors, val_score: 0.367410:   5%|5         | 1/20 [00:04&lt;01:19,  4.20s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[54]	valid_0's binary_logloss: 0.369316
+[175]	valid_0's binary_logloss: 0.400075
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2767,15 +2769,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  10%|#         | 2/20 [00:10&lt;01:30,  5.03s/it][I 2024-05-01 21:26:41,134] Trial 44 finished with value: 0.3776993048423959 and parameters: {'lambda_l1': 1.8449710008006576e-08, 'lambda_l2': 8.096058854091515}. Best is trial 43 with value: 0.3693160167829919.
-regularization_factors, val_score: 0.363165:  10%|#         | 2/20 [00:10&lt;01:30,  5.03s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  10%|#         | 2/20 [00:06&lt;00:59,  3.33s/it][I 2024-05-17 10:16:37,029] Trial 44 finished with value: 0.3842358602524559 and parameters: {'lambda_l1': 1.3624272314789979e-08, 'lambda_l2': 4.53719639040893}. Best is trial 44 with value: 0.3842358602524559.
+regularization_factors, val_score: 0.367410:  10%|#         | 2/20 [00:06&lt;00:59,  3.33s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[89]	valid_0's binary_logloss: 0.377699
+[63]	valid_0's binary_logloss: 0.384236
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2783,15 +2785,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  15%|#5        | 3/20 [00:16&lt;01:31,  5.38s/it][I 2024-05-01 21:26:46,932] Trial 45 finished with value: 0.3825146969283817 and parameters: {'lambda_l1': 5.222945182730914, 'lambda_l2': 0.0005511762357956978}. Best is trial 43 with value: 0.3693160167829919.
-regularization_factors, val_score: 0.363165:  15%|#5        | 3/20 [00:16&lt;01:31,  5.38s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  15%|#5        | 3/20 [00:09&lt;00:51,  3.04s/it][I 2024-05-17 10:16:39,718] Trial 45 finished with value: 0.3768392688529174 and parameters: {'lambda_l1': 0.0006052551309667524, 'lambda_l2': 1.0805462176025796e-08}. Best is trial 45 with value: 0.3768392688529174.
+regularization_factors, val_score: 0.367410:  15%|#5        | 3/20 [00:09&lt;00:51,  3.04s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[151]	valid_0's binary_logloss: 0.382515
+[59]	valid_0's binary_logloss: 0.376839
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2799,15 +2801,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  20%|##        | 4/20 [00:19&lt;01:14,  4.68s/it][I 2024-05-01 21:26:50,531] Trial 46 finished with value: 0.36316548666967746 and parameters: {'lambda_l1': 2.38821495370382e-08, 'lambda_l2': 1.2234306473380587e-08}. Best is trial 46 with value: 0.36316548666967746.
-regularization_factors, val_score: 0.363165:  20%|##        | 4/20 [00:19&lt;01:14,  4.68s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  20%|##        | 4/20 [00:13&lt;00:52,  3.26s/it][I 2024-05-17 10:16:43,314] Trial 46 finished with value: 0.38300850920886864 and parameters: {'lambda_l1': 1.8958239622988977e-08, 'lambda_l2': 6.020371560207324}. Best is trial 45 with value: 0.3768392688529174.
+regularization_factors, val_score: 0.367410:  20%|##        | 4/20 [00:13&lt;00:52,  3.26s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[102]	valid_0's binary_logloss: 0.383009
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2815,15 +2817,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  25%|##5       | 5/20 [00:25&lt;01:13,  4.90s/it][I 2024-05-01 21:26:55,826] Trial 47 finished with value: 0.3631654866650527 and parameters: {'lambda_l1': 1.742301640602742e-08, 'lambda_l2': 1.4757341530288764e-08}. Best is trial 47 with value: 0.3631654866650527.
-regularization_factors, val_score: 0.363165:  25%|##5       | 5/20 [00:25&lt;01:13,  4.90s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  25%|##5       | 5/20 [00:15&lt;00:45,  3.03s/it][I 2024-05-17 10:16:45,926] Trial 47 finished with value: 0.3979727901107469 and parameters: {'lambda_l1': 9.028443418520673, 'lambda_l2': 0.0008471787212032551}. Best is trial 45 with value: 0.3768392688529174.
+regularization_factors, val_score: 0.367410:  25%|##5       | 5/20 [00:15&lt;00:45,  3.03s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[176]	valid_0's binary_logloss: 0.397973
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2831,15 +2833,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  30%|###       | 6/20 [00:28&lt;01:01,  4.42s/it][I 2024-05-01 21:26:59,330] Trial 48 finished with value: 0.36316548663033577 and parameters: {'lambda_l1': 1.3466481734549487e-08, 'lambda_l2': 1.4328721374059667e-08}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  30%|###       | 6/20 [00:28&lt;01:01,  4.42s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  30%|###       | 6/20 [00:18&lt;00:38,  2.78s/it][I 2024-05-17 10:16:48,219] Trial 48 finished with value: 0.38142112717658005 and parameters: {'lambda_l1': 0.0002499516385751432, 'lambda_l2': 0.0010381660654697966}. Best is trial 45 with value: 0.3768392688529174.
+regularization_factors, val_score: 0.367410:  30%|###       | 6/20 [00:18&lt;00:38,  2.78s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[43]	valid_0's binary_logloss: 0.381421
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2847,15 +2849,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  35%|###5      | 7/20 [00:32&lt;00:53,  4.09s/it][I 2024-05-01 21:27:02,722] Trial 49 finished with value: 0.37054045070773345 and parameters: {'lambda_l1': 3.088163108098451e-06, 'lambda_l2': 2.7879778968249513e-06}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  35%|###5      | 7/20 [00:32&lt;00:53,  4.09s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  35%|###5      | 7/20 [00:20&lt;00:36,  2.79s/it][I 2024-05-17 10:16:51,026] Trial 49 finished with value: 0.3827689612973024 and parameters: {'lambda_l1': 0.00010166999713623285, 'lambda_l2': 1.606135170483702e-08}. Best is trial 45 with value: 0.3768392688529174.
+regularization_factors, val_score: 0.367410:  35%|###5      | 7/20 [00:20&lt;00:36,  2.79s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[46]	valid_0's binary_logloss: 0.37054
+[68]	valid_0's binary_logloss: 0.382769
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2863,15 +2865,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  40%|####      | 8/20 [00:35&lt;00:47,  3.97s/it][I 2024-05-01 21:27:06,441] Trial 50 finished with value: 0.37054045078383646 and parameters: {'lambda_l1': 8.658464209873121e-06, 'lambda_l2': 5.7532449843552794e-06}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  40%|####      | 8/20 [00:35&lt;00:47,  3.97s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  40%|####      | 8/20 [00:23&lt;00:34,  2.85s/it][I 2024-05-17 10:16:54,004] Trial 50 finished with value: 0.3717680065875255 and parameters: {'lambda_l1': 0.05452714002013461, 'lambda_l2': 4.088790430612965e-06}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  40%|####      | 8/20 [00:23&lt;00:34,  2.85s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[46]	valid_0's binary_logloss: 0.37054
+[72]	valid_0's binary_logloss: 0.371768
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2879,15 +2881,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  45%|####5     | 9/20 [00:39&lt;00:42,  3.88s/it][I 2024-05-01 21:27:10,138] Trial 51 finished with value: 0.36316548664521475 and parameters: {'lambda_l1': 1.9014991506245228e-08, 'lambda_l2': 1.228912182998111e-08}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  45%|####5     | 9/20 [00:39&lt;00:42,  3.88s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  45%|####5     | 9/20 [00:26&lt;00:29,  2.72s/it][I 2024-05-17 10:16:56,427] Trial 51 finished with value: 0.3761342067809677 and parameters: {'lambda_l1': 0.0369066143307944, 'lambda_l2': 3.2663806162439897e-06}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  45%|####5     | 9/20 [00:26&lt;00:29,  2.72s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[54]	valid_0's binary_logloss: 0.376134
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2895,15 +2897,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  50%|#####     | 10/20 [00:43&lt;00:38,  3.83s/it][I 2024-05-01 21:27:13,840] Trial 52 finished with value: 0.3631654866579665 and parameters: {'lambda_l1': 2.130936000793227e-08, 'lambda_l2': 1.0208411546562743e-08}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  50%|#####     | 10/20 [00:43&lt;00:38,  3.83s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  50%|#####     | 10/20 [00:29&lt;00:27,  2.74s/it][I 2024-05-17 10:16:59,219] Trial 52 finished with value: 0.37432924731676614 and parameters: {'lambda_l1': 0.054816809029998775, 'lambda_l2': 0.024999499348712872}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  50%|#####     | 10/20 [00:29&lt;00:27,  2.74s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[70]	valid_0's binary_logloss: 0.374329
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2911,15 +2913,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  55%|#####5    | 11/20 [00:47&lt;00:34,  3.88s/it][I 2024-05-01 21:27:17,910] Trial 53 finished with value: 0.36317380360951507 and parameters: {'lambda_l1': 9.881443065281692e-07, 'lambda_l2': 8.743449696624595e-07}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  55%|#####5    | 11/20 [00:47&lt;00:34,  3.88s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  55%|#####5    | 11/20 [00:32&lt;00:25,  2.79s/it][I 2024-05-17 10:17:02,121] Trial 53 finished with value: 0.3802377964900833 and parameters: {'lambda_l1': 2.316914347130571e-06, 'lambda_l2': 5.795374367862176e-06}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  55%|#####5    | 11/20 [00:32&lt;00:25,  2.79s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[56]	valid_0's binary_logloss: 0.363174
+[65]	valid_0's binary_logloss: 0.380238
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2927,15 +2929,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  60%|######    | 12/20 [00:50&lt;00:29,  3.73s/it][I 2024-05-01 21:27:21,222] Trial 54 finished with value: 0.3637709163338463 and parameters: {'lambda_l1': 2.881752239078986e-07, 'lambda_l2': 1.8792756540431085e-07}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  60%|######    | 12/20 [00:50&lt;00:29,  3.73s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  60%|######    | 12/20 [00:34&lt;00:21,  2.73s/it][I 2024-05-17 10:17:04,708] Trial 54 finished with value: 0.3824576314527321 and parameters: {'lambda_l1': 0.06822102509516187, 'lambda_l2': 8.792255957217181e-07}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  60%|######    | 12/20 [00:34&lt;00:21,  2.73s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[43]	valid_0's binary_logloss: 0.363771
+[59]	valid_0's binary_logloss: 0.382458
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2943,15 +2945,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  65%|######5   | 13/20 [00:53&lt;00:24,  3.54s/it][I 2024-05-01 21:27:24,321] Trial 55 finished with value: 0.37120916631743206 and parameters: {'lambda_l1': 0.00020721071716331315, 'lambda_l2': 0.00014298218599046993}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  65%|######5   | 13/20 [00:53&lt;00:24,  3.54s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  65%|######5   | 13/20 [00:37&lt;00:19,  2.78s/it][I 2024-05-17 10:17:07,622] Trial 55 finished with value: 0.3746797506374062 and parameters: {'lambda_l1': 0.004203813235193917, 'lambda_l2': 0.0746628734826108}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  65%|######5   | 13/20 [00:37&lt;00:19,  2.78s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[38]	valid_0's binary_logloss: 0.371209
+[80]	valid_0's binary_logloss: 0.37468
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2959,15 +2961,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  70%|#######   | 14/20 [00:57&lt;00:21,  3.53s/it][I 2024-05-01 21:27:27,835] Trial 56 finished with value: 0.36316548668822407 and parameters: {'lambda_l1': 1.057995755643754e-08, 'lambda_l2': 1.3909980688169465e-07}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  70%|#######   | 14/20 [00:57&lt;00:21,  3.53s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  70%|#######   | 14/20 [00:40&lt;00:16,  2.79s/it][I 2024-05-17 10:17:10,426] Trial 56 finished with value: 0.380237800076126 and parameters: {'lambda_l1': 3.697476359113887e-06, 'lambda_l2': 2.228738169703633e-07}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  70%|#######   | 14/20 [00:40&lt;00:16,  2.79s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[65]	valid_0's binary_logloss: 0.380238
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2975,15 +2977,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  75%|#######5  | 15/20 [01:00&lt;00:17,  3.46s/it][I 2024-05-01 21:27:31,214] Trial 57 finished with value: 0.3657911523095971 and parameters: {'lambda_l1': 5.12545520043369e-07, 'lambda_l2': 0.044035931319284856}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  75%|#######5  | 15/20 [01:00&lt;00:17,  3.46s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  75%|#######5  | 15/20 [00:43&lt;00:14,  2.88s/it][I 2024-05-17 10:17:13,525] Trial 57 finished with value: 0.3819070958826241 and parameters: {'lambda_l1': 0.810771895442005, 'lambda_l2': 6.377701924975795e-05}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  75%|#######5  | 15/20 [00:43&lt;00:14,  2.88s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[46]	valid_0's binary_logloss: 0.365791
+[80]	valid_0's binary_logloss: 0.381907
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -2991,15 +2993,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  80%|########  | 16/20 [01:03&lt;00:13,  3.26s/it][I 2024-05-01 21:27:34,010] Trial 58 finished with value: 0.37358486758113685 and parameters: {'lambda_l1': 3.58530228752031e-05, 'lambda_l2': 3.334572516297209e-05}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  80%|########  | 16/20 [01:03&lt;00:13,  3.26s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  80%|########  | 16/20 [00:46&lt;00:11,  2.95s/it][I 2024-05-17 10:17:16,619] Trial 58 finished with value: 0.3722284134939273 and parameters: {'lambda_l1': 7.86173966634575e-06, 'lambda_l2': 0.009668553543780791}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  80%|########  | 16/20 [00:46&lt;00:11,  2.95s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[29]	valid_0's binary_logloss: 0.373585
+[80]	valid_0's binary_logloss: 0.372228
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3007,15 +3009,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  85%|########5 | 17/20 [01:07&lt;00:10,  3.46s/it][I 2024-05-01 21:27:37,845] Trial 59 finished with value: 0.37121279787563816 and parameters: {'lambda_l1': 1.984329418685077e-07, 'lambda_l2': 1.6307206573021137e-07}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  85%|########5 | 17/20 [01:07&lt;00:10,  3.46s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  85%|########5 | 17/20 [00:48&lt;00:08,  2.73s/it][I 2024-05-17 10:17:18,897] Trial 59 finished with value: 0.3728074176393718 and parameters: {'lambda_l1': 0.6306947740321641, 'lambda_l2': 1.013819292434261e-07}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  85%|########5 | 17/20 [00:48&lt;00:08,  2.73s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[58]	valid_0's binary_logloss: 0.371213
+[56]	valid_0's binary_logloss: 0.372807
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3023,15 +3025,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  90%|######### | 18/20 [01:10&lt;00:06,  3.37s/it][I 2024-05-01 21:27:41,032] Trial 60 finished with value: 0.37045292764892235 and parameters: {'lambda_l1': 0.007568084108802888, 'lambda_l2': 1.0129981332826581e-08}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  90%|######### | 18/20 [01:10&lt;00:06,  3.37s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  90%|######### | 18/20 [00:50&lt;00:05,  2.57s/it][I 2024-05-17 10:17:21,098] Trial 60 finished with value: 0.383089180978512 and parameters: {'lambda_l1': 0.005507471755818934, 'lambda_l2': 5.575100781579365e-05}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  90%|######### | 18/20 [00:50&lt;00:05,  2.57s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[47]	valid_0's binary_logloss: 0.370453
+[39]	valid_0's binary_logloss: 0.383089
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3039,15 +3041,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165:  95%|#########5| 19/20 [01:14&lt;00:03,  3.66s/it][I 2024-05-01 21:27:45,339] Trial 61 finished with value: 0.3646160826147363 and parameters: {'lambda_l1': 9.591305582762461e-08, 'lambda_l2': 7.830943342805554e-08}. Best is trial 48 with value: 0.36316548663033577.
-regularization_factors, val_score: 0.363165:  95%|#########5| 19/20 [01:14&lt;00:03,  3.66s/it]</pre>
+<pre>regularization_factors, val_score: 0.367410:  95%|#########5| 19/20 [00:53&lt;00:02,  2.69s/it][I 2024-05-17 10:17:24,001] Trial 61 finished with value: 0.37251331352332 and parameters: {'lambda_l1': 2.1575640685639232e-07, 'lambda_l2': 0.5104002702883277}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410:  95%|#########5| 19/20 [00:53&lt;00:02,  2.69s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[38]	valid_0's binary_logloss: 0.364616
+[65]	valid_0's binary_logloss: 0.372513
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3055,8 +3057,8 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>regularization_factors, val_score: 0.363165: 100%|##########| 20/20 [01:18&lt;00:00,  3.60s/it][I 2024-05-01 21:27:48,813] Trial 62 finished with value: 0.3631654866159358 and parameters: {'lambda_l1': 1.3569118215629687e-08, 'lambda_l2': 1.1426930988999945e-08}. Best is trial 62 with value: 0.3631654866159358.
-regularization_factors, val_score: 0.363165: 100%|##########| 20/20 [01:18&lt;00:00,  3.91s/it]
+<pre>regularization_factors, val_score: 0.367410: 100%|##########| 20/20 [00:56&lt;00:00,  2.64s/it][I 2024-05-17 10:17:26,515] Trial 62 finished with value: 0.3751039420293567 and parameters: {'lambda_l1': 0.8971910981660706, 'lambda_l2': 0.00011633445362150633}. Best is trial 50 with value: 0.3717680065875255.
+regularization_factors, val_score: 0.367410: 100%|##########| 20/20 [00:56&lt;00:00,  2.82s/it]
 </pre>
 </div>
 </div>
@@ -3064,14 +3066,14 @@ regularization_factors, val_score: 0.363165: 100%|##########| 20/20 [01:18&lt;00
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[49]	valid_0's binary_logloss: 0.363165
+[66]	valid_0's binary_logloss: 0.375104
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>min_child_samples, val_score: 0.363165:   0%|          | 0/5 [00:00&lt;?, ?it/s]</pre>
+<pre>min_child_samples, val_score: 0.367410:   0%|          | 0/5 [00:00&lt;?, ?it/s]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -3084,15 +3086,15 @@ regularization_factors, val_score: 0.363165: 100%|##########| 20/20 [01:18&lt;00
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>min_child_samples, val_score: 0.363165:  20%|##        | 1/5 [00:03&lt;00:12,  3.01s/it][I 2024-05-01 21:27:51,833] Trial 63 finished with value: 0.3752495834229246 and parameters: {'min_child_samples': 5}. Best is trial 63 with value: 0.3752495834229246.
-min_child_samples, val_score: 0.363165:  20%|##        | 1/5 [00:03&lt;00:12,  3.01s/it]</pre>
+<pre>min_child_samples, val_score: 0.367410:  20%|##        | 1/5 [00:07&lt;00:31,  7.91s/it][I 2024-05-17 10:17:34,430] Trial 63 finished with value: 0.37088802049847946 and parameters: {'min_child_samples': 5}. Best is trial 63 with value: 0.37088802049847946.
+min_child_samples, val_score: 0.367410:  20%|##        | 1/5 [00:07&lt;00:31,  7.91s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[32]	valid_0's binary_logloss: 0.37525
+[54]	valid_0's binary_logloss: 0.370888
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3100,15 +3102,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>min_child_samples, val_score: 0.363165:  40%|####      | 2/5 [00:05&lt;00:08,  2.93s/it][I 2024-05-01 21:27:54,713] Trial 64 finished with value: 0.3806994493558711 and parameters: {'min_child_samples': 50}. Best is trial 63 with value: 0.3752495834229246.
-min_child_samples, val_score: 0.363165:  40%|####      | 2/5 [00:05&lt;00:08,  2.93s/it]</pre>
+<pre>min_child_samples, val_score: 0.367410:  40%|####      | 2/5 [00:10&lt;00:14,  4.77s/it][I 2024-05-17 10:17:37,008] Trial 64 finished with value: 0.3893329770050149 and parameters: {'min_child_samples': 50}. Best is trial 63 with value: 0.37088802049847946.
+min_child_samples, val_score: 0.367410:  40%|####      | 2/5 [00:10&lt;00:14,  4.77s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[81]	valid_0's binary_logloss: 0.380699
+[68]	valid_0's binary_logloss: 0.389333
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3116,15 +3118,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>min_child_samples, val_score: 0.363165:  60%|######    | 3/5 [00:08&lt;00:05,  2.57s/it][I 2024-05-01 21:27:56,840] Trial 65 finished with value: 0.3920818505283064 and parameters: {'min_child_samples': 100}. Best is trial 63 with value: 0.3752495834229246.
-min_child_samples, val_score: 0.363165:  60%|######    | 3/5 [00:08&lt;00:05,  2.57s/it]</pre>
+<pre>min_child_samples, val_score: 0.367410:  60%|######    | 3/5 [00:13&lt;00:07,  3.88s/it][I 2024-05-17 10:17:39,898] Trial 65 finished with value: 0.3788845205095279 and parameters: {'min_child_samples': 10}. Best is trial 63 with value: 0.37088802049847946.
+min_child_samples, val_score: 0.367410:  60%|######    | 3/5 [00:13&lt;00:07,  3.88s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[109]	valid_0's binary_logloss: 0.392082
+[68]	valid_0's binary_logloss: 0.378885
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3132,15 +3134,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>min_child_samples, val_score: 0.363165:  80%|########  | 4/5 [00:11&lt;00:02,  2.89s/it][I 2024-05-01 21:28:00,224] Trial 66 finished with value: 0.3757703556020652 and parameters: {'min_child_samples': 10}. Best is trial 63 with value: 0.3752495834229246.
-min_child_samples, val_score: 0.363165:  80%|########  | 4/5 [00:11&lt;00:02,  2.89s/it]</pre>
+<pre>min_child_samples, val_score: 0.367410:  80%|########  | 4/5 [00:15&lt;00:03,  3.21s/it][I 2024-05-17 10:17:42,014] Trial 66 finished with value: 0.39615198116336536 and parameters: {'min_child_samples': 100}. Best is trial 63 with value: 0.37088802049847946.
+min_child_samples, val_score: 0.367410:  80%|########  | 4/5 [00:15&lt;00:03,  3.21s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[41]	valid_0's binary_logloss: 0.37577
+[97]	valid_0's binary_logloss: 0.396152
 Training until validation scores don't improve for 50 rounds
 </pre>
 </div>
@@ -3148,15 +3150,15 @@ Training until validation scores don't improve for 50 rounds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>min_child_samples, val_score: 0.363165: 100%|##########| 5/5 [00:14&lt;00:00,  2.90s/it][I 2024-05-01 21:28:03,136] Trial 67 finished with value: 0.37433125024309605 and parameters: {'min_child_samples': 25}. Best is trial 67 with value: 0.37433125024309605.
-min_child_samples, val_score: 0.363165: 100%|##########| 5/5 [00:14&lt;00:00,  2.86s/it]</pre>
+<pre>min_child_samples, val_score: 0.367410: 100%|##########| 5/5 [00:17&lt;00:00,  2.92s/it][I 2024-05-17 10:17:44,414] Trial 67 finished with value: 0.3804781158926489 and parameters: {'min_child_samples': 25}. Best is trial 63 with value: 0.37088802049847946.
+min_child_samples, val_score: 0.367410: 100%|##########| 5/5 [00:17&lt;00:00,  3.58s/it]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Early stopping, best iteration is:
-[43]	valid_0's binary_logloss: 0.374331
+[55]	valid_0's binary_logloss: 0.380478
 </pre>
 </div>
 </div>
@@ -3190,12 +3192,12 @@ min_child_samples, val_score: 0.363165: 100%|##########| 5/5 [00:14&lt;00:00,  2
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># save/load trainer</span>
-<span class="n">dill_dump</span><span class="p">(</span><span class="s2">"data/model/lgbm_trainer.dill"</span><span class="p">,</span> <span class="n">trainer</span><span class="p">)</span>
-<span class="n">trainer</span> <span class="o">=</span> <span class="n">dill_load</span><span class="p">(</span><span class="s2">"data/model/lgbm_trainer.dill"</span><span class="p">)</span>
+<span class="n">dill_dump</span><span class="p">(</span><span class="s2">"lgbm_trainer.dill"</span><span class="p">,</span> <span class="n">trainer</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">dill_load</span><span class="p">(</span><span class="s2">"lgbm_trainer.dill"</span><span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-9"># save/load trainer
-dill_dump("data/model/lgbm_trainer.dill", trainer)
-trainer = dill_load("data/model/lgbm_trainer.dill")</div>
+dill_dump("lgbm_trainer.dill", trainer)
+trainer = dill_load("lgbm_trainer.dill")</div>
 </div>
 </div>
 </div>
@@ -3234,26 +3236,26 @@ trainer = dill_load("data/model/lgbm_trainer.dill")</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{'cls_report': {'0': {'f1-score': 0.9143206854345166,
-                      'precision': 0.8914081145584726,
-                      'recall': 0.9384422110552764,
+<pre>{'cls_report': {'0': {'f1-score': 0.9218559218559219,
+                      'precision': 0.8966745843230404,
+                      'recall': 0.9484924623115578,
                       'support': 796},
-                '1': {'f1-score': 0.6174863387978142,
-                      'precision': 0.6975308641975309,
-                      'recall': 0.553921568627451,
+                '1': {'f1-score': 0.6464088397790054,
+                      'precision': 0.740506329113924,
+                      'recall': 0.5735294117647058,
                       'support': 204},
-                'accuracy': 0.86,
-                'macro avg': {'f1-score': 0.7659035121161655,
-                              'precision': 0.7944694893780018,
-                              'recall': 0.7461818898413637,
+                'accuracy': 0.872,
+                'macro avg': {'f1-score': 0.7841323808174636,
+                              'precision': 0.8185904567184822,
+                              'recall': 0.7610109370381318,
                               'support': 1000},
-                'weighted avg': {'f1-score': 0.8537664787206294,
-                                 'precision': 0.8518571554848405,
-                                 'recall': 0.86,
+                'weighted avg': {'f1-score': 0.8656647171122308,
+                                 'precision': 0.8648162602603806,
+                                 'recall': 0.872,
                                  'support': 1000}},
- 'cm': [[747, 49], [91, 113]],
- 'prec_rec_curve': [[0.204, 0.6975308641975309, 1.0],
-                    [1.0, 0.553921568627451, 0.0],
+ 'cm': [[755, 41], [87, 117]],
+ 'prec_rec_curve': [[0.204, 0.740506329113924, 1.0],
+                    [1.0, 0.5735294117647058, 0.0],
                     [0.0, 1.0]]}
 </pre>
 </div>
@@ -3294,30 +3296,931 @@ trainer = dill_load("data/model/lgbm_trainer.dill")</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>{'cls_report': {'0': {'f1-score': 0.9143920595533498,
-                      'precision': 0.9031862745098039,
-                      'recall': 0.9258793969849246,
+<pre>{'cls_report': {'0': {'f1-score': 0.9244823386114495,
+                      'precision': 0.8971631205673759,
+                      'recall': 0.9535175879396985,
                       'support': 796},
-                '1': {'f1-score': 0.6443298969072165,
-                      'precision': 0.6793478260869565,
-                      'recall': 0.6127450980392157,
+                '1': {'f1-score': 0.6536312849162011,
+                      'precision': 0.7597402597402597,
+                      'recall': 0.5735294117647058,
                       'support': 204},
-                'accuracy': 0.862,
-                'macro avg': {'f1-score': 0.7793609782302832,
-                              'precision': 0.7912670502983803,
-                              'recall': 0.7693122475120702,
+                'accuracy': 0.876,
+                'macro avg': {'f1-score': 0.7890568117638252,
+                              'precision': 0.8284516901538178,
+                              'recall': 0.7635234998522022,
                               'support': 1000},
-                'weighted avg': {'f1-score': 0.8592993783735386,
-                                 'precision': 0.8575232310315432,
-                                 'recall': 0.862,
+                'weighted avg': {'f1-score': 0.8692287236576187,
+                                 'precision': 0.8691288569586443,
+                                 'recall': 0.876,
                                  'support': 1000}},
- 'cm': [[737, 59], [79, 125]],
- 'prec_rec_curve': [[0.204, 0.6793478260869565, 1.0],
-                    [1.0, 0.6127450980392157, 0.0],
+ 'cm': [[759, 37], [87, 117]],
+ 'prec_rec_curve': [[0.204, 0.7597402597402597, 1.0],
+                    [1.0, 0.5735294117647058, 0.0],
                     [0.0, 1.0]]}
 </pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="mlflow">Mlflow<a class="anchor-link" href="#mlflow">¶</a></h1><ul>
+<li>tracking</li>
+<li>model registration in Minio</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-12">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">mlflow_host</span> <span class="o">=</span> <span class="s2">"10.152.183.54"</span>
+<span class="n">mlflow_host_url</span> <span class="o">=</span> <span class="s2">"mlflow.mlflow.svc.cluster.local"</span>
+<span class="n">mlflow_port</span> <span class="o">=</span> <span class="s2">"5000"</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"AWS_ACCESS_KEY_ID"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"minioadmin"</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"AWS_SECRET_ACCESS_KEY"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"minioadmin"</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"MLFLOW_S3_ENDPOINT_URL"</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"http://10.152.183.156:9000"</span>
+
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="s2">"http://"</span> <span class="o">+</span> <span class="n">mlflow_host</span> <span class="o">+</span> <span class="s2">":"</span> <span class="o">+</span> <span class="n">mlflow_port</span><span class="p">)</span>
+<span class="n">experiment_id</span> <span class="o">=</span> <span class="n">get_or_create_experiment</span><span class="p">(</span><span class="s2">"ecovadis_assignment"</span><span class="p">)</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment_id</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-12">mlflow_host = "10.152.183.54"
+mlflow_host_url = "mlflow.mlflow.svc.cluster.local"
+mlflow_port = "5000"
+os.environ["AWS_ACCESS_KEY_ID"] = "minioadmin"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "minioadmin"
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = f"http://10.152.183.156:9000"
+
+mlflow.set_tracking_uri("http://" + mlflow_host + ":" + mlflow_port)
+experiment_id = get_or_create_experiment("ecovadis_assignment")
+mlflow.set_experiment(experiment_id=experiment_id)</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>&lt;Experiment: artifact_location='s3://mlflow/2', creation_time=1715939157478, experiment_id='2', last_update_time=1715939157478, lifecycle_stage='active', name='ecovadis_assignment', tags={}&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-13">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">metrics_dict_flattened</span> <span class="o">=</span> <span class="n">flatten_dict</span><span class="p">(</span><span class="n">metrics_dict</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-13">metrics_dict_flattened = flatten_dict(metrics_dict)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-14">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># mlflow metrics can be only int, float not list</span>
+<span class="k">del</span> <span class="n">metrics_dict_flattened</span><span class="p">[</span><span class="s2">"cm"</span><span class="p">]</span>
+<span class="k">del</span> <span class="n">metrics_dict_flattened</span><span class="p">[</span><span class="s2">"prec_rec_curve"</span><span class="p">]</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-14"># mlflow metrics can be only int, float not list
+del metrics_dict_flattened["cm"]
+del metrics_dict_flattened["prec_rec_curve"]</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-15">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">run_name</span> <span class="o">=</span> <span class="s2">"init_run"</span>
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span>
+    <span class="n">experiment_id</span><span class="o">=</span><span class="n">experiment_id</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="n">run_name</span><span class="p">,</span> <span class="n">nested</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">best</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">metrics_dict_flattened</span><span class="p">)</span>
+
+    <span class="c1"># Log tags</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tags</span><span class="p">(</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">"project"</span><span class="p">:</span> <span class="s2">"SUCCESS6G"</span><span class="p">,</span>
+            <span class="s2">"optimizer_engine"</span><span class="p">:</span> <span class="s2">"optuna"</span><span class="p">,</span>
+            <span class="s2">"model_family"</span><span class="p">:</span> <span class="s2">"ligtgbm"</span><span class="p">,</span>
+            <span class="s2">"feature_set_version"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="c1"># Log figure - for future fun</span>
+    <span class="c1"># mlflow.log_figure(figure=correlation_plot, artifact_file="correlation_plot.png")</span>
+
+    <span class="n">artifact_path</span> <span class="o">=</span> <span class="s2">"ecovadis_model"</span>
+    <span class="n">registered_model_name</span> <span class="o">=</span> <span class="s2">"ecovadis_lgbm_model"</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
+        <span class="n">python_model</span><span class="o">=</span><span class="n">trainer</span><span class="p">,</span>
+        <span class="n">artifact_path</span><span class="o">=</span><span class="n">artifact_path</span><span class="p">,</span>
+        <span class="n">registered_model_name</span><span class="o">=</span><span class="n">registered_model_name</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">model_uri</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_artifact_uri</span><span class="p">(</span><span class="n">artifact_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Run ID:</span><span class="se">\n</span><span class="si">{</span><span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="si">}</span><span class="se">\n</span><span class="s2">Model uri:</span><span class="se">\n</span><span class="si">{</span><span class="n">model_uri</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-15">run_name = "init_run"
+with mlflow.start_run(
+    experiment_id=experiment_id, run_name=run_name, nested=True
+) as run:
+    mlflow.log_params(trainer.optimizer.best)
+    mlflow.log_metrics(metrics_dict_flattened)
+
+    # Log tags
+    mlflow.set_tags(
+        tags={
+            "project": "SUCCESS6G",
+            "optimizer_engine": "optuna",
+            "model_family": "ligtgbm",
+            "feature_set_version": 1,
+        }
+    )
+    # Log figure - for future fun
+    # mlflow.log_figure(figure=correlation_plot, artifact_file="correlation_plot.png")
+
+    artifact_path = "ecovadis_model"
+    registered_model_name = "ecovadis_lgbm_model"
+    mlflow.pyfunc.log_model(
+        python_model=trainer,
+        artifact_path=artifact_path,
+        registered_model_name=registered_model_name,
+    )
+    model_uri = mlflow.get_artifact_uri(artifact_path)
+    print(f"Run ID:\n{run.info.run_id}\nModel uri:\n{model_uri}")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>2024/05/17 10:18:43 INFO mlflow.types.utils: Unsupported type hint: &lt;class 'pandas.core.frame.DataFrame'&gt;, skipping schema inference
+2024/05/17 10:18:43 INFO mlflow.types.utils: Unsupported type hint: &lt;class 'pandas.core.frame.DataFrame'&gt;, skipping schema inference
+Registered model 'ecovadis_lgbm_model' already exists. Creating a new version of this model...
+2024/05/17 10:18:49 INFO mlflow.store.model_registry.abstract_store: Waiting up to 300 seconds for model version to finish creation. Model name: ecovadis_lgbm_model, version 2
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Run ID:
+18b4ab4d40bb4476b2cbb70b4b6a72a0
+Model uri:
+s3://mlflow/2/18b4ab4d40bb4476b2cbb70b4b6a72a0/artifacts/ecovadis_model
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>Created version '2' of model 'ecovadis_lgbm_model'.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="screenshots-from-mlflow-gui-nodeport-service-in-kubernetes">Screenshots from MLflow GUI (Nodeport service in Kubernetes)<a class="anchor-link" href="#screenshots-from-mlflow-gui-nodeport-service-in-kubernetes">¶</a></h2><p><img alt="mlflow_parameters" src="img/mlflow_parameters.png"/>
+<img alt="mlflow_parameters" src="img/mlflow_metrics.png"/></p>
+<p><img alt="mlflow_parameters" src="img/mlflow_artifacts.png"/></p>
+<p><img alt="mlflow_parameters" src="img/mlflow_artifacts_registered_model.png"/></p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="predictions-testing">Predictions testing<a class="anchor-link" href="#predictions-testing">¶</a></h2><p><strong>IMPORTANT</strong>: the predictions are in raw_score format(for testing to see if I get same predictions), i.e. strange numbers and not classes in t</p>
+<h3 id="example-data">Example data<a class="anchor-link" href="#example-data">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-16">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">df_pd</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-16">df_pd.iloc[:2]</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>CustomerId</th>
+<th>CreditScore</th>
+<th>Country</th>
+<th>Gender</th>
+<th>Age</th>
+<th>Tenure</th>
+<th>Balance (EUR)</th>
+<th>NumberOfProducts</th>
+<th>HasCreditCard</th>
+<th>IsActiveMember</th>
+<th>EstimatedSalary</th>
+<th>Exited</th>
+<th>CustomerFeedback_sentiment3</th>
+<th>CustomerFeedback_sentiment5</th>
+<th>Surname_Country</th>
+<th>Surname_Country_region</th>
+<th>Surname_Country_subregion</th>
+<th>Country_region</th>
+<th>Country_subregion</th>
+<th>is_native</th>
+<th>Country_hemisphere</th>
+<th>Country_gdp_per_capita</th>
+<th>Country_IncomeGroup</th>
+<th>Surname_Country_gdp_per_capita</th>
+<th>Surname_Country_IncomeGroup</th>
+<th>working_class</th>
+<th>stage_of_life</th>
+<th>generation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>15787619</td>
+<td>844</td>
+<td>France</td>
+<td>Male</td>
+<td>18</td>
+<td>2</td>
+<td>160980.03</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>145936.28</td>
+<td>0</td>
+<td>neutral</td>
+<td>4 stars</td>
+<td>Taiwan</td>
+<td>Asia</td>
+<td>Eastern Asia</td>
+<td>Europe</td>
+<td>Western Europe</td>
+<td>0</td>
+<td>northern</td>
+<td>57594.03402</td>
+<td>High income</td>
+<td>32756.00000</td>
+<td>None</td>
+<td>working_age</td>
+<td>teen</td>
+<td>gen_z</td>
+</tr>
+<tr>
+<th>1</th>
+<td>15770309</td>
+<td>656</td>
+<td>France</td>
+<td>Male</td>
+<td>18</td>
+<td>10</td>
+<td>151762.74</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>127014.32</td>
+<td>0</td>
+<td>neutral</td>
+<td>1 star</td>
+<td>United States</td>
+<td>Americas</td>
+<td>Northern America</td>
+<td>Europe</td>
+<td>Western Europe</td>
+<td>0</td>
+<td>northern</td>
+<td>57594.03402</td>
+<td>High income</td>
+<td>76329.58227</td>
+<td>High income</td>
+<td>working_age</td>
+<td>teen</td>
+<td>gen_z</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-17">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">df_pd</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-17">df_pd.iloc[:2].transpose().to_dict(orient="index")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>{'CustomerId': {0: 15787619, 1: 15770309},
+ 'CreditScore': {0: 844, 1: 656},
+ 'Country': {0: 'France', 1: 'France'},
+ 'Gender': {0: 'Male', 1: 'Male'},
+ 'Age': {0: 18, 1: 18},
+ 'Tenure': {0: 2, 1: 10},
+ 'Balance (EUR)': {0: 160980.03, 1: 151762.74},
+ 'NumberOfProducts': {0: 1, 1: 1},
+ 'HasCreditCard': {0: '0', 1: '0'},
+ 'IsActiveMember': {0: '0', 1: '1'},
+ 'EstimatedSalary': {0: 145936.28, 1: 127014.32},
+ 'Exited': {0: 0, 1: 0},
+ 'CustomerFeedback_sentiment3': {0: 'neutral', 1: 'neutral'},
+ 'CustomerFeedback_sentiment5': {0: '4 stars', 1: '1 star'},
+ 'Surname_Country': {0: 'Taiwan', 1: 'United States'},
+ 'Surname_Country_region': {0: 'Asia', 1: 'Americas'},
+ 'Surname_Country_subregion': {0: 'Eastern Asia', 1: 'Northern America'},
+ 'Country_region': {0: 'Europe', 1: 'Europe'},
+ 'Country_subregion': {0: 'Western Europe', 1: 'Western Europe'},
+ 'is_native': {0: '0', 1: '0'},
+ 'Country_hemisphere': {0: 'northern', 1: 'northern'},
+ 'Country_gdp_per_capita': {0: 57594.03402, 1: 57594.03402},
+ 'Country_IncomeGroup': {0: 'High income', 1: 'High income'},
+ 'Surname_Country_gdp_per_capita': {0: 32756.0, 1: 76329.58227},
+ 'Surname_Country_IncomeGroup': {0: 'None', 1: 'High income'},
+ 'working_class': {0: 'working_age', 1: 'working_age'},
+ 'stage_of_life': {0: 'teen', 1: 'teen'},
+ 'generation': {0: 'gen_z', 1: 'gen_z'}}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>after some notepad magic:</p>
+<pre><code>{
+    "CustomerId": [15787619, 15770309],
+    "CreditScore": [844, 656],
+    "Country": ["France", "France"],
+    "Gender": ["Male", "Male"],
+    "Age": [18, 18],
+    "Tenure": [2, 10],
+    "Balance (EUR)": [160980.03, 151762.74],
+    "NumberOfProducts": [1, 1],
+    "HasCreditCard": ["0", "0"],
+    "IsActiveMember": ["0", "1"],
+    "EstimatedSalary": [145936.28, 127014.32],
+    "Exited": [0, 0],
+    "CustomerFeedback_sentiment3": ["neutral", "neutral"],
+    "CustomerFeedback_sentiment5": ["4 stars", "1 star"],
+    "Surname_Country": ["Taiwan", "United States"],
+    "Surname_Country_region": ["Asia", "Americas"],
+    "Surname_Country_subregion": ["Eastern Asia", "Northern America"],
+    "Country_region": ["Europe", "Europe"],
+    "Country_subregion": ["Western Europe", "Western Europe"],
+    "is_native": ["0", "0"],
+    "Country_hemisphere": ["northern", "northern"],
+    "Country_gdp_per_capita": [57594.03402, 57594.03402],
+    "Country_IncomeGroup": ["High income", "High income"],
+    "Surname_Country_gdp_per_capita": [32756.0, 76329.58227],
+    "Surname_Country_IncomeGroup": ["None", "High income"],
+    "working_class": ["working_age", "working_age"],
+    "stage_of_life": ["teen", "teen"],
+    "generation": ["gen_z", "gen_z"],
+}
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="trainer">Trainer<a class="anchor-link" href="#trainer">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-18">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_pd</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Exited"</span><span class="p">]),</span> <span class="n">context</span><span class="o">=</span><span class="p">{})</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-18">trainer.predict(df=df_pd.iloc[:2].drop(columns=["Exited"]), context={})</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Exited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>-17.300401</td>
+</tr>
+<tr>
+<th>1</th>
+<td>-15.238104</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="downloaded-trainer">Downloaded Trainer<a class="anchor-link" href="#downloaded-trainer">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-19">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">model_uri</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-19">model_uri</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>'s3://mlflow/2/18b4ab4d40bb4476b2cbb70b4b6a72a0/artifacts/ecovadis_model'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-20">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">loaded_trainer</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">pyfunc</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_uri</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-20">loaded_trainer = mlflow.pyfunc.load_model(model_uri)</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Downloading artifacts:   0%|          | 0/9 [00:00&lt;?, ?it/s]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-21">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">loaded_trainer</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df_pd</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Exited"</span><span class="p">]))</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-21">loaded_trainer.predict(df_pd.iloc[:2].drop(columns=["Exited"]))</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[21]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Exited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>-17.300401</td>
+</tr>
+<tr>
+<th>1</th>
+<td>-15.238104</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="downloadedserved-trainer">Downloaded/Served Trainer<a class="anchor-link" href="#downloadedserved-trainer">¶</a></h3><ul>
+<li>i.e. testing <a href="https://mlflow.org/docs/latest/deployment/deploy-model-to-kubernetes/tutorial.html?highlight=kserve#step-6-testing-model-serving-locally">model locally</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-22">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">model_uri</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-22">model_uri</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>'s3://mlflow/2/18b4ab4d40bb4476b2cbb70b4b6a72a0/artifacts/ecovadis_model'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-23">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="err">!</span> <span class="n">mlflow</span> <span class="n">models</span> <span class="n">serve</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"s3://mlflow/2/18b4ab4d40bb4476b2cbb70b4b6a72a0/artifacts/ecovadis_model"</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">manager</span> <span class="n">local</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5000</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-23">! mlflow models serve -m "s3://mlflow/2/18b4ab4d40bb4476b2cbb70b4b6a72a0/artifacts/ecovadis_model" --env-manager local -p 5000</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Downloading artifacts: 100%|█████████████████████| 1/1 [00:00&lt;00:00, 577.81it/s]
+2024/05/17 10:19:38 INFO mlflow.models.flavor_backend_registry: Selected backend for flavor 'python_function'
+Downloading artifacts: 100%|██████████████████████| 9/9 [00:00&lt;00:00, 44.62it/s]
+2024/05/17 10:19:38 INFO mlflow.pyfunc.backend: === Running command 'exec gunicorn --timeout=60 -b 127.0.0.1:5000 -w 1 ${GUNICORN_CMD_ARGS} -- mlflow.pyfunc.scoring_server.wsgi:app'
+[2024-05-17 10:19:39 +0000] [8811] [INFO] Starting gunicorn 22.0.0
+[2024-05-17 10:19:39 +0000] [8811] [INFO] Listening at: http://127.0.0.1:5000 (8811)
+[2024-05-17 10:19:39 +0000] [8811] [INFO] Using worker: sync
+[2024-05-17 10:19:39 +0000] [8812] [INFO] Booting worker with pid: 8812
+^C
+[2024-05-17 10:23:52 +0000] [8811] [INFO] Handling signal: int
+[2024-05-17 10:23:52 +0000] [8812] [INFO] Worker exiting (pid: 8812)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>output from terminal:</p>
+<pre><code>root@jupyter-5uperpalo:~# curl -X POST -H "Content-Type:application/json" --data '{"inputs": {"CustomerId": [15787619, 15770309], "CreditScore": [844, 656], "Country": ["France", "France"], "Gender": ["Male", "Male"], "Age": [18, 18], "Tenure": [2, 10], "Balance (EUR)": [160980.03, 151762.74], "NumberOfProducts": [1, 1], "HasCreditCard": ["0", "0"], "IsActiveMember": ["0", "1"], "EstimatedSalary": [145936.28, 127014.32], "CustomerFeedback_sentiment3": ["neutral", "neutral"], "CustomerFeedback_sentiment5": ["4 stars", "1 star"], "Surname_Country": ["Taiwan", "United States"], "Surname_Country_region": ["Asia", "Americas"], "Surname_Country_subregion": ["Eastern Asia", "Northern America"], "Country_region": ["Europe", "Europe"], "Country_subregion": ["Western Europe", "Western Europe"], "is_native": ["0", "0"], "Country_hemisphere": ["northern", "northern"], "Country_gdp_per_capita": [57594.03402, 57594.03402], "Country_IncomeGroup": ["High income", "High income"], "Surname_Country_gdp_per_capita": [32756.0, 76329.58227], "Surname_Country_IncomeGroup": ["None", "High income"], "working_class": ["working_age", "working_age"], "stage_of_life": ["teen", "teen"], "generation": ["gen_z", "gen_z"]}}' http://127.0.0.1:5000/invocations
+{"predictions": [{"Exited": -17.300400783182656}, {"Exited": -15.2381037279264}]}
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="tbd-model-deployment-using-kserve">[TBD] Model deployment using Kserve<a class="anchor-link" href="#tbd-model-deployment-using-kserve">¶</a></h1><ul>
+<li><a href="https://mlflow.org/docs/latest/deployment/deploy-model-to-kubernetes/tutorial.html?highlight=kserve#step-7-deploying-the-model-to-kserve">https://mlflow.org/docs/latest/deployment/deploy-model-to-kubernetes/tutorial.html?highlight=kserve#step-7-deploying-the-model-to-kserve</a></li>
+</ul>
+<p><strong>Current ISSUE</strong>: the readiness probe is killing the pod: <code>Readiness probe failed: Get "http://10.1.4.209:8012/": context deadline exceeded (Client.Timeout exceeded while awaiting headers)</code></p>
 </div>
 </div>
 </div>
@@ -3346,12 +4249,13 @@ trainer = dill_load("data/model/lgbm_trainer.dill")</div>
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contributors">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.536 5.536 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13v-1.75M0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20H0m24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9V20Z"/></svg>
       
     </span>
     <nav>
       
-        <a href="mailto:mulinka.pavol@gmail.com">Pavol Mulinka</a>
+        <a href="mailto:mulinka.pavol@gmail.com">Pavol Mulinka</a>, 
+        <a href="mailto:not.committed.yet">Not Committed Yet</a>
     </nav>
   </span>
 
