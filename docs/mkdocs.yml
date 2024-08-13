@@ -1,6 +1,6 @@
-site_name: ecovadis_assignment
-repo_name: ecovadis_assignment
-repo_url: https://github.com/5uperpalo/ecovadis_assignment
+site_name: churnpred
+repo_name: churnpred
+repo_url: https://github.com/5uperpalo/churnpred
 copyright: Pavol Mulinka
 docs_dir: sources
 site_url: 
@@ -30,7 +30,7 @@ nav:
     - contributing: contributing.md
 
 theme:
-    logo: assets/images/ecovadis_green_logo.png
+    logo: assets/images/logo.png
     name: material
     custom_dir: sources/overrides
 
@@ -43,14 +43,14 @@ theme:
 
     palette:
     - scheme: default
-      primary: green
-      accent: teal
+      primary: purple
+      accent: pink
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
-      primary: green
-      accent: teal
+      primary: purple
+      accent: pink
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
