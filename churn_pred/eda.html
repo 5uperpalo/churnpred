@@ -8,33 +8,23 @@
       
       
       
-      
-        <link rel="prev" href="code_profiling.html">
-      
-      
-        <link rel="next" href="preprocessing.html">
-      
-      
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.20">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>eda - ecovadis_assignment</title>
+        <title>eda - churnpred</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
       
       
-
-
     
-    
-      
     
     
       
@@ -50,11 +40,10 @@
     
       <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
-    
     
     
   </head>
@@ -67,8 +56,11 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="teal">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="purple" data-md-color-accent="pink">
   
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -90,22 +82,21 @@
 
   
 
-<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<header class="md-header md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="ecovadis_assignment" class="md-header__button md-logo" aria-label="ecovadis_assignment" data-md-component="logo">
+    <a href="../index.html" title="churnpred" class="md-header__button md-logo" aria-label="churnpred" data-md-component="logo">
       
-  <img src="../assets/images/ecovadis_green_logo.png" alt="logo">
+  <img src="../assets/images/logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            ecovadis_assignment
+            churnpred
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -118,39 +109,31 @@
       </div>
     </div>
     
-      
-        <form class="md-header__option" data-md-component="palette">
-  
-    
-    
-    
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
-    
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-      </label>
-    
-  
-    
-    
-    
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
-    
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-      </label>
-    
-  
-</form>
-      
-    
-    
-      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="purple" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="purple" data-md-color-accent="pink"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
     
     
     
       <label class="md-header__button md-icon" for="__search">
-        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
@@ -159,15 +142,12 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
@@ -179,7 +159,7 @@
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
+          <ol class="md-search-result__list"></ol>
         </div>
       </div>
     </div>
@@ -188,13 +168,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/5uperpalo/ecovadis_assignment" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/5uperpalo/churnpred" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    ecovadis_assignment
+    churnpred
   </div>
 </a>
       </div>
@@ -204,21 +184,46 @@
     
       
 <nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-grid">
+  <div class="md-tabs__inner md-grid">
     <ul class="md-tabs__list">
       
         
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../index.html" class="md-tabs__link">
+
+
+  <li class="md-tabs__item">
+    <a href="../index.html" class="md-tabs__link">
+      home
+    </a>
+  </li>
+
+      
         
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../installation.html" class="md-tabs__link">
+      installation
+    </a>
+  </li>
+
+      
+        
+  
   
     
   
-  home
 
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="code_profiling.html" class="md-tabs__link md-tabs__link--active">
+        churn_pred
       </a>
     </li>
   
@@ -227,15 +232,14 @@
         
   
   
+
+
+  
+  
   
     <li class="md-tabs__item">
-      <a href="../installation.html" class="md-tabs__link">
-        
-  
-    
-  
-  installation
-
+      <a href="../notebooks/00_auxiliary_features_surname_origin_country_classification.html" class="md-tabs__link">
+        notebooks
       </a>
     </li>
   
@@ -244,94 +248,37 @@
         
   
   
-    
-  
-  
-    
-    
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="code_profiling.html" class="md-tabs__link">
-          
-  
-    
-  
-  churn_pred
 
-        </a>
-      </li>
-    
-  
+
+  <li class="md-tabs__item">
+    <a href="../cicd.html" class="md-tabs__link">
+      cicd
+    </a>
+  </li>
 
       
         
   
   
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../notebooks/00_auxiliary_features_surname_origin_country_classification.html" class="md-tabs__link">
-          
-  
-    
-  
-  notebooks
 
-        </a>
-      </li>
-    
-  
+
+  <li class="md-tabs__item">
+    <a href="../code_profiling.html" class="md-tabs__link">
+      code profiling
+    </a>
+  </li>
 
       
         
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../cicd.html" class="md-tabs__link">
-        
-  
-    
-  
-  cicd
 
-      </a>
-    </li>
-  
 
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../code_profiling.html" class="md-tabs__link">
-        
-  
-    
-  
-  code profiling
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../contributing.html" class="md-tabs__link">
-        
-  
-    
-  
-  contributing
-
-      </a>
-    </li>
-  
+  <li class="md-tabs__item">
+    <a href="../contributing.html" class="md-tabs__link">
+      contributing
+    </a>
+  </li>
 
       
     </ul>
@@ -356,7 +303,6 @@
                   <div class="md-sidebar__inner">
                     
 
-
   
 
 
@@ -364,22 +310,22 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="ecovadis_assignment" class="md-nav__button md-logo" aria-label="ecovadis_assignment" data-md-component="logo">
+    <a href="../index.html" title="churnpred" class="md-nav__button md-logo" aria-label="churnpred" data-md-component="logo">
       
-  <img src="../assets/images/ecovadis_green_logo.png" alt="logo">
+  <img src="../assets/images/logo.png" alt="logo">
 
     </a>
-    ecovadis_assignment
+    churnpred
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/5uperpalo/ecovadis_assignment" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/5uperpalo/churnpred" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    ecovadis_assignment
+    churnpred
   </div>
 </a>
     </div>
@@ -388,19 +334,14 @@
     
       
       
-  
+      
+
   
   
   
     <li class="md-nav__item">
       <a href="../index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    home
-  </span>
-  
-
+        home
       </a>
     </li>
   
@@ -408,19 +349,14 @@
     
       
       
-  
+      
+
   
   
   
     <li class="md-nav__item">
       <a href="../installation.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    installation
-  </span>
-  
-
+        installation
       </a>
     </li>
   
@@ -428,113 +364,80 @@
     
       
       
+      
+
   
   
     
   
   
-  
     
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-      
-        
-        
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    churn_pred
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            churn_pred
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          churn_pred
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="churn_pred" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          churn_pred
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="code_profiling.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    code_profiling
-  </span>
-  
-
+        code_profiling
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
   
   
     
   
   
-  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    eda
-  </span>
-  
-
+          eda
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="eda.html" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    eda
-  </span>
-  
-
+        eda
       </a>
       
         
@@ -554,180 +457,42 @@
       
         <li class="md-nav__item">
   <a href="#churn_pred.eda.features.analysis" class="md-nav__link">
-    <span class="md-ellipsis">
-      analysis
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.analysis.entropy" class="md-nav__link">
-    <span class="md-ellipsis">
-      entropy
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.analysis.init_check" class="md-nav__link">
-    <span class="md-ellipsis">
-      init_check
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.analysis.missing" class="md-nav__link">
-    <span class="md-ellipsis">
-      missing
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.analysis.nunique" class="md-nav__link">
-    <span class="md-ellipsis">
-      nunique
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.analysis.std" class="md-nav__link">
-    <span class="md-ellipsis">
-      std
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.analysis.zero" class="md-nav__link">
-    <span class="md-ellipsis">
-      zero
-    </span>
+    analysis
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#churn_pred.eda.features.plotting" class="md-nav__link">
-    <span class="md-ellipsis">
-      plotting
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.plotting.cross_correlation" class="md-nav__link">
-    <span class="md-ellipsis">
-      cross_correlation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.features.plotting.distributions" class="md-nav__link">
-    <span class="md-ellipsis">
-      distributions
-    </span>
+    plotting
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#churn_pred.eda.target.analysis" class="md-nav__link">
-    <span class="md-ellipsis">
-      analysis
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.target.analysis.correlation" class="md-nav__link">
-    <span class="md-ellipsis">
-      correlation
-    </span>
+    analysis
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#churn_pred.eda.target.plotting" class="md-nav__link">
-    <span class="md-ellipsis">
-      plotting
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.target.plotting.distributions_in_binary_cls" class="md-nav__link">
-    <span class="md-ellipsis">
-      distributions_in_binary_cls
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.target.plotting.prob_distrib_per_class" class="md-nav__link">
-    <span class="md-ellipsis">
-      prob_distrib_per_class
-    </span>
+    plotting
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#churn_pred.eda.plotting" class="md-nav__link">
-    <span class="md-ellipsis">
-      plotting
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.plotting.bar_plot" class="md-nav__link">
-    <span class="md-ellipsis">
-      bar_plot
-    </span>
+    plotting
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#churn_pred.eda.general_utils" class="md-nav__link">
-    <span class="md-ellipsis">
-      general_utils
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.general_utils.entropy_calc" class="md-nav__link">
-    <span class="md-ellipsis">
-      entropy_calc
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn_pred.eda.general_utils.intsec" class="md-nav__link">
-    <span class="md-ellipsis">
-      intsec
-    </span>
+    general_utils
   </a>
   
 </li>
@@ -739,282 +504,200 @@
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="preprocessing.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    preprocessing
-  </span>
-  
-
+        preprocessing
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="training.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    training
-  </span>
-  
-
+        training
       </a>
     </li>
   
 
-              
             
-          </ul>
-        </nav>
-      
+          
+        </ul>
+      </nav>
     </li>
   
 
     
       
       
+      
+
   
   
   
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-      
-      
-    
     
     <li class="md-nav__item md-nav__item--nested">
       
-        
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+          
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    notebooks
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            notebooks
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          notebooks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="notebooks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          notebooks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../notebooks/00_auxiliary_features_surname_origin_country_classification.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    TBD_00_auxiliary_features_surname_origin_country_classification.ipynb
-  </span>
-  
-
+        TBD_00_auxiliary_features_surname_origin_country_classification.ipynb
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../notebooks/00_auxiliary_features.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    00_auxiliary_features
-  </span>
-  
-
+        00_auxiliary_features
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../notebooks/01_feature_analysis.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    01_feature_analysis
-  </span>
-  
-
+        01_feature_analysis
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../notebooks/02_target_analysis.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    02_target_analysis
-  </span>
-  
-
+        02_target_analysis
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../notebooks/03_models.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    03_models
-  </span>
-  
-
+        03_models
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../notebooks/04_model_training_pipeline.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    04_model_training_pipeline
-  </span>
-  
-
+        04_model_training_pipeline
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../notebooks/05_model_analysis.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    05_model_analysis.ipynb
-  </span>
-  
-
+        05_model_analysis.ipynb
       </a>
     </li>
   
 
-              
             
-          </ul>
-        </nav>
-      
+          
+        </ul>
+      </nav>
     </li>
   
 
     
       
       
-  
+      
+
   
   
   
     <li class="md-nav__item">
       <a href="../cicd.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    cicd
-  </span>
-  
-
+        cicd
       </a>
     </li>
   
@@ -1022,19 +705,14 @@
     
       
       
-  
+      
+
   
   
   
     <li class="md-nav__item">
       <a href="../code_profiling.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    code profiling
-  </span>
-  
-
+        code profiling
       </a>
     </li>
   
@@ -1042,19 +720,14 @@
     
       
       
-  
+      
+
   
   
   
     <li class="md-nav__item">
       <a href="../contributing.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    contributing
-  </span>
-  
-
+        contributing
       </a>
     </li>
   
@@ -1068,14 +741,14 @@
             
             
           
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
                 
-                  
+  <a href="https://github.com/5uperpalo/churnpred/edit/main/docs/sources/churn_pred/eda.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
 
-  
-  
 
 
 <h1 id="preprocess-data">Preprocess data<a class="headerlink" href="#preprocess-data" title="Permanent link">&para;</a></h1>
@@ -1085,7 +758,12 @@
 
 
 
-<a id="churn_pred.eda.features.analysis"></a>
+<h2 id="churn_pred.eda.features.analysis" class="doc doc-heading">
+          <span class="doc doc-object-name doc-module-name">analysis</span>
+
+
+<a href="#churn_pred.eda.features.analysis" class="headerlink" title="Permanent link">&para;</a></h2>
+
   <div class="doc doc-contents first">
 
   
@@ -1100,176 +778,23 @@
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.features.analysis.entropy" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">entropy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-<a href="#churn_pred.eda.features.analysis.entropy" class="headerlink" title="Permanent link">&para;</a></h2>
+<h3 id="churn_pred.eda.features.analysis.init_check" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">init_check</span>
 
 
-  <div class="doc doc-contents ">
-  
-      <p>Procedure to plot features sorted by their entropy.</p>
-
-
-
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>dataset</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>scale</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>y scale of the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;linear&#39;</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>plot</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>whether to output the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>plot with sorted entropy of the features</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span>
-<span class="normal">212</span>
-<span class="normal">213</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Figure</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to plot features sorted by their entropy.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        df (DataFrame): dataset</span>
-<span class="sd">        scale (str): y scale of the plot</span>
-<span class="sd">        plot (bool): whether to output the plot</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        fig (Figure): plot with sorted entropy of the features</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">col_entropies</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">entropy_calc</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">col_entropies</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-        <span class="n">bar_plot</span><span class="p">(</span>
-            <span class="n">col_entropies</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Features entropies (NA are dropped)&quot;</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">col_entropies</span><span class="p">,</span> <span class="n">fig</span>
-</code></pre></div></td></tr></table></div>
-          </details>
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="churn_pred.eda.features.analysis.init_check" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">init_check</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cat_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cont_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-<a href="#churn_pred.eda.features.analysis.init_check" class="headerlink" title="Permanent link">&para;</a></h2>
-
+<a href="#churn_pred.eda.features.analysis.init_check" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">init_check</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cat_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cont_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
@@ -1278,125 +803,49 @@
 * general stats of numerical features
 * general stats of categorical features</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>pandas dataframe</p>
+      </li>
+      <li class="field-body">
+        <b>identifier</b>
+            (<code>str</code>)
+        – <p>column which identifies unique user IDs</p>
+      </li>
+      <li class="field-body">
+        <b>cat_cols</b>
+            (<code>list</code>)
+        – <p>categorical features in the dataset</p>
+      </li>
+      <li class="field-body">
+        <b>cont_cols</b>
+            (<code>list</code>)
+        – <p>numerical features in the dataset</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>duplicated_ids</b>(            <code>int</code>
+)        – 
+      </li>
+      <li class="field-body">
+<b>cont_cols_desc</b>(            <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
+)        – 
+      </li>
+      <li class="field-body">
+<b>cat_cols_desc</b>(            <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
+)        – 
+      </li>
+  </ul>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>pandas dataframe</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>identifier</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>column which identifies unique user IDs</p>
-            </div>
-          </td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>cat_cols</code></td>
-          <td>
-                <code>list</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>categorical features in the dataset</p>
-            </div>
-          </td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>cont_cols</code></td>
-          <td>
-                <code>list</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>numerical features in the dataset</p>
-            </div>
-          </td>
-          <td>
-                <code>None</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>duplicated_ids</code></td>          <td>
-                <code>int</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              
-            </div>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-<td><code>cont_cols_desc</code></td>          <td>
-                <code><span title="pandas.DataFrame">DataFrame</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              
-            </div>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-<td><code>cat_cols_desc</code></td>          <td>
-                <code><span title="pandas.DataFrame">DataFrame</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
@@ -1448,7 +897,7 @@
     <span class="n">cont_cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to check:</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to check:</span>
 <span class="sd">    * duplicated rows in teh dataset</span>
 <span class="sd">    * general stats of numerical features</span>
 <span class="sd">    * general stats of categorical features</span>
@@ -1488,122 +937,62 @@
                 <span class="nb">print</span><span class="p">(</span><span class="n">cat_cols_desc</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">duplicated_ids</span><span class="p">,</span> <span class="n">cont_cols_desc</span><span class="p">,</span> <span class="n">cat_cols_desc</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.features.analysis.missing" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">missing</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.features.analysis.missing" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">missing</span>
 
-<a href="#churn_pred.eda.features.analysis.missing" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.features.analysis.missing" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">missing</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Procedure to check fraction of missing values in the dataset.</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>pandas dataframe</p>
+      </li>
+      <li class="field-body">
+        <b>scale</b>
+            (<code>str</code>)
+        – <p>y scale of the plot</p>
+      </li>
+      <li class="field-body">
+        <b>plot</b>
+            (<code>bool</code>)
+        – <p>whether to output the plot</p>
+      </li>
+  </ul>
 
-
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>pandas dataframe</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>scale</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>y scale of the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;linear&#39;</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>plot</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>whether to output the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>missing_val_frac</code></td>          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>sorted dataframe with fraction of missing values
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>missing_val_frac</b>(            <code>DataFrame</code>
+)        – <p>sorted dataframe with fraction of missing values
 per feature</p>
-            </div>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>plot with sorted fractions of missing values in each column</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
+      </li>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>plot with sorted fractions of missing values in each column</p>
+      </li>
+  </ul>
 
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">59</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
 <span class="normal">62</span>
@@ -1639,7 +1028,7 @@ per feature</p>
     <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
     <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Figure</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to check fraction of missing values in the dataset.</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to check fraction of missing values in the dataset.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (DataFrame): pandas dataframe</span>
@@ -1667,111 +1056,168 @@ per feature</p>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">missing_val_frac</span><span class="p">,</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.features.analysis.nunique" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">nunique</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.features.analysis.zero" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">zero</span>
 
-<a href="#churn_pred.eda.features.analysis.nunique" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.features.analysis.zero" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">zero</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Procedure to check fraction of zero values in the dataset.</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>pandas dataframe</p>
+      </li>
+      <li class="field-body">
+        <b>scale</b>
+            (<code>str</code>)
+        – <p>y scale of the plot</p>
+      </li>
+      <li class="field-body">
+        <b>plot</b>
+            (<code>bool</code>)
+        – <p>whether to output the plot</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>zero_val_frac</b>(            <code>DataFrame</code>
+)        – <p>sorted dataframe with fraction of '0' values per
+feature</p>
+      </li>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>plot with sorted fractions of '0' values in each column</p>
+      </li>
+  </ul>
+
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">zero</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Figure</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to check fraction of zero values in the dataset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (DataFrame): pandas dataframe</span>
+<span class="sd">        scale (str): y scale of the plot</span>
+<span class="sd">        plot (bool): whether to output the plot</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        zero_val_frac (DataFrame): sorted dataframe with fraction of &#39;0&#39; values per</span>
+<span class="sd">            feature</span>
+<span class="sd">        fig (Figure): plot with sorted fractions of &#39;0&#39; values in each column</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">zero_val_frac</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">zero_val_frac</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">bar_plot</span><span class="p">(</span><span class="n">zero_val_frac</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Fraction of zero values in the dataset&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">zero_val_frac</span><span class="p">,</span> <span class="n">fig</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="churn_pred.eda.features.analysis.nunique" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">nunique</span>
+
+
+<a href="#churn_pred.eda.features.analysis.nunique" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">nunique</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Procedure to plot features sorted by their number of unique values.</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>dataset</p>
+      </li>
+      <li class="field-body">
+        <b>scale</b>
+            (<code>str</code>)
+        – <p>y scale of the plot</p>
+      </li>
+      <li class="field-body">
+        <b>plot</b>
+            (<code>bool</code>)
+        – <p>whether to output the plot</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>plot with sorted number of unique values in features</p>
+      </li>
+  </ul>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>dataset</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>scale</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>y scale of the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;linear&#39;</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>plot</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>whether to output the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>plot with sorted number of unique values in features</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
 <span class="normal">124</span>
 <span class="normal">125</span>
 <span class="normal">126</span>
@@ -1806,7 +1252,7 @@ per feature</p>
     <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
     <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Figure</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to plot features sorted by their number of unique values.</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to plot features sorted by their number of unique values.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (DataFrame): dataset</span>
@@ -1833,111 +1279,57 @@ per feature</p>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_nunique</span><span class="p">,</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.features.analysis.std" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">std</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.features.analysis.std" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">std</span>
 
-<a href="#churn_pred.eda.features.analysis.std" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.features.analysis.std" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Procedure to plot features sorted by their variance.</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>dataset</p>
+      </li>
+      <li class="field-body">
+        <b>scale</b>
+            (<code>str</code>)
+        – <p>y scale of the plot</p>
+      </li>
+      <li class="field-body">
+        <b>plot</b>
+            (<code>bool</code>)
+        – <p>whether to output the plot</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>plot with sorted standard deviation of continuous features</p>
+      </li>
+  </ul>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>dataset</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>scale</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>y scale of the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;linear&#39;</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>plot</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>whether to output the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>plot with sorted standard deviation of continuous features</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
 <span class="normal">157</span>
 <span class="normal">158</span>
 <span class="normal">159</span>
@@ -1969,7 +1361,7 @@ per feature</p>
     <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
     <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Figure</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to plot features sorted by their variance.</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to plot features sorted by their variance.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (DataFrame): dataset</span>
@@ -1993,178 +1385,113 @@ per feature</p>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_std</span><span class="p">,</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.features.analysis.zero" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">zero</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.features.analysis.entropy" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">entropy</span>
 
-<a href="#churn_pred.eda.features.analysis.zero" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.features.analysis.entropy" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">entropy</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
-      <p>Procedure to check fraction of zero values in the dataset.</p>
+      <p>Procedure to plot features sorted by their entropy.</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>dataset</p>
+      </li>
+      <li class="field-body">
+        <b>scale</b>
+            (<code>str</code>)
+        – <p>y scale of the plot</p>
+      </li>
+      <li class="field-body">
+        <b>plot</b>
+            (<code>bool</code>)
+        – <p>whether to output the plot</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>plot with sorted entropy of the features</p>
+      </li>
+  </ul>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>pandas dataframe</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>scale</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>y scale of the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;linear&#39;</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>plot</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>whether to output the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>zero_val_frac</code></td>          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>sorted dataframe with fraction of '0' values per
-feature</p>
-            </div>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>plot with sorted fractions of '0' values in each column</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">zero</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-    <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
-    <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/analysis.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Figure</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to check fraction of zero values in the dataset.</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to plot features sorted by their entropy.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        df (DataFrame): pandas dataframe</span>
+<span class="sd">        df (DataFrame): dataset</span>
 <span class="sd">        scale (str): y scale of the plot</span>
 <span class="sd">        plot (bool): whether to output the plot</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        zero_val_frac (DataFrame): sorted dataframe with fraction of &#39;0&#39; values per</span>
-<span class="sd">            feature</span>
-<span class="sd">        fig (Figure): plot with sorted fractions of &#39;0&#39; values in each column</span>
+<span class="sd">        fig (Figure): plot with sorted entropy of the features</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">zero_val_frac</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">zero_val_frac</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">col_entropies</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">entropy_calc</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">col_entropies</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-        <span class="n">bar_plot</span><span class="p">(</span><span class="n">zero_val_frac</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Fraction of zero values in the dataset&quot;</span><span class="p">)</span>
+        <span class="n">bar_plot</span><span class="p">(</span>
+            <span class="n">col_entropies</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Features entropies (NA are dropped)&quot;</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">zero_val_frac</span><span class="p">,</span> <span class="n">fig</span>
+    <span class="k">return</span> <span class="n">col_entropies</span><span class="p">,</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
@@ -2181,7 +1508,12 @@ feature</p>
 
 
 
-<a id="churn_pred.eda.features.plotting"></a>
+<h2 id="churn_pred.eda.features.plotting" class="doc doc-heading">
+          <span class="doc doc-object-name doc-module-name">plotting</span>
+
+
+<a href="#churn_pred.eda.features.plotting" class="headerlink" title="Permanent link">&para;</a></h2>
+
   <div class="doc doc-contents first">
 
   
@@ -2196,107 +1528,53 @@ feature</p>
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.features.plotting.cross_correlation" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">cross_correlation</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.features.plotting.cross_correlation" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">cross_correlation</span>
 
-<a href="#churn_pred.eda.features.plotting.cross_correlation" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.features.plotting.cross_correlation" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">cross_correlation</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Procedure to calculate and plot cross-correlation of features
 in the dataset.</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>pandas dataframe</p>
+      </li>
+      <li class="field-body">
+        <b>verbose</b>
+            (<code>bool</code>)
+        – <p>show n most correlated features</p>
+      </li>
+      <li class="field-body">
+        <b>n</b>
+            (<code>int</code>)
+        – <p>number correlated features in verbose output</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>heatmap of continuous features cross correlations</p>
+      </li>
+  </ul>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>pandas dataframe</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>verbose</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>show n most correlated features</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>n</code></td>
-          <td>
-                <code>int</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>number correlated features in verbose output</p>
-            </div>
-          </td>
-          <td>
-                <code>10</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>heatmap of continuous features cross correlations</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/plotting.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/plotting.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
@@ -2342,7 +1620,7 @@ in the dataset.</p>
     <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to calculate and plot cross-correlation of features</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to calculate and plot cross-correlation of features</span>
 <span class="sd">    in the dataset.</span>
 
 <span class="sd">    Args:</span>
@@ -2380,21 +1658,24 @@ in the dataset.</p>
         <span class="nb">print</span><span class="p">(</span><span class="n">upper_stacked_sorted</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
-
 
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.features.plotting.distributions" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">distributions</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">low_per_cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high_per_cut</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.features.plotting.distributions" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">distributions</span>
 
-<a href="#churn_pred.eda.features.plotting.distributions" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.features.plotting.distributions" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">distributions</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">low_per_cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high_per_cut</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;box&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
@@ -2403,107 +1684,43 @@ by column split_col using workaround for violinplots in seaborn:
 * <a href="https://stackoverflow.com/a/64787568/8147433">https://stackoverflow.com/a/64787568/8147433</a>
 DISCALIMER: for now the cont_cols NA vals are filled with 0</p>
 
-
-
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>pandas dataframe</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>low_per_cut</code></td>
-          <td>
-                <code>float</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>lower percentile where to cut the plot for better
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>pandas dataframe</p>
+      </li>
+      <li class="field-body">
+        <b>low_per_cut</b>
+            (<code>float</code>)
+        – <p>lower percentile where to cut the plot for better
 readability</p>
-            </div>
-          </td>
-          <td>
-                <code>0</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>high_per_cut</code></td>
-          <td>
-                <code>float</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>higher percentile where to cut the plot for better
+      </li>
+      <li class="field-body">
+        <b>high_per_cut</b>
+            (<code>float</code>)
+        – <p>higher percentile where to cut the plot for better
 readability</p>
-            </div>
-          </td>
-          <td>
-                <code>1</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>type</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>type of distribution plot</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;box&#39;</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
+      </li>
+      <li class="field-body">
+        <b>type</b>
+            (<code>str</code>)
+        – <p>type of distribution plot</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>ditribution plot per each feature</p>
+      </li>
+  </ul>
 
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>ditribution plot per each feature</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/features/plotting.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 54</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/features/plotting.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 54</span>
 <span class="normal"> 55</span>
 <span class="normal"> 56</span>
 <span class="normal"> 57</span>
@@ -2558,7 +1775,7 @@ readability</p>
     <span class="n">high_per_cut</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="s2">&quot;violin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;box&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to plot distributions of the features splitted</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to plot distributions of the features splitted</span>
 <span class="sd">    by column split_col using workaround for violinplots in seaborn:</span>
 <span class="sd">    * https://stackoverflow.com/a/64787568/8147433</span>
 <span class="sd">    DISCALIMER: for now the cont_cols NA vals are filled with 0</span>
@@ -2603,7 +1820,7 @@ readability</p>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
@@ -2620,7 +1837,12 @@ readability</p>
 
 
 
-<a id="churn_pred.eda.target.analysis"></a>
+<h2 id="churn_pred.eda.target.analysis" class="doc doc-heading">
+          <span class="doc doc-object-name doc-module-name">analysis</span>
+
+
+<a href="#churn_pred.eda.target.analysis" class="headerlink" title="Permanent link">&para;</a></h2>
+
   <div class="doc doc-contents first">
 
   
@@ -2635,132 +1857,63 @@ readability</p>
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.target.analysis.correlation" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">correlation</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.target.analysis.correlation" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">correlation</span>
 
-<a href="#churn_pred.eda.target.analysis.correlation" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.target.analysis.correlation" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">correlation</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Procedure to plot most correlated numerical features with
 target column.</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>)
+        – <p>pandas dataframe</p>
+      </li>
+      <li class="field-body">
+        <b>target</b>
+            (<code><span title="pandas">pd</span>.<span title="pandas.Series">Series</span></code>)
+        – <p>target values</p>
+      </li>
+      <li class="field-body">
+        <b>scale</b>
+            (<code>str</code>)
+        – <p>y scale of the plot</p>
+      </li>
+      <li class="field-body">
+        <b>plot</b>
+            (<code>bool</code>)
+        – <p>whether to output the plot</p>
+      </li>
+  </ul>
 
-
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code><span title="pandas.DataFrame">DataFrame</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>pandas dataframe</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>target</code></td>
-          <td>
-                <code><span title="pandas.Series">Series</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>target values</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>scale</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>y scale of the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>&#39;linear&#39;</code>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>plot</code></td>
-          <td>
-                <code>bool</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>whether to output the plot</p>
-            </div>
-          </td>
-          <td>
-                <code>False</code>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>sorted_corr_cols</code></td>          <td>
-                <code><span title="pandas.DataFrame">DataFrame</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>sorted dataframe with feature and target value
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>sorted_corr_cols</b>(            <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
+)        – <p>sorted dataframe with feature and target value
 correlation</p>
-            </div>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>sorted bar plot with feature and target value correlation</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
+      </li>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>sorted bar plot with feature and target value correlation</p>
+      </li>
+  </ul>
 
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/target/analysis.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/target/analysis.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
@@ -2802,7 +1955,7 @@ correlation</p>
     <span class="n">scale</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
     <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">Figure</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to plot most correlated numerical features with</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to plot most correlated numerical features with</span>
 <span class="sd">    target column.</span>
 
 <span class="sd">    Args:</span>
@@ -2834,7 +1987,7 @@ correlation</p>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">sorted_corr_cols</span><span class="p">,</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
@@ -2851,7 +2004,12 @@ correlation</p>
 
 
 
-<a id="churn_pred.eda.target.plotting"></a>
+<h2 id="churn_pred.eda.target.plotting" class="doc doc-heading">
+          <span class="doc doc-object-name doc-module-name">plotting</span>
+
+
+<a href="#churn_pred.eda.target.plotting" class="headerlink" title="Permanent link">&para;</a></h2>
+
   <div class="doc doc-contents first">
 
   
@@ -2866,288 +2024,53 @@ correlation</p>
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.target.plotting.distributions_in_binary_cls" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">distributions_in_binary_cls</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">low_per_cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high_per_cut</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
-
-<a href="#churn_pred.eda.target.plotting.distributions_in_binary_cls" class="headerlink" title="Permanent link">&para;</a></h2>
+<h3 id="churn_pred.eda.target.plotting.prob_distrib_per_class" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">prob_distrib_per_class</span>
 
 
-  <div class="doc doc-contents ">
-  
-      <p>Procedure to plot distributions of the features splitted
-by column split_col using workaround for violinplots in seaborn:
-* <a href="https://stackoverflow.com/a/64787568/8147433">https://stackoverflow.com/a/64787568/8147433</a>
-DISCALIMER: for now the cont_cols NA vals are filled with 0</p>
-
-
-
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>pandas dataframe</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>target</code></td>
-          <td>
-                <code><span title="pandas.Series">Series</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>target values, i.e. binary classes</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>ditribution plot per each feature</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/target/plotting.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">distributions_in_binary_cls</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-    <span class="n">target</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
-    <span class="n">low_per_cut</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">high_per_cut</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to plot distributions of the features splitted</span>
-<span class="sd">    by column split_col using workaround for violinplots in seaborn:</span>
-<span class="sd">    * https://stackoverflow.com/a/64787568/8147433</span>
-<span class="sd">    DISCALIMER: for now the cont_cols NA vals are filled with 0</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        df (DataFrame): pandas dataframe</span>
-<span class="sd">        target (pd.Series): target values, i.e. binary classes</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        fig (Figure): ditribution plot per each feature</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">target</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">cols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;dummy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribution of feature values splitted by </span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">))):</span>
-        <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-            <span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span>
-                <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-                <span class="n">hue</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="n">x</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
-                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;dummy&quot;</span><span class="p">,</span>
-                <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>
-                <span class="n">cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">showextrem</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
-            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">low_per_cut</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">high_per_cut</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mf">0.97</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">fig</span>
-</code></pre></div></td></tr></table></div>
-          </details>
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="churn_pred.eda.target.plotting.prob_distrib_per_class" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">prob_distrib_per_class</span><span class="p">(</span><span class="n">predicted_probs</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span></code>
-
-<a href="#churn_pred.eda.target.plotting.prob_distrib_per_class" class="headerlink" title="Permanent link">&para;</a></h2>
-
+<a href="#churn_pred.eda.target.plotting.prob_distrib_per_class" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">prob_distrib_per_class</span><span class="p">(</span><span class="n">predicted_probs</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Procedure to plot probability density distributions per class from LightGBM
 predictions.</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>predicted_probs</b>
+            (<code>ndarray</code>)
+        – <p>predicted probs</p>
+      </li>
+      <li class="field-body">
+        <b>actual</b>
+            (<code>ndarray</code>)
+        – <p>ground truth classes</p>
+      </li>
+      <li class="field-body">
+        <b>task</b>
+            (<code>str</code>)
+        – <p>type of task</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>probability density ditributions plot per each class</p>
+      </li>
+  </ul>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>predicted_probs</code></td>
-          <td>
-                <code>ndarray</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>predicted probs</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>actual</code></td>
-          <td>
-                <code>ndarray</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>ground truth classes</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>task</code></td>
-          <td>
-                <code>str</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>type of task</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>fig</code></td>          <td>
-                <code><span title="matplotlib.figure.Figure">Figure</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>probability density ditributions plot per each class</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/target/plotting.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/target/plotting.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
@@ -3222,7 +2145,7 @@ predictions.</p>
     <span class="n">actual</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">task</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;multiclass&quot;</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Procedure to plot probability density distributions per class from LightGBM</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to plot probability density distributions per class from LightGBM</span>
 <span class="sd">    predictions.</span>
 
 <span class="sd">    Args:</span>
@@ -3289,7 +2212,145 @@ predictions.</p>
             <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;probability_density&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="churn_pred.eda.target.plotting.distributions_in_binary_cls" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">distributions_in_binary_cls</span>
+
+
+<a href="#churn_pred.eda.target.plotting.distributions_in_binary_cls" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">distributions_in_binary_cls</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">low_per_cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high_per_cut</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Procedure to plot distributions of the features splitted
+by column split_col using workaround for violinplots in seaborn:
+* <a href="https://stackoverflow.com/a/64787568/8147433">https://stackoverflow.com/a/64787568/8147433</a>
+DISCALIMER: for now the cont_cols NA vals are filled with 0</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>pandas dataframe</p>
+      </li>
+      <li class="field-body">
+        <b>target</b>
+            (<code><span title="pandas">pd</span>.<span title="pandas.Series">Series</span></code>)
+        – <p>target values, i.e. binary classes</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>fig</b>(            <code><span title="matplotlib.figure.Figure">Figure</span></code>
+)        – <p>ditribution plot per each feature</p>
+      </li>
+  </ul>
+
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/target/plotting.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">distributions_in_binary_cls</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">low_per_cut</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">high_per_cut</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Procedure to plot distributions of the features splitted</span>
+<span class="sd">    by column split_col using workaround for violinplots in seaborn:</span>
+<span class="sd">    * https://stackoverflow.com/a/64787568/8147433</span>
+<span class="sd">    DISCALIMER: for now the cont_cols NA vals are filled with 0</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (DataFrame): pandas dataframe</span>
+<span class="sd">        target (pd.Series): target values, i.e. binary classes</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        fig (Figure): ditribution plot per each feature</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">target</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;dummy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribution of feature values splitted by </span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">))):</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span>
+                <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s2">&quot;dummy&quot;</span><span class="p">,</span>
+                <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>
+                <span class="n">cut</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">showextrem</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">low_per_cut</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">high_per_cut</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mf">0.97</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</code></pre></div></td></tr></table></div>
+      </details>
   </div>
 
 </div>
@@ -3306,7 +2367,12 @@ predictions.</p>
 
 
 
-<a id="churn_pred.eda.plotting"></a>
+<h2 id="churn_pred.eda.plotting" class="doc doc-heading">
+          <span class="doc doc-object-name doc-module-name">plotting</span>
+
+
+<a href="#churn_pred.eda.plotting" class="headerlink" title="Permanent link">&para;</a></h2>
+
   <div class="doc doc-contents first">
 
   
@@ -3321,92 +2387,47 @@ predictions.</p>
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.plotting.bar_plot" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">bar_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.plotting.bar_plot" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">bar_plot</span>
 
-<a href="#churn_pred.eda.plotting.bar_plot" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.plotting.bar_plot" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">bar_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Helper method for unified bar plot</p>
 
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>df</b>
+            (<code>DataFrame</code>)
+        – <p>dataframe to plot</p>
+      </li>
+      <li class="field-body">
+        <b>ax</b>
+            (<code><span title="matplotlib.axes.Axes">Axes</span></code>)
+        – <p>axes defining where to plot it</p>
+      </li>
+  </ul>
 
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>adjusted_plot</b>(            <code><span title="matplotlib.axes.Axes">Axes</span></code>
+)        – <p>adjusted axes</p>
+      </li>
+  </ul>
 
-  <p><span class="doc-section-title">Parameters:</span></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Default</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-          <td><code>df</code></td>
-          <td>
-                <code>DataFrame</code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>dataframe to plot</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-        <tr class="doc-section-item">
-          <td><code>ax</code></td>
-          <td>
-                <code><span title="matplotlib.axes.Axes">Axes</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>axes defining where to plot it</p>
-            </div>
-          </td>
-          <td>
-              <em>required</em>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-
-
-  <p><span class="doc-section-title">Returns:</span></p>
-  <table>
-    <thead>
-      <tr>
-<th>Name</th>        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr class="doc-section-item">
-<td><code>adjusted_plot</code></td>          <td>
-                <code><span title="matplotlib.axes.Axes">Axes</span></code>
-          </td>
-          <td>
-            <div class="doc-md-description">
-              <p>adjusted axes</p>
-            </div>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/plotting.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/plotting.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
@@ -3421,7 +2442,7 @@ predictions.</p>
 <span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">bar_plot</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Axes</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper method for unified bar plot</span>
+    <span class="sd">&quot;&quot;&quot;Helper method for unified bar plot</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (DataFrame): dataframe to plot</span>
@@ -3436,7 +2457,7 @@ predictions.</p>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;sorted features&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
@@ -3453,7 +2474,12 @@ predictions.</p>
 
 
 
-<a id="churn_pred.eda.general_utils"></a>
+<h2 id="churn_pred.eda.general_utils" class="doc doc-heading">
+          <span class="doc doc-object-name doc-module-name">general_utils</span>
+
+
+<a href="#churn_pred.eda.general_utils" class="headerlink" title="Permanent link">&para;</a></h2>
+
   <div class="doc doc-contents first">
 
   
@@ -3468,30 +2494,107 @@ predictions.</p>
 
 
 
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="churn_pred.eda.general_utils.intsec" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">intsec</span>
+
+
+<a href="#churn_pred.eda.general_utils.intsec" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">intsec</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Simple intesection of two lists.</p>
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>list1</b>
+            (<code>list</code>)
+        – <p>list1</p>
+      </li>
+      <li class="field-body">
+        <b>list2</b>
+            (<code>list</code>)
+        – <p>list2</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>list</b>(            <code>list</code>
+)        – <p>intersection of lists</p>
+      </li>
+  </ul>
+
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/general_utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">intsec</span><span class="p">(</span><span class="n">list1</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">list2</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Simple intesection of two lists.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        list1 (list): list1</span>
+<span class="sd">        list2 (list): list2</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list (list): intersection of lists</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">list1</span><span class="p">),</span> <span class="nb">set</span><span class="p">(</span><span class="n">list2</span><span class="p">)))</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
 
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="churn_pred.eda.general_utils.entropy_calc" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">entropy_calc</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">e</span><span class="p">)</span></code>
+<h3 id="churn_pred.eda.general_utils.entropy_calc" class="doc doc-heading">
+        <span class="doc doc-object-name doc-function-name">entropy_calc</span>
 
-<a href="#churn_pred.eda.general_utils.entropy_calc" class="headerlink" title="Permanent link">&para;</a></h2>
 
+<a href="#churn_pred.eda.general_utils.entropy_calc" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">entropy_calc</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>
 
   <div class="doc doc-contents ">
   
       <p>Computes entropy of both continuous and categorical features.
 Shamelessly stolen from :
-<a href="https://stackoverflow.com/a/45091961">https://stackoverflow.com/a/45091961</a>
-Args:
-    labels (list, ndarray, Series): list of values
-Returns:
-    ent (float): entropy of the list of values</p>
+<a href="https://stackoverflow.com/a/45091961">https://stackoverflow.com/a/45091961</a></p>
 
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/general_utils.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b>labels</b>
+            (<code>list, ndarray, Series</code>)
+        – <p>list of values</p>
+      </li>
+  </ul>
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b>ent</b>(            <code>float</code>
+)        – <p>entropy of the list of values</p>
+      </li>
+  </ul>
+
+      <details class="quote">
+        <summary>Source code in <code>churn_pred/eda/general_utils.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
@@ -3510,7 +2613,7 @@ Returns:
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">entropy_calc</span><span class="p">(</span><span class="n">labels</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">e</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes entropy of both continuous and categorical features.</span>
+    <span class="sd">&quot;&quot;&quot;Computes entropy of both continuous and categorical features.</span>
 <span class="sd">    Shamelessly stolen from :</span>
 <span class="sd">    https://stackoverflow.com/a/45091961</span>
 <span class="sd">    Args:</span>
@@ -3529,52 +2632,7 @@ Returns:
             <span class="n">ent</span> <span class="o">-=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ent</span>
 </code></pre></div></td></tr></table></div>
-          </details>
-  </div>
-
-</div>
-
-
-<div class="doc doc-object doc-function">
-
-
-
-<h2 id="churn_pred.eda.general_utils.intsec" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">intsec</span><span class="p">(</span><span class="n">list1</span><span class="p">,</span> <span class="n">list2</span><span class="p">)</span></code>
-
-<a href="#churn_pred.eda.general_utils.intsec" class="headerlink" title="Permanent link">&para;</a></h2>
-
-
-  <div class="doc doc-contents ">
-  
-      <p>Simple intesection of two lists.
-Args:
-    list1 (list): list1
-    list2 (list): list2
-Returns:
-    list (list): intersection of lists</p>
-
-          <details class="quote">
-            <summary>Source code in <code>churn_pred/eda/general_utils.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">intsec</span><span class="p">(</span><span class="n">list1</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">list2</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple intesection of two lists.</span>
-<span class="sd">    Args:</span>
-<span class="sd">        list1 (list): list1</span>
-<span class="sd">        list2 (list): list2</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        list (list): intersection of lists</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">list1</span><span class="p">),</span> <span class="nb">set</span><span class="p">(</span><span class="n">list2</span><span class="p">)))</span>
-</code></pre></div></td></tr></table></div>
-          </details>
+      </details>
   </div>
 
 </div>
@@ -3587,50 +2645,51 @@ Returns:
 
 </div>
 
-
-
-
-
-
-
-
-  <aside class="md-source-file">
-    
-    
-    
-      
-  
-  <span class="md-source-file__fact">
-    <span class="md-icon" title="Contributors">
-      
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
-      
-    </span>
-    <nav>
-      
-        <a href="mailto:mulinka.pavol@gmail.com">Pavol Mulinka</a>
-    </nav>
-  </span>
-
-    
-    
-  </aside>
-
-
-
-
-
-                
-              </article>
-            </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+              
+            </article>
+            
+          </div>
         </div>
         
       </main>
       
         <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="code_profiling.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: code_profiling" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              code_profiling
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="preprocessing.html" class="md-footer__link md-footer__link--next" aria-label="Next: preprocessing" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              preprocessing
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -3656,12 +2715,10 @@ Returns:
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "toc.integrate"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.expand", "toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
-    
-    
-      <script src="../assets/javascripts/bundle.dd8806f2.min.js"></script>
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
       
         <script src="../stylesheets/extra.js"></script>
       
