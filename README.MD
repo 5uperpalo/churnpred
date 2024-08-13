@@ -1,7 +1,7 @@
 # <img src="docs/sources/assets/images/logo.png" style="height:2em; vertical-align: middle;">
 Customer churn predictor for an assignment below.
 
-Documentation: https://5uperpalo.github.io/ecovadis_assignment/
+Documentation: https://5uperpalo.github.io/churnpred/
 
 ```
 In this assignment you're tasked with developing a machine learning solution for churn prediction to identify which customers are likely to leave a service (column "Exited" in the attached dataset). This assignment is meant to assess
