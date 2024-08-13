@@ -1,6 +1,6 @@
 # CI/CD
 
-This section includes some ideas for model developmnet and deployment within Azure services - i.e. EcoVadis cloud services vendor.
+This section includes some ideas for model developmnet and deployment within Azure services.
 
 * MLFlow for experiment tracking and endpoint deployment
   * https://mlflow.org/docs/1.25.1/python_api/mlflow.azureml.html
